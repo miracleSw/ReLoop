@@ -75,7 +75,7 @@ export const defaultSpotlightSlides: SpotlightItem[] = [
     },
     description:
       'Dòng SLR cơ học huyền thoại của Yoshihisa Maitani với kính ngắm siêu sáng 0.92x. Cơ tốc 1s - 1/1000s đanh giòn, đo sáng kim chỉ nhạy bén, đồng hành cùng bạn trên mọi nẻo đường sáng tạo bền vững.',
-    metadataBadges: ['98% Like New', 'Kèm Lens 50mm f/1.8', 'Định giá: 2.800.000 đ'],
+    metadataBadges: ['Độ mới 95%', 'Kèm Lens 50mm f/1.8', 'Định giá: 2.800.000 đ'],
     primaryCta: {
       label: 'Xem chi tiết & Giao lưu',
       link: '/explore?q=Olympus'
@@ -104,7 +104,7 @@ export const defaultSpotlightSlides: SpotlightItem[] = [
     highlightColor: 'clay',
     author: {
       name: 'Thu Hà',
-      location: 'Bình Thạnh, TP.HCM',
+      location: 'Bình Thạnh',
       rating: '4.9★',
       avatar: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=200&q=80',
       verified: true
@@ -219,17 +219,22 @@ export const SpotlightBanner: React.FC<SpotlightBannerProps> = ({
   onSlideChange
 }) => {
   const navigate = useNavigate();
+  const activeSlides = slides && slides.length > 0 ? slides : defaultSpotlightSlides;
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const [progress, setProgress] = useState(0);
+  const progressRef = useRef(0);
   const touchStartXRef = useRef<number | null>(null);
+  const touchStartYRef = useRef<number | null>(null);
+  const isSwipingRef = useRef(false);
 
-  const totalSlides = slides.length;
-  const current = slides[currentSlide] || slides[0];
+  const totalSlides = activeSlides.length;
+  const current = activeSlides[currentSlide] || activeSlides[0];
 
   const goToSlide = useCallback(
     (index: number) => {
       const targetIndex = (index + totalSlides) % totalSlides;
+      progressRef.current = 0;
       setCurrentSlide(targetIndex);
       setProgress(0);
       onSlideChange?.(targetIndex);
@@ -238,12 +243,29 @@ export const SpotlightBanner: React.FC<SpotlightBannerProps> = ({
   );
 
   const nextSlide = useCallback(() => {
-    goToSlide(currentSlide + 1);
-  }, [goToSlide, currentSlide]);
+    progressRef.current = 0;
+    setProgress(0);
+    setCurrentSlide((prev) => {
+      const nextIndex = (prev + 1) % totalSlides;
+      onSlideChange?.(nextIndex);
+      return nextIndex;
+    });
+  }, [totalSlides, onSlideChange]);
 
   const prevSlide = useCallback(() => {
-    goToSlide(currentSlide - 1);
-  }, [goToSlide, currentSlide]);
+    progressRef.current = 0;
+    setProgress(0);
+    setCurrentSlide((prev) => {
+      const prevIndex = (prev - 1 + totalSlides) % totalSlides;
+      onSlideChange?.(prevIndex);
+      return prevIndex;
+    });
+  }, [totalSlides, onSlideChange]);
+
+  const nextSlideRef = useRef(nextSlide);
+  useEffect(() => {
+    nextSlideRef.current = nextSlide;
+  }, [nextSlide]);
 
   // Auto-play timer with progress ticker
   useEffect(() => {
@@ -253,22 +275,32 @@ export const SpotlightBanner: React.FC<SpotlightBannerProps> = ({
     const increment = (stepMs / autoPlayInterval) * 100;
 
     const timer = setInterval(() => {
-      setProgress((prev) => {
-        if (prev + increment >= 100) {
-          nextSlide();
-          return 0;
-        }
-        return prev + increment;
-      });
+      progressRef.current += increment;
+      if (progressRef.current >= 100) {
+        progressRef.current = 0;
+        setProgress(0);
+        nextSlideRef.current();
+      } else {
+        setProgress(progressRef.current);
+      }
     }, stepMs);
 
     return () => clearInterval(timer);
-  }, [isPaused, autoPlayInterval, totalSlides, nextSlide]);
+  }, [isPaused, autoPlayInterval, totalSlides]);
 
   // Keyboard navigation (ArrowLeft / ArrowRight)
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (['INPUT', 'TEXTAREA'].includes((e.target as HTMLElement)?.tagName)) return;
+      const activeEl = document.activeElement as HTMLElement | null;
+      const tagName = activeEl?.tagName;
+      if (
+        tagName === 'INPUT' ||
+        tagName === 'TEXTAREA' ||
+        tagName === 'SELECT' ||
+        activeEl?.isContentEditable
+      ) {
+        return;
+      }
       if (e.key === 'ArrowLeft') {
         prevSlide();
       } else if (e.key === 'ArrowRight') {
@@ -283,20 +315,37 @@ export const SpotlightBanner: React.FC<SpotlightBannerProps> = ({
   // Touch swipe gestures
   const handleTouchStart = (e: React.TouchEvent) => {
     touchStartXRef.current = e.touches[0].clientX;
+    touchStartYRef.current = e.touches[0].clientY;
+    isSwipingRef.current = false;
   };
 
   const handleTouchEnd = (e: React.TouchEvent) => {
     if (touchStartXRef.current === null) return;
     const touchEndX = e.changedTouches[0].clientX;
-    const diff = touchEndX - touchStartXRef.current;
-    if (Math.abs(diff) > 50) {
-      if (diff > 0) {
+    const diffX = touchEndX - touchStartXRef.current;
+
+    // Check vertical movement if clientY is available
+    const hasY =
+      touchStartYRef.current !== undefined &&
+      touchStartYRef.current !== null &&
+      e.changedTouches[0]?.clientY !== undefined;
+    const diffY = hasY ? e.changedTouches[0].clientY - (touchStartYRef.current ?? 0) : 0;
+
+    // Only process horizontal swipe if horizontal movement exceeds vertical movement
+    if ((!hasY || Math.abs(diffX) > Math.abs(diffY)) && Math.abs(diffX) > 50) {
+      isSwipingRef.current = true;
+      if (diffX > 0) {
         prevSlide();
       } else {
         nextSlide();
       }
+      // Keep isSwiping flag briefly to prevent accidental tap/click navigation
+      setTimeout(() => {
+        isSwipingRef.current = false;
+      }, 200);
     }
     touchStartXRef.current = null;
+    touchStartYRef.current = null;
   };
 
   const renderEcoIcon = (name?: string) => {
@@ -319,11 +368,13 @@ export const SpotlightBanner: React.FC<SpotlightBannerProps> = ({
   return (
     <div
       className={clsx(
-        'relative rounded-3xl lg:rounded-4xl bg-gradient-to-br from-eco-950 via-[#122416] to-charcoal-900 text-white p-6 sm:p-10 lg:p-14 overflow-hidden shadow-elevated border border-eco-900/60 select-none group/banner',
+        'relative rounded-3xl lg:rounded-4xl bg-gradient-to-br from-eco-950 via-[#122416] to-charcoal-900 text-white p-6 sm:p-10 lg:p-14 overflow-hidden shadow-elevated border border-eco-900/60 select-none group/banner touch-pan-y',
         className
       )}
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
+      onPointerEnter={() => setIsPaused(true)}
+      onPointerLeave={() => setIsPaused(false)}
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
       tabIndex={0}
@@ -394,7 +445,7 @@ export const SpotlightBanner: React.FC<SpotlightBannerProps> = ({
           </div>
 
           {/* Display Headline */}
-          <h2 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-white leading-[1.2] tracking-tight">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white leading-[1.2] tracking-tight">
             {current.headlinePrefix}{' '}
             <span
               className={clsx(
@@ -465,11 +516,11 @@ export const SpotlightBanner: React.FC<SpotlightBannerProps> = ({
           </div>
 
           {/* Eco Impact Metric Strip */}
-          <div className="grid grid-cols-3 gap-2 sm:gap-3 pt-2">
+          <div className="flex flex-row gap-2 sm:gap-3 pt-2">
             {current.ecoMetrics.map((metric, idx) => (
               <div
                 key={idx}
-                className="bg-black/25 backdrop-blur-md border border-white/10 rounded-2xl p-3 sm:p-3.5 flex flex-col justify-between transition-colors hover:bg-black/35"
+                className="bg-black/25 backdrop-blur-md border border-white/10 rounded-2xl p-3 sm:p-3.5 flex-1 min-w-[85px] sm:min-w-[90px] flex flex-col justify-between transition-colors hover:bg-black/35"
               >
                 <div className="flex items-center gap-1.5 text-emerald-400 mb-1">
                   {renderEcoIcon(metric.iconName)}
@@ -489,19 +540,24 @@ export const SpotlightBanner: React.FC<SpotlightBannerProps> = ({
         <div className="w-full lg:w-[42%] flex items-center justify-center pt-2 lg:pt-0">
           <div
             key={`deck-${current.id}`}
-            className="relative w-full max-w-[320px] sm:max-w-[380px] lg:max-w-[420px] h-[340px] sm:h-[400px] lg:h-[450px] flex items-center justify-center [perspective:1200px] group/fandeck cursor-pointer select-none animate-fade-in"
-            onClick={() => navigate(current.primaryCta.link)}
+            className="relative w-full max-w-[320px] sm:max-w-[380px] lg:max-w-[420px] h-[340px] sm:h-[400px] lg:h-[450px] flex items-center justify-center [perspective:1200px] [transform-style:preserve-3d] group/fandeck cursor-pointer select-none animate-fade-in"
+            onClick={() => {
+              if (isSwipingRef.current) return;
+              navigate(current.primaryCta.link);
+            }}
             title={`Khám phá ngay: ${current.collection}`}
+            aria-label={`Khám phá sản phẩm: ${current.collection}`}
             role="button"
             tabIndex={0}
             onKeyDown={(e) => {
               if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
                 navigate(current.primaryCta.link);
               }
             }}
           >
-            {/* Back Layer Card (-10deg -> -14deg on hover) */}
-            <div className="absolute w-[210px] sm:w-[260px] lg:w-[280px] h-[270px] sm:h-[340px] lg:h-[370px] rounded-2xl sm:rounded-3xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.6)] border border-white/10 z-10 transition-all duration-500 ease-out transform-gpu will-change-transform -rotate-[10deg] scale-90 -translate-x-8 sm:-translate-x-12 translate-y-3 group-hover/fandeck:-rotate-[14deg] group-hover/fandeck:scale-95 group-hover/fandeck:-translate-x-14 sm:group-hover/fandeck:-translate-x-18 group-hover/fandeck:translate-y-1">
+            {/* Back Layer Card (-10deg -> -13deg on hover) */}
+            <div className="absolute w-[210px] sm:w-[260px] lg:w-[280px] h-[270px] sm:h-[340px] lg:h-[370px] rounded-2xl sm:rounded-3xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.6)] border border-white/10 z-10 transition-all duration-500 ease-out transform-gpu will-change-transform -rotate-[10deg] scale-90 -translate-x-8 sm:-translate-x-12 translate-y-3 group-hover/fandeck:-rotate-[13deg] group-hover/fandeck:scale-95 group-hover/fandeck:-translate-x-12 sm:group-hover/fandeck:-translate-x-16 group-hover/fandeck:translate-y-0">
               <img
                 src={current.images.back}
                 alt={`${current.collection} - Không gian phong cách sống`}
@@ -514,8 +570,8 @@ export const SpotlightBanner: React.FC<SpotlightBannerProps> = ({
               </span>
             </div>
 
-            {/* Mid Layer Card (-3deg -> -5deg on hover) */}
-            <div className="absolute w-[210px] sm:w-[260px] lg:w-[280px] h-[270px] sm:h-[340px] lg:h-[370px] rounded-2xl sm:rounded-3xl overflow-hidden shadow-[0_25px_60px_rgba(0,0,0,0.65)] border border-white/15 z-20 transition-all duration-500 ease-out transform-gpu will-change-transform -rotate-[3deg] scale-95 -translate-x-2 translate-y-1 group-hover/fandeck:-rotate-[6deg] group-hover/fandeck:scale-100 group-hover/fandeck:-translate-x-4 group-hover/fandeck:-translate-y-3">
+            {/* Mid Layer Card (-3deg -> -6deg on hover) */}
+            <div className="absolute w-[210px] sm:w-[260px] lg:w-[280px] h-[270px] sm:h-[340px] lg:h-[370px] rounded-2xl sm:rounded-3xl overflow-hidden shadow-[0_25px_60px_rgba(0,0,0,0.65)] border border-white/15 z-20 transition-all duration-500 ease-out transform-gpu will-change-transform -rotate-[3deg] scale-95 -translate-x-2 translate-y-1 group-hover/fandeck:-rotate-[6deg] group-hover/fandeck:scale-100 group-hover/fandeck:-translate-x-4 group-hover/fandeck:-translate-y-2">
               <img
                 src={current.images.mid}
                 alt={`${current.collection} - Góc chụp chi tiết kiểm định`}
@@ -529,7 +585,7 @@ export const SpotlightBanner: React.FC<SpotlightBannerProps> = ({
             </div>
 
             {/* Front Layer Card (+5deg -> +8deg on hover) */}
-            <div className="absolute w-[210px] sm:w-[260px] lg:w-[280px] h-[270px] sm:h-[340px] lg:h-[370px] rounded-2xl sm:rounded-3xl overflow-hidden shadow-[0_30px_70px_rgba(0,0,0,0.85)] ring-1 ring-white/30 border border-white/20 z-30 transition-all duration-500 ease-out transform-gpu will-change-transform rotate-[5deg] scale-100 translate-x-6 sm:translate-x-10 translate-y-0 group-hover/fandeck:rotate-[8deg] group-hover/fandeck:scale-105 group-hover/fandeck:translate-x-10 sm:group-hover/fandeck:translate-x-14 group-hover/fandeck:-translate-y-2">
+            <div className="absolute w-[210px] sm:w-[260px] lg:w-[280px] h-[270px] sm:h-[340px] lg:h-[370px] rounded-2xl ring-1 ring-white/30 shadow-2xl overflow-hidden border border-white/20 z-30 transition-all duration-500 ease-out transform-gpu will-change-transform rotate-[5deg] scale-100 translate-x-6 sm:translate-x-10 translate-y-0 group-hover/fandeck:rotate-[8deg] group-hover/fandeck:scale-105 group-hover/fandeck:translate-x-10 sm:group-hover/fandeck:translate-x-14 group-hover/fandeck:-translate-y-2">
               <img
                 src={current.images.front}
                 alt={`${current.collection} - Ảnh sắc nét`}
@@ -564,7 +620,7 @@ export const SpotlightBanner: React.FC<SpotlightBannerProps> = ({
       <div className="pt-4 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-white/10 mt-6 sm:mt-8 z-20 relative">
         {/* Timeline Progress Indicators */}
         <div className="flex items-center gap-2 sm:gap-2.5">
-          {slides.map((s, index) => {
+          {activeSlides.map((s, index) => {
             const isActive = index === currentSlide;
             return (
               <button
@@ -599,7 +655,7 @@ export const SpotlightBanner: React.FC<SpotlightBannerProps> = ({
           )}
           <span>
             <strong className="text-white text-sm">0{currentSlide + 1}</strong>
-            <span className="opacity-60"> / 0{slides.length}</span>
+            <span className="opacity-60"> / 0{activeSlides.length}</span>
           </span>
 
           {/* Quick Mobile Prev/Next navigation */}

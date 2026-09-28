@@ -53,54 +53,54 @@ export const HomePage: React.FC = () => {
 
   return (
     <div className="space-y-20 pb-20">
-      {/* 1. SHOWCASE SPOTLIGHT HERO BANNER */}
-      <section className="pt-6 sm:pt-10">
+      {/* 1. SHOWCASE SPOTLIGHT HERO BANNER & QUICK DISCOVERY */}
+      <section className="pt-6 sm:pt-10 space-y-6 sm:space-y-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SpotlightBanner />
         </div>
-      </section>
 
-      {/* QUICK SEARCH & POPULAR DISCOVERY BAR */}
-      <section className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 -mt-10 sm:-mt-14 relative z-30">
-        <div className="p-3 sm:p-4 bg-white/95 backdrop-blur-md rounded-2xl sm:rounded-full shadow-elevated border border-sand-200">
-          <form
-            onSubmit={handleHeroSearch}
-            className="flex flex-col sm:flex-row items-center gap-2"
-          >
-            <div className="flex items-center gap-3 flex-1 pl-4 w-full">
-              <Search className="w-5 h-5 text-sand-400 flex-shrink-0" />
-              <input
-                type="text"
-                value={heroSearch}
-                onChange={(e) => setHeroSearch(e.target.value)}
-                placeholder="Tìm máy ảnh film, bàn phím cơ, xe đạp, nội thất mây..."
-                className="w-full text-sm sm:text-base text-charcoal-900 bg-transparent placeholder:text-sand-400 focus:outline-none"
-              />
-            </div>
-            <button
-              type="submit"
-              className="w-full sm:w-auto px-7 py-3.5 bg-eco-800 hover:bg-eco-700 active:scale-95 text-white font-semibold text-sm rounded-xl sm:rounded-full transition-all flex items-center justify-center gap-2 shadow-soft flex-shrink-0"
+        {/* QUICK SEARCH & POPULAR DISCOVERY BAR */}
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
+          <div className="p-3 sm:p-4 bg-white/95 backdrop-blur-md rounded-2xl sm:rounded-full shadow-elevated border border-sand-200">
+            <form
+              onSubmit={handleHeroSearch}
+              className="flex flex-col sm:flex-row items-center gap-2"
             >
-              <span>Tìm kiếm</span>
-              <ArrowRight className="w-4 h-4" />
-            </button>
-          </form>
-        </div>
-
-        {/* Fast tag chips */}
-        <div className="mt-3 flex flex-wrap items-center justify-center gap-2 text-xs text-sand-600">
-          <span className="font-medium text-sand-500">Tìm kiếm phổ biến:</span>
-          {['Olympus', 'Bàn phím cơ', 'Ghế mây', 'Xe đạp Touring', 'Linen Blazer', 'Sách tối giản'].map(
-            (tag) => (
+              <div className="flex items-center gap-3 flex-1 pl-4 w-full">
+                <Search className="w-5 h-5 text-sand-400 flex-shrink-0" />
+                <input
+                  type="text"
+                  value={heroSearch}
+                  onChange={(e) => setHeroSearch(e.target.value)}
+                  placeholder="Tìm máy ảnh film, bàn phím cơ, xe đạp, nội thất mây..."
+                  className="w-full text-sm sm:text-base text-charcoal-900 bg-transparent placeholder:text-sand-400 focus:outline-none"
+                />
+              </div>
               <button
-                key={tag}
-                onClick={() => navigate(`/explore?q=${encodeURIComponent(tag)}`)}
-                className="px-3 py-1 rounded-full bg-white hover:bg-eco-50 hover:text-eco-800 text-charcoal-700 border border-sand-200 shadow-subtle transition-colors font-medium"
+                type="submit"
+                className="w-full sm:w-auto px-7 py-3.5 bg-eco-800 hover:bg-eco-700 active:scale-95 text-white font-semibold text-sm rounded-xl sm:rounded-full transition-all flex items-center justify-center gap-2 shadow-soft flex-shrink-0"
               >
-                {tag}
+                <span>Tìm kiếm</span>
+                <ArrowRight className="w-4 h-4" />
               </button>
-            )
-          )}
+            </form>
+          </div>
+
+          {/* Fast tag chips */}
+          <div className="mt-3 flex flex-wrap items-center justify-center gap-2 text-xs text-sand-600">
+            <span className="font-medium text-sand-500">Tìm kiếm phổ biến:</span>
+            {['Olympus', 'Bàn phím cơ', 'Ghế mây', 'Xe đạp Touring', 'Linen Blazer', 'Sách tối giản'].map(
+              (tag) => (
+                <button
+                  key={tag}
+                  onClick={() => navigate(`/explore?q=${encodeURIComponent(tag)}`)}
+                  className="px-3 py-1 rounded-full bg-white hover:bg-eco-50 hover:text-eco-800 text-charcoal-700 border border-sand-200 shadow-subtle transition-colors font-medium"
+                >
+                  {tag}
+                </button>
+              )
+            )}
+          </div>
         </div>
       </section>
 

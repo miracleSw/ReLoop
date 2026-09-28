@@ -833,7 +833,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const sendMessage = (transactionId: string, receiverId: string, content: string) => {
     if (!currentUser) return;
     const newMsg: Message = {
-      id: 'msg-' + Date.now(),
+      id: `msg-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`,
       transactionId,
       senderId: currentUser.id,
       receiverId,

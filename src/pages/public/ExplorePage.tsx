@@ -149,8 +149,8 @@ export const ExplorePage: React.FC = () => {
           <h1 className="text-2xl sm:text-3xl font-extrabold text-charcoal-900">
             Khám phá kho đồ cũ
           </h1>
-          <p className="text-xs sm:text-sm text-sand-600 mt-1">
-            Tìm thấy <span className="font-bold text-eco-800">{filteredProducts.length}</span> món đồ sẵn sàng giao dịch gặp mặt
+          <p className="text-xs sm:text-sm text-sand-500 mt-1">
+            Tìm thấy <span className="font-bold text-eco-700">{filteredProducts.length}</span> món đồ sẵn sàng giao dịch gặp mặt
           </p>
         </div>
 
@@ -162,7 +162,7 @@ export const ExplorePage: React.FC = () => {
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               placeholder="Tìm theo tên, mô tả sản phẩm..."
-              className="w-full text-sm bg-white border border-sand-200 rounded-full pl-10 pr-4 py-2.5 text-charcoal-900 focus:outline-none focus:ring-2 focus:ring-eco-500/20 focus:border-eco-500 shadow-soft"
+              className="w-full text-sm bg-white border border-slate-200/90 rounded-full pl-10 pr-4 py-2.5 text-charcoal-900 focus:outline-none focus:ring-4 focus:ring-eco-500/15 focus:border-eco-500 shadow-soft"
             />
             <Search className="w-4 h-4 text-sand-400 absolute left-3.5 top-3 pointer-events-none" />
             {searchTerm && (
@@ -178,7 +178,7 @@ export const ExplorePage: React.FC = () => {
           {/* Mobile Filter Drawer Button */}
           <button
             onClick={() => setIsMobileFilterOpen(true)}
-            className="lg:hidden flex items-center gap-1.5 px-4 py-2.5 bg-white border border-sand-200 rounded-full text-xs font-semibold text-charcoal-800 shadow-soft"
+            className="lg:hidden flex items-center gap-1.5 px-4 py-2.5 bg-white border border-slate-200 rounded-full text-xs font-bold text-charcoal-800 shadow-soft hover:bg-slate-50"
           >
             <Filter className="w-4 h-4 text-eco-700" />
             <span>Bộ lọc</span>
@@ -188,11 +188,11 @@ export const ExplorePage: React.FC = () => {
 
       {/* 2. ACTIVE FILTER CHIPS */}
       {hasActiveFilters && (
-        <div className="flex flex-wrap items-center gap-2 mb-6 p-3 bg-white rounded-2xl border border-sand-200 text-xs">
-          <span className="font-semibold text-sand-500 mr-1">Đang lọc theo:</span>
+        <div className="flex flex-wrap items-center gap-2 mb-6 p-3.5 bg-white rounded-2xl border border-slate-200/80 text-xs shadow-soft">
+          <span className="font-bold text-sand-500 mr-1">Đang lọc theo:</span>
 
           {searchTerm && (
-            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-eco-100 text-eco-800 font-medium">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-eco-100 text-eco-800 font-semibold border border-eco-200/60 shadow-subtle">
               Từ khóa: "{searchTerm}"
               <button onClick={() => setSearchTerm('')} className="hover:text-eco-950">
                 <X className="w-3 h-3" />
@@ -201,7 +201,7 @@ export const ExplorePage: React.FC = () => {
           )}
 
           {selectedCategory !== 'all' && (
-            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-eco-100 text-eco-800 font-medium">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-eco-100 text-eco-800 font-semibold border border-eco-200/60 shadow-subtle">
               {categories.find((c) => c.id === selectedCategory)?.name}
               <button onClick={() => setSelectedCategory('all')} className="hover:text-eco-950">
                 <X className="w-3 h-3" />
@@ -210,7 +210,7 @@ export const ExplorePage: React.FC = () => {
           )}
 
           {selectedType !== 'all' && (
-            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-eco-100 text-eco-800 font-medium">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-eco-100 text-eco-800 font-semibold border border-eco-200/60 shadow-subtle">
               {selectedType === 'EXCHANGE' ? 'Góc Đổi đồ' : selectedType === 'SELL' ? 'Cần bán' : 'Cả hai'}
               <button onClick={() => setSelectedType('all')} className="hover:text-eco-950">
                 <X className="w-3 h-3" />
@@ -219,7 +219,7 @@ export const ExplorePage: React.FC = () => {
           )}
 
           {selectedCondition !== 'all' && (
-            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-eco-100 text-eco-800 font-medium">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-eco-100 text-eco-800 font-semibold border border-eco-200/60 shadow-subtle">
               Tình trạng: {selectedCondition}
               <button onClick={() => setSelectedCondition('all')} className="hover:text-eco-950">
                 <X className="w-3 h-3" />
@@ -228,7 +228,7 @@ export const ExplorePage: React.FC = () => {
           )}
 
           {selectedProvince !== 'all' && (
-            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-eco-100 text-eco-800 font-medium">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-eco-100 text-eco-800 font-semibold border border-eco-200/60 shadow-subtle">
               Khu vực: {selectedProvince}
               <button onClick={() => setSelectedProvince('all')} className="hover:text-eco-950">
                 <X className="w-3 h-3" />
@@ -237,7 +237,7 @@ export const ExplorePage: React.FC = () => {
           )}
 
           {priceRange !== 'all' && (
-            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-eco-100 text-eco-800 font-medium">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-eco-100 text-eco-800 font-semibold border border-eco-200/60 shadow-subtle">
               Khoảng giá
               <button onClick={() => setPriceRange('all')} className="hover:text-eco-950">
                 <X className="w-3 h-3" />
@@ -247,7 +247,7 @@ export const ExplorePage: React.FC = () => {
 
           <button
             onClick={handleClearFilters}
-            className="ml-auto text-xs text-rose-600 hover:underline font-semibold flex items-center gap-1"
+            className="ml-auto text-xs text-rose-600 hover:underline font-bold flex items-center gap-1"
           >
             <RotateCcw className="w-3 h-3" />
             Xóa tất cả bộ lọc
@@ -259,8 +259,8 @@ export const ExplorePage: React.FC = () => {
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
         {/* DESKTOP FILTER SIDEBAR */}
         <aside className="hidden lg:block lg:col-span-1 space-y-6">
-          <div className="p-6 rounded-3xl bg-white border border-sand-200 shadow-soft space-y-6">
-            <div className="flex items-center justify-between pb-4 border-b border-sand-100">
+          <div className="p-6 rounded-3xl bg-white border border-slate-200/80 shadow-soft space-y-6">
+            <div className="flex items-center justify-between pb-4 border-b border-slate-100">
               <div className="flex items-center gap-2 font-bold text-sm text-charcoal-900">
                 <SlidersHorizontal className="w-4 h-4 text-eco-700" />
                 <span>Bộ lọc chi tiết</span>
@@ -268,7 +268,7 @@ export const ExplorePage: React.FC = () => {
               {hasActiveFilters && (
                 <button
                   onClick={handleClearFilters}
-                  className="text-xs text-sand-500 hover:text-rose-600 transition-colors"
+                  className="text-xs text-sand-500 hover:text-rose-600 font-medium transition-colors"
                 >
                   Đặt lại
                 </button>
@@ -283,10 +283,10 @@ export const ExplorePage: React.FC = () => {
               <div className="space-y-1.5 text-xs">
                 <button
                   onClick={() => setSelectedCategory('all')}
-                  className={`w-full text-left px-3 py-2 rounded-xl transition-colors ${
+                  className={`w-full text-left px-3.5 py-2 rounded-xl transition-all ${
                     selectedCategory === 'all'
-                      ? 'bg-eco-50 text-eco-900 font-bold'
-                      : 'text-sand-700 hover:bg-sand-50'
+                      ? 'bg-eco-50 text-eco-900 font-bold border-l-2 border-eco-600'
+                      : 'text-sand-700 hover:bg-slate-50'
                   }`}
                 >
                   Tất cả ngành hàng
@@ -295,21 +295,21 @@ export const ExplorePage: React.FC = () => {
                   <button
                     key={c.id}
                     onClick={() => setSelectedCategory(c.id)}
-                    className={`w-full text-left px-3 py-2 rounded-xl transition-colors flex items-center justify-between ${
+                    className={`w-full text-left px-3.5 py-2 rounded-xl transition-all flex items-center justify-between ${
                       selectedCategory === c.id
-                        ? 'bg-eco-50 text-eco-900 font-bold'
-                        : 'text-sand-700 hover:bg-sand-50'
+                        ? 'bg-eco-50 text-eco-900 font-bold border-l-2 border-eco-600'
+                        : 'text-sand-700 hover:bg-slate-50'
                     }`}
                   >
                     <span>{c.name}</span>
-                    <span className="text-[10px] text-sand-400">{c.productCount}</span>
+                    <span className="text-[10px] text-sand-400 font-semibold">{c.productCount}</span>
                   </button>
                 ))}
               </div>
             </div>
 
             {/* Filter: Transaction Type */}
-            <div className="pt-4 border-t border-sand-100">
+            <div className="pt-4 border-t border-slate-100">
               <label className="block text-xs font-bold text-charcoal-800 uppercase tracking-wider mb-2.5">
                 Hình thức giao dịch
               </label>
@@ -323,10 +323,10 @@ export const ExplorePage: React.FC = () => {
                   <button
                     key={item.id}
                     onClick={() => setSelectedType(item.id)}
-                    className={`py-2 px-3 rounded-xl border text-center font-medium transition-all ${
+                    className={`py-2 px-3 rounded-xl border text-center font-bold transition-all ${
                       selectedType === item.id
-                        ? 'bg-eco-800 text-white border-eco-800 shadow-soft'
-                        : 'bg-white text-charcoal-700 border-sand-200 hover:bg-sand-50'
+                        ? 'bg-gradient-to-r from-eco-700 to-eco-600 text-white border-eco-600 shadow-soft'
+                        : 'bg-white text-charcoal-700 border-slate-200 hover:bg-slate-50'
                     }`}
                   >
                     {item.label}
@@ -336,14 +336,14 @@ export const ExplorePage: React.FC = () => {
             </div>
 
             {/* Filter: Location Province */}
-            <div className="pt-4 border-t border-sand-100">
+            <div className="pt-4 border-t border-slate-100">
               <label className="block text-xs font-bold text-charcoal-800 uppercase tracking-wider mb-2.5">
                 Khu vực địa phương
               </label>
               <select
                 value={selectedProvince}
                 onChange={(e) => setSelectedProvince(e.target.value)}
-                className="w-full text-xs bg-sand-50 border border-sand-200 rounded-xl p-2.5 text-charcoal-800 focus:outline-none focus:ring-2 focus:ring-eco-500/20"
+                className="w-full text-xs bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-charcoal-800 focus:outline-none focus:ring-4 focus:ring-eco-500/15 font-medium"
               >
                 <option value="all">Toàn quốc (Tất cả khu vực)</option>
                 {provinces.map((prov) => (
@@ -355,7 +355,7 @@ export const ExplorePage: React.FC = () => {
             </div>
 
             {/* Filter: Condition */}
-            <div className="pt-4 border-t border-sand-100">
+            <div className="pt-4 border-t border-slate-100">
               <label className="block text-xs font-bold text-charcoal-800 uppercase tracking-wider mb-2.5">
                 Tình trạng sản phẩm
               </label>
@@ -364,10 +364,10 @@ export const ExplorePage: React.FC = () => {
                   <button
                     key={cond}
                     onClick={() => setSelectedCondition(cond)}
-                    className={`w-full text-left px-3 py-2 rounded-xl transition-colors ${
+                    className={`w-full text-left px-3.5 py-2 rounded-xl transition-all ${
                       selectedCondition === cond
-                        ? 'bg-eco-50 text-eco-900 font-bold'
-                        : 'text-sand-700 hover:bg-sand-50'
+                        ? 'bg-eco-50 text-eco-900 font-bold border-l-2 border-eco-600'
+                        : 'text-sand-700 hover:bg-slate-50'
                     }`}
                   >
                     {cond === 'all' ? 'Mọi tình trạng' : cond}
@@ -377,11 +377,11 @@ export const ExplorePage: React.FC = () => {
             </div>
 
             {/* Filter: Price Range */}
-            <div className="pt-4 border-t border-sand-100">
+            <div className="pt-4 border-t border-slate-100">
               <label className="block text-xs font-bold text-charcoal-800 uppercase tracking-wider mb-2.5">
                 Khoảng giá (VNĐ)
               </label>
-              <div className="space-y-1 text-xs">
+              <div className="space-y-1.5 text-xs">
                 {[
                   { id: 'all', label: 'Tất cả mức giá' },
                   { id: 'under500k', label: 'Dưới 500.000₫' },
@@ -392,10 +392,10 @@ export const ExplorePage: React.FC = () => {
                   <button
                     key={range.id}
                     onClick={() => setPriceRange(range.id)}
-                    className={`w-full text-left px-3 py-2 rounded-xl transition-colors ${
+                    className={`w-full text-left px-3.5 py-2 rounded-xl transition-all ${
                       priceRange === range.id
-                        ? 'bg-eco-50 text-eco-900 font-bold'
-                        : 'text-sand-700 hover:bg-sand-50'
+                        ? 'bg-eco-50 text-eco-900 font-bold border-l-2 border-eco-600'
+                        : 'text-sand-700 hover:bg-slate-50'
                     }`}
                   >
                     {range.label}
@@ -409,17 +409,17 @@ export const ExplorePage: React.FC = () => {
         {/* PRODUCT GRID & SORT CONTROLS */}
         <div className="lg:col-span-3 space-y-6">
           {/* Sorting Bar */}
-          <div className="flex items-center justify-between bg-white p-3.5 px-5 rounded-2xl border border-sand-200 shadow-soft">
-            <span className="text-xs text-sand-600 font-medium">
+          <div className="flex items-center justify-between bg-white p-3.5 px-5 rounded-2xl border border-slate-200/80 shadow-soft">
+            <span className="text-xs text-sand-500 font-medium">
               Hiển thị <span className="font-bold text-charcoal-900">{filteredProducts.length}</span> kết quả
             </span>
 
             <div className="flex items-center gap-2 text-xs">
-              <span className="text-sand-500 hidden sm:inline">Sắp xếp:</span>
+              <span className="text-sand-500 hidden sm:inline font-medium">Sắp xếp:</span>
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
-                className="bg-sand-50 border border-sand-200 rounded-xl px-3 py-1.5 text-xs font-semibold text-charcoal-800 focus:outline-none focus:ring-2 focus:ring-eco-500/20"
+                className="bg-slate-50 border border-slate-200 rounded-xl px-3 py-1.5 text-xs font-semibold text-charcoal-800 focus:outline-none focus:ring-4 focus:ring-eco-500/15"
               >
                 <option value="newest">Mới đăng nhất</option>
                 <option value="price-asc">Giá: Thấp đến cao</option>
@@ -431,19 +431,19 @@ export const ExplorePage: React.FC = () => {
 
           {/* Product Grid */}
           {filteredProducts.length === 0 ? (
-            <div className="p-12 text-center bg-white rounded-3xl border border-sand-200 space-y-4">
-              <div className="w-16 h-16 rounded-full bg-sand-100 text-sand-400 flex items-center justify-center mx-auto">
+            <div className="p-12 text-center bg-white rounded-3xl border border-slate-200 space-y-4">
+              <div className="w-16 h-16 rounded-full bg-slate-100 text-sand-400 flex items-center justify-center mx-auto">
                 <Search className="w-8 h-8" />
               </div>
               <h3 className="text-lg font-bold text-charcoal-900">
                 Không tìm thấy món đồ phù hợp
               </h3>
-              <p className="text-xs sm:text-sm text-sand-600 max-w-md mx-auto">
+              <p className="text-xs sm:text-sm text-sand-500 max-w-md mx-auto">
                 Hãy thử nới lỏng các tiêu chí lọc, tìm từ khóa ngắn hơn hoặc khôi phục lại bộ lọc mặc định.
               </p>
               <button
                 onClick={handleClearFilters}
-                className="mt-2 px-5 py-2.5 bg-eco-800 text-white rounded-xl text-xs sm:text-sm font-semibold hover:bg-eco-700 transition-colors shadow-soft"
+                className="mt-2 px-6 py-2.5 bg-gradient-to-r from-eco-600 to-teal-600 text-white rounded-full text-xs sm:text-sm font-bold hover:shadow-md transition-all"
               >
                 Xóa toàn bộ bộ lọc
               </button>

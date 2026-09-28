@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useApp } from '../../context/AppContext';
-import { Bell, CheckCircle2, Clock, ShieldCheck, ArrowRightLeft, Calendar } from 'lucide-react';
+import { Bell, CheckCircle2, Clock, ShieldCheck, ArrowRightLeft, Calendar, Sparkles, CheckCheck, Inbox } from 'lucide-react';
 
 export const NotificationCenterPage: React.FC = () => {
   const { notifications, markNotificationRead, markAllNotificationsRead } = useApp();
@@ -12,28 +12,41 @@ export const NotificationCenterPage: React.FC = () => {
     return n.type === filterType;
   });
 
+  const unreadCount = notifications.filter((n) => !n.isRead).length;
+
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-8">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200/80">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-charcoal-900">
-            Trung tâm thông báo (Notification Center)
+          <div className="inline-flex items-center gap-1.5 text-xs font-bold text-eco-800 uppercase tracking-wider bg-eco-100/70 px-3 py-1 rounded-full border border-eco-200/80 mb-2 shadow-xs">
+            <Bell className="w-3.5 h-3.5 text-eco-700" />
+            <span>Thông báo & nhắc nhở</span>
+          </div>
+          <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight flex items-center gap-2.5">
+            <span>Trung tâm thông báo (Notification Center)</span>
+            {unreadCount > 0 && (
+              <span className="text-xs font-black bg-gradient-to-r from-clay-500 to-rose-500 text-white px-2.5 py-0.5 rounded-full shadow-xs">
+                {unreadCount} mới
+              </span>
+            )}
           </h1>
-          <p className="text-xs sm:text-sm text-sand-600 mt-1">
+          <p className="text-xs sm:text-sm text-slate-500 mt-1">
             Cập nhật biến động các đề nghị giao dịch, nhắc nhở lịch hẹn và thông báo hệ thống.
           </p>
         </div>
 
         <button
           onClick={markAllNotificationsRead}
-          className="text-xs font-semibold text-eco-800 hover:underline"
+          className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-white border border-slate-200 text-xs font-bold text-slate-700 hover:text-eco-700 hover:bg-slate-50 shadow-xs transition-all"
         >
-          Đánh dấu tất cả đã đọc
+          <CheckCheck className="w-4 h-4 text-eco-600" />
+          <span>Đánh dấu tất cả đã đọc</span>
         </button>
       </div>
 
       {/* Filter Tabs */}
-      <div className="flex items-center gap-2 overflow-x-auto pb-2 border-b border-sand-200 text-xs">
+      <div className="flex items-center gap-2 overflow-x-auto pb-1 border-b border-slate-200/80 text-xs scrollbar-none">
         {[
           { id: 'ALL', label: 'Tất cả thông báo' },
           { id: 'OFFER', label: 'Đề nghị Mua/Đổi' },
@@ -44,10 +57,10 @@ export const NotificationCenterPage: React.FC = () => {
           <button
             key={tab.id}
             onClick={() => setFilterType(tab.id)}
-            className={`px-4 py-2 rounded-full font-semibold whitespace-nowrap transition-all ${
+            className={`px-4 py-2 rounded-full font-bold whitespace-nowrap transition-all ${
               filterType === tab.id
-                ? 'bg-eco-800 text-white shadow-soft'
-                : 'bg-white text-charcoal-700 hover:bg-sand-100 border border-sand-200'
+                ? 'bg-gradient-to-r from-eco-700 via-eco-600 to-teal-600 text-white shadow-glow-emerald'
+                : 'bg-white text-slate-700 hover:bg-slate-50 border border-slate-200/90 shadow-xs'
             }`}
           >
             {tab.label}
@@ -56,48 +69,70 @@ export const NotificationCenterPage: React.FC = () => {
       </div>
 
       {/* Notifications List */}
-      <div className="bg-white rounded-3xl border border-sand-200 shadow-card divide-y divide-sand-100 overflow-hidden">
+      <div className="bg-white rounded-3xl border border-slate-200/90 shadow-[0_10px_35px_-8px_rgba(16,185,129,0.08)] divide-y divide-slate-100 overflow-hidden">
         {filtered.length === 0 ? (
-          <div className="p-12 text-center text-xs text-sand-500">
-            Không có thông báo nào trong mục này.
+          <div className="p-16 text-center space-y-3">
+            <div className="w-16 h-16 mx-auto rounded-2xl bg-slate-50 border border-slate-200 flex items-center justify-center text-slate-400">
+              <Inbox className="w-8 h-8" />
+            </div>
+            <h3 className="text-base font-bold text-slate-900">Không có thông báo nào</h3>
+            <p className="text-xs text-slate-500">
+              Bạn chưa có thông báo nào thuộc danh mục này.
+            </p>
           </div>
         ) : (
-          filtered.map((n) => (
-            <Link
-              key={n.id}
-              to={n.link}
-              onClick={() => markNotificationRead(n.id)}
-              className={`p-5 flex items-start gap-4 hover:bg-sand-50 transition-colors ${
-                !n.isRead ? 'bg-eco-50/40' : ''
-              }`}
-            >
-              <div className="w-10 h-10 rounded-2xl bg-eco-100 text-eco-800 flex items-center justify-center flex-shrink-0">
-                {n.type === 'OFFER' ? (
+          filtered.map((n) => {
+            const iconBadge =
+              n.type === 'OFFER' ? (
+                <div className="w-11 h-11 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-700 flex items-center justify-center flex-shrink-0 shadow-xs">
                   <ArrowRightLeft className="w-5 h-5" />
-                ) : n.type === 'TRANSACTION' ? (
-                  <Calendar className="w-5 h-5" />
-                ) : n.type === 'REVIEW' ? (
-                  <CheckCircle2 className="w-5 h-5" />
-                ) : (
-                  <Bell className="w-5 h-5" />
-                )}
-              </div>
-
-              <div className="min-w-0 flex-1">
-                <div className="flex items-center justify-between">
-                  <h4 className="text-xs sm:text-sm font-bold text-charcoal-900">{n.title}</h4>
-                  <span className="text-[10px] text-sand-400">
-                    {new Date(n.createdAt).toLocaleDateString('vi-VN')}
-                  </span>
                 </div>
-                <p className="text-xs text-sand-700 mt-1 leading-relaxed">{n.message}</p>
-              </div>
+              ) : n.type === 'TRANSACTION' ? (
+                <div className="w-11 h-11 rounded-2xl bg-teal-50 border border-teal-200 text-teal-700 flex items-center justify-center flex-shrink-0 shadow-xs">
+                  <Calendar className="w-5 h-5" />
+                </div>
+              ) : n.type === 'REVIEW' ? (
+                <div className="w-11 h-11 rounded-2xl bg-amber-50 border border-amber-200 text-amber-700 flex items-center justify-center flex-shrink-0 shadow-xs">
+                  <CheckCircle2 className="w-5 h-5" />
+                </div>
+              ) : (
+                <div className="w-11 h-11 rounded-2xl bg-indigo-50 border border-indigo-200 text-indigo-700 flex items-center justify-center flex-shrink-0 shadow-xs">
+                  <Bell className="w-5 h-5" />
+                </div>
+              );
 
-              {!n.isRead && (
-                <span className="w-2.5 h-2.5 rounded-full bg-clay-500 flex-shrink-0 mt-2" />
-              )}
-            </Link>
-          ))
+            return (
+              <Link
+                key={n.id}
+                to={n.link}
+                onClick={() => markNotificationRead(n.id)}
+                className={`p-5 flex items-start gap-4 transition-all hover:bg-slate-50/80 relative group ${
+                  !n.isRead
+                    ? 'bg-gradient-to-r from-eco-50/50 via-teal-50/15 to-transparent border-l-4 border-eco-500'
+                    : 'border-l-4 border-transparent'
+                }`}
+              >
+                {iconBadge}
+
+                <div className="min-w-0 flex-1">
+                  <div className="flex items-center justify-between gap-2">
+                    <h4 className={`text-xs sm:text-sm font-black transition-colors ${!n.isRead ? 'text-slate-900 group-hover:text-eco-700' : 'text-slate-800'}`}>
+                      {n.title}
+                    </h4>
+                    <span className="text-[10px] text-slate-400 whitespace-nowrap flex items-center gap-1 font-medium">
+                      <Clock className="w-3 h-3 text-slate-300" />
+                      {new Date(n.createdAt).toLocaleDateString('vi-VN')}
+                    </span>
+                  </div>
+                  <p className="text-xs text-slate-600 mt-1 leading-relaxed">{n.message}</p>
+                </div>
+
+                {!n.isRead && (
+                  <span className="w-2.5 h-2.5 rounded-full bg-clay-500 ring-4 ring-clay-100 flex-shrink-0 mt-2" />
+                )}
+              </Link>
+            );
+          })
         )}
       </div>
     </div>

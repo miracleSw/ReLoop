@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useApp } from '../../context/AppContext';
 import { ProductCondition, TransactionType } from '../../types';
-import { UploadCloud, X, AlertTriangle, CheckCircle2, MapPin, Info } from 'lucide-react';
+import { UploadCloud, X, AlertTriangle, CheckCircle2, MapPin, Info, ArrowLeft, Sparkles, Tag, ShieldCheck } from 'lucide-react';
 import { StatusBadge } from '../../components/common/StatusBadge';
 
 export const EditListingPage: React.FC = () => {
@@ -50,9 +50,15 @@ export const EditListingPage: React.FC = () => {
   if (!currentUser || !product) {
     return (
       <div className="max-w-md mx-auto px-4 py-20 text-center">
-        <h2 className="text-xl font-bold text-charcoal-900">Không tìm thấy bài đăng</h2>
-        <Link to="/user/products" className="mt-4 inline-block text-eco-800 text-xs font-semibold hover:underline">
-          Về kho đồ cá nhân
+        <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-slate-100 flex items-center justify-center text-slate-400">
+          <AlertTriangle className="w-8 h-8" />
+        </div>
+        <h2 className="text-xl font-bold text-slate-900">Không tìm thấy bài đăng</h2>
+        <Link
+          to="/user/products"
+          className="mt-4 inline-flex items-center gap-1.5 text-eco-700 text-xs font-semibold hover:underline"
+        >
+          <ArrowLeft className="w-4 h-4" /> Về kho đồ cá nhân
         </Link>
       </div>
     );
@@ -62,10 +68,19 @@ export const EditListingPage: React.FC = () => {
   if (product.sellerId !== currentUser.id) {
     return (
       <div className="max-w-md mx-auto px-4 py-20 text-center">
+        <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-rose-50 flex items-center justify-center text-rose-500">
+          <ShieldCheck className="w-8 h-8" />
+        </div>
         <h2 className="text-xl font-bold text-rose-700">Không có quyền chỉnh sửa</h2>
-        <p className="text-xs text-sand-600 mt-1">
+        <p className="text-xs text-slate-600 mt-1">
           Bạn chỉ có thể chỉnh sửa bài đăng do chính mình tạo ra (BR UC06).
         </p>
+        <Link
+          to="/user/products"
+          className="mt-4 inline-flex items-center gap-1.5 text-eco-700 text-xs font-semibold hover:underline"
+        >
+          <ArrowLeft className="w-4 h-4" /> Về kho đồ cá nhân
+        </Link>
       </div>
     );
   }
@@ -140,27 +155,39 @@ export const EditListingPage: React.FC = () => {
 
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-6">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200/80">
         <div>
-          <div className="flex items-center gap-2 mb-1">
-            <span className="text-xs font-semibold text-sand-500">Mã bài đăng: #{product.id}</span>
+          <div className="flex items-center gap-2 mb-1.5">
+            <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-600 border border-slate-200">
+              Mã: #{product.id}
+            </span>
             <StatusBadge status={product.status} size="sm" />
           </div>
-          <h1 className="text-2xl font-extrabold text-charcoal-900">Chỉnh sửa bài đăng sản phẩm</h1>
-          <p className="text-xs text-sand-600 mt-0.5">
+          <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight flex items-center gap-2.5">
+            <span>Chỉnh sửa bài đăng</span>
+            <span className="inline-flex items-center justify-center p-1 rounded-lg bg-eco-100/70 text-eco-700">
+              <Sparkles className="w-4 h-4" />
+            </span>
+          </h1>
+          <p className="text-xs sm:text-sm text-slate-500 mt-1">
             Cập nhật lại thông tin, mô tả thực tế, hình ảnh hoặc khu vực gặp mặt trực tiếp.
           </p>
         </div>
-        <Link to="/user/products" className="text-xs font-semibold text-sand-600 hover:text-charcoal-900">
-          ← Về kho đồ
+        <Link
+          to="/user/products"
+          className="inline-flex items-center gap-1.5 text-xs font-bold text-slate-600 hover:text-eco-700 bg-white px-3.5 py-2 rounded-xl border border-slate-200 shadow-sm transition-all"
+        >
+          <ArrowLeft className="w-3.5 h-3.5" />
+          <span>Về kho đồ</span>
         </Link>
       </div>
 
       {isLockedOrCompleted && (
-        <div className="p-4 bg-amber-50 rounded-2xl border border-amber-200 text-xs text-amber-900 flex items-start gap-3">
-          <Info className="w-5 h-5 text-amber-700 flex-shrink-0 mt-0.5" />
+        <div className="p-4 bg-amber-50/90 rounded-2xl border border-amber-200 text-xs text-amber-900 flex items-start gap-3 shadow-sm">
+          <Info className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
           <div>
-            <strong>Lưu ý nghiệp vụ (HUSC-33):</strong> Bài đăng đang ở trạng thái{' '}
+            <strong className="font-bold">Lưu ý nghiệp vụ (HUSC-33):</strong> Bài đăng đang ở trạng thái{' '}
             <span className="font-bold underline">{product.status}</span> (đã chấp thuận đề nghị hoặc đã hoàn tất).
             Để bảo vệ sự minh bạch giao dịch, bạn không thể thay đổi giá bán hoặc hình thức trao đổi trong khi lịch hẹn đang diễn ra.
           </div>
@@ -168,33 +195,38 @@ export const EditListingPage: React.FC = () => {
       )}
 
       {errorMsg && (
-        <div className="p-3 bg-rose-50 text-rose-700 text-xs rounded-xl flex items-center gap-2 border border-rose-200">
-          <AlertTriangle className="w-4 h-4 flex-shrink-0" />
-          <span>{errorMsg}</span>
+        <div className="p-3.5 bg-rose-50 text-rose-700 text-xs rounded-2xl flex items-center gap-2.5 border border-rose-200 shadow-sm">
+          <AlertTriangle className="w-4 h-4 flex-shrink-0 text-rose-600" />
+          <span className="font-semibold">{errorMsg}</span>
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="bg-white rounded-3xl border border-sand-200 p-6 sm:p-8 space-y-6 shadow-soft">
+      <form onSubmit={handleSubmit} className="bg-white rounded-3xl border border-slate-200/90 p-6 sm:p-8 space-y-6 shadow-[0_10px_35px_-8px_rgba(16,185,129,0.08)]">
         {/* Title */}
         <div>
-          <label className="block text-xs font-bold text-charcoal-800 mb-1.5">Tiêu đề bài đăng <span className="text-rose-500">*</span></label>
+          <label className="block text-xs font-bold text-slate-800 mb-1.5 uppercase tracking-wider">
+            Tiêu đề bài đăng <span className="text-rose-500">*</span>
+          </label>
           <input
             type="text"
             required
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            className="w-full text-sm bg-sand-50 border border-sand-200 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-eco-500/20"
+            className="w-full text-sm font-medium bg-slate-50 border border-slate-200 rounded-xl p-3.5 focus:outline-none focus:ring-4 focus:ring-eco-500/15 focus:border-eco-600 focus:bg-white transition-all text-slate-800"
+            placeholder="Nhập tiêu đề rõ ràng, chi tiết..."
           />
         </div>
 
         {/* Category & Condition */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label className="block text-xs font-bold text-charcoal-800 mb-1.5">Danh mục</label>
+            <label className="block text-xs font-bold text-slate-800 mb-1.5 uppercase tracking-wider">
+              Danh mục
+            </label>
             <select
               value={categoryId}
               onChange={(e) => setCategoryId(e.target.value)}
-              className="w-full text-xs sm:text-sm bg-sand-50 border border-sand-200 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-eco-500/20"
+              className="w-full text-xs sm:text-sm bg-slate-50 border border-slate-200 rounded-xl p-3.5 focus:outline-none focus:ring-4 focus:ring-eco-500/15 focus:border-eco-600 focus:bg-white transition-all font-medium text-slate-800"
             >
               {categories.map((c) => (
                 <option key={c.id} value={c.id}>
@@ -205,11 +237,13 @@ export const EditListingPage: React.FC = () => {
           </div>
 
           <div>
-            <label className="block text-xs font-bold text-charcoal-800 mb-1.5">Tình trạng</label>
+            <label className="block text-xs font-bold text-slate-800 mb-1.5 uppercase tracking-wider">
+              Tình trạng
+            </label>
             <select
               value={condition}
               onChange={(e) => setCondition(e.target.value as ProductCondition)}
-              className="w-full text-xs sm:text-sm bg-sand-50 border border-sand-200 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-eco-500/20"
+              className="w-full text-xs sm:text-sm bg-slate-50 border border-slate-200 rounded-xl p-3.5 focus:outline-none focus:ring-4 focus:ring-eco-500/15 focus:border-eco-600 focus:bg-white transition-all font-medium text-slate-800"
             >
               <option value="Mới 99%">Mới 99%</option>
               <option value="Còn tốt">Còn tốt</option>
@@ -230,25 +264,29 @@ export const EditListingPage: React.FC = () => {
             onChange={handleFileUpload}
           />
           <div className="flex items-center justify-between mb-2">
-            <label className="text-xs font-bold text-charcoal-800">
+            <label className="text-xs font-bold text-slate-800 uppercase tracking-wider">
               Hình ảnh thực tế ({images.length}/5) <span className="text-rose-500">*</span>
             </label>
+            <span className="text-[11px] text-slate-500">Kéo ảnh đầu tiên làm ảnh bìa</span>
           </div>
 
           <div className="flex flex-wrap gap-3">
             {images.map((img, idx) => (
-              <div key={idx} className="relative w-20 h-20 rounded-2xl overflow-hidden border border-sand-200 group shadow-subtle">
-                <img src={img} alt="Uploaded" className="w-full h-full object-cover" />
+              <div
+                key={idx}
+                className="relative w-24 h-24 rounded-2xl overflow-hidden border border-slate-200/90 group shadow-sm bg-slate-50"
+              >
+                <img src={img} alt="Uploaded" className="w-full h-full object-cover transition-transform group-hover:scale-105" />
                 <button
                   type="button"
                   onClick={() => handleRemoveImage(idx)}
-                  className="absolute inset-0 bg-black/60 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                  className="absolute inset-0 bg-slate-900/60 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity backdrop-blur-xs"
                   title="Xóa ảnh"
                 >
-                  <X className="w-5 h-5" />
+                  <X className="w-5 h-5 text-rose-300 hover:text-white" />
                 </button>
                 {idx === 0 && (
-                  <span className="absolute bottom-1 left-1 bg-eco-800 text-white text-[9px] font-bold px-1.5 py-0.2 rounded">
+                  <span className="absolute bottom-1.5 left-1.5 bg-gradient-to-r from-eco-700 to-teal-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-sm">
                     Ảnh bìa
                   </span>
                 )}
@@ -259,9 +297,9 @@ export const EditListingPage: React.FC = () => {
               <button
                 type="button"
                 onClick={() => fileInputRef.current?.click()}
-                className="w-20 h-20 rounded-2xl border-2 border-dashed border-eco-400 bg-eco-50/50 hover:bg-eco-100/60 flex flex-col items-center justify-center text-eco-800 transition-colors text-[10px] font-bold"
+                className="w-24 h-24 rounded-2xl border-2 border-dashed border-eco-400 bg-eco-50/50 hover:bg-eco-100/60 flex flex-col items-center justify-center text-eco-700 transition-colors text-[11px] font-bold gap-1 group shadow-sm"
               >
-                <UploadCloud className="w-5 h-5 mb-0.5 text-eco-700" />
+                <UploadCloud className="w-6 h-6 text-eco-600 group-hover:scale-110 transition-transform" />
                 <span>+ Thêm ảnh</span>
               </button>
             )}
@@ -272,21 +310,25 @@ export const EditListingPage: React.FC = () => {
         {!isLockedOrCompleted && type !== 'EXCHANGE' && (
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-bold text-charcoal-800 mb-1.5">Giá bán (VNĐ)</label>
+              <label className="block text-xs font-bold text-slate-800 mb-1.5 uppercase tracking-wider">
+                Giá bán (VNĐ)
+              </label>
               <input
                 type="number"
                 value={price}
                 onChange={(e) => setPrice(parseInt(e.target.value) || 0)}
-                className="w-full text-sm font-bold text-clay-700 bg-sand-50 border border-sand-200 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-eco-500/20"
+                className="w-full text-base font-black text-clay-600 bg-slate-50 border border-slate-200 rounded-xl p-3.5 focus:outline-none focus:ring-4 focus:ring-clay-500/15 focus:border-clay-500 focus:bg-white transition-all"
               />
             </div>
             <div>
-              <label className="block text-xs font-bold text-charcoal-800 mb-1.5">Giá gốc (VNĐ)</label>
+              <label className="block text-xs font-bold text-slate-800 mb-1.5 uppercase tracking-wider">
+                Giá gốc (VNĐ)
+              </label>
               <input
                 type="number"
                 value={originalPrice}
                 onChange={(e) => setOriginalPrice(parseInt(e.target.value) || 0)}
-                className="w-full text-sm bg-sand-50 border border-sand-200 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-eco-500/20"
+                className="w-full text-sm font-semibold text-slate-700 bg-slate-50 border border-slate-200 rounded-xl p-3.5 focus:outline-none focus:ring-4 focus:ring-eco-500/15 focus:border-eco-600 focus:bg-white transition-all"
               />
             </div>
           </div>
@@ -294,48 +336,53 @@ export const EditListingPage: React.FC = () => {
 
         {!isLockedOrCompleted && type !== 'SELL' && (
           <div>
-            <label className="block text-xs font-bold text-charcoal-800 mb-1.5">Đồ muốn đổi</label>
+            <label className="block text-xs font-bold text-slate-800 mb-1.5 uppercase tracking-wider">
+              Đồ muốn đổi (Gợi ý trao đổi)
+            </label>
             <input
               type="text"
               value={wantedExchangeItems}
               onChange={(e) => setWantedExchangeItems(e.target.value)}
-              className="w-full text-sm bg-sand-50 border border-sand-200 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-eco-500/20"
+              className="w-full text-sm font-medium bg-slate-50 border border-slate-200 rounded-xl p-3.5 focus:outline-none focus:ring-4 focus:ring-eco-500/15 focus:border-eco-600 focus:bg-white transition-all text-slate-800"
+              placeholder="VD: Sách lập trình, máy tính bảng mini, cây cảnh..."
             />
           </div>
         )}
 
         {/* Location selector */}
-        <div className="p-4 bg-sand-50 rounded-2xl border border-sand-200/80 space-y-3">
-          <label className="text-xs font-bold text-charcoal-800 flex items-center gap-1.5">
-            <MapPin className="w-4 h-4 text-eco-700" />
+        <div className="p-5 bg-gradient-to-br from-slate-50 via-slate-50/50 to-emerald-50/30 rounded-2xl border border-slate-200 space-y-3.5">
+          <label className="text-xs font-bold text-slate-900 flex items-center gap-2 uppercase tracking-wider">
+            <span className="p-1 rounded-lg bg-eco-100 text-eco-700">
+              <MapPin className="w-4 h-4" />
+            </span>
             <span>Khu vực giao dịch gặp mặt</span>
           </label>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <div>
-              <label className="block text-[11px] text-sand-600 mb-1">Tỉnh / Thành phố</label>
+              <label className="block text-[11px] font-semibold text-slate-600 mb-1">Tỉnh / Thành phố</label>
               <input
                 type="text"
                 value={province}
                 onChange={(e) => setProvince(e.target.value)}
-                className="w-full text-xs bg-white border border-sand-200 rounded-xl p-2.5"
+                className="w-full text-xs font-medium bg-white border border-slate-200 rounded-xl p-2.5 focus:ring-2 focus:ring-eco-500/20"
               />
             </div>
             <div>
-              <label className="block text-[11px] text-sand-600 mb-1">Quận / Huyện</label>
+              <label className="block text-[11px] font-semibold text-slate-600 mb-1">Quận / Huyện</label>
               <input
                 type="text"
                 value={district}
                 onChange={(e) => setDistrict(e.target.value)}
-                className="w-full text-xs bg-white border border-sand-200 rounded-xl p-2.5"
+                className="w-full text-xs font-medium bg-white border border-slate-200 rounded-xl p-2.5 focus:ring-2 focus:ring-eco-500/20"
               />
             </div>
             <div>
-              <label className="block text-[11px] text-sand-600 mb-1">Phường / Xã</label>
+              <label className="block text-[11px] font-semibold text-slate-600 mb-1">Phường / Xã</label>
               <input
                 type="text"
                 value={ward}
                 onChange={(e) => setWard(e.target.value)}
-                className="w-full text-xs bg-white border border-sand-200 rounded-xl p-2.5"
+                className="w-full text-xs font-medium bg-white border border-slate-200 rounded-xl p-2.5 focus:ring-2 focus:ring-eco-500/20"
               />
             </div>
           </div>
@@ -343,26 +390,29 @@ export const EditListingPage: React.FC = () => {
 
         {/* Description */}
         <div>
-          <label className="block text-xs font-bold text-charcoal-800 mb-1.5">Mô tả chi tiết <span className="text-rose-500">*</span></label>
+          <label className="block text-xs font-bold text-slate-800 mb-1.5 uppercase tracking-wider">
+            Mô tả chi tiết <span className="text-rose-500">*</span>
+          </label>
           <textarea
-            rows={4}
+            rows={5}
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            className="w-full text-sm bg-sand-50 border border-sand-200 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-eco-500/20"
+            className="w-full text-sm font-medium bg-slate-50 border border-slate-200 rounded-xl p-3.5 focus:outline-none focus:ring-4 focus:ring-eco-500/15 focus:border-eco-600 focus:bg-white transition-all text-slate-800 leading-relaxed"
+            placeholder="Mô tả nguồn gốc, tình trạng thực tế, bảo hành hoặc phụ kiện đi kèm..."
           />
         </div>
 
-        <div className="flex items-center justify-end gap-3 pt-4 border-t border-sand-100">
+        <div className="flex items-center justify-end gap-3 pt-5 border-t border-slate-100">
           <button
             type="button"
             onClick={() => navigate('/user/products')}
-            className="px-5 py-2.5 rounded-xl border border-sand-200 text-xs font-semibold text-charcoal-700 hover:bg-sand-50"
+            className="px-5 py-2.5 rounded-xl border border-slate-200 text-xs font-bold text-slate-700 hover:bg-slate-100 transition-colors"
           >
             Hủy
           </button>
           <button
             type="submit"
-            className="px-6 py-2.5 rounded-xl bg-eco-800 text-white text-xs font-bold shadow-soft hover:bg-eco-700 transition-all"
+            className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-eco-700 via-eco-600 to-teal-600 hover:from-eco-600 hover:to-teal-500 text-white text-xs font-bold shadow-glow-emerald hover:shadow-lg transition-all"
           >
             Lưu thay đổi
           </button>

@@ -146,13 +146,13 @@ export const CreateListingPage: React.FC = () => {
     <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-8">
       {/* 1. HEADER */}
       <div className="text-center max-w-2xl mx-auto space-y-2">
-        <span className="text-xs font-bold text-eco-700 uppercase tracking-wider">
+        <span className="text-xs font-bold text-eco-800 uppercase tracking-wider bg-eco-50 px-3.5 py-1 rounded-full border border-eco-200/80 inline-flex shadow-subtle">
           Mô hình tuần hoàn đồ cũ
         </span>
-        <h1 className="text-2xl sm:text-3xl font-extrabold text-charcoal-900">
+        <h1 className="text-2xl sm:text-3xl font-extrabold text-charcoal-900 tracking-tight">
           Đăng tin Sản phẩm mới
         </h1>
-        <p className="text-xs sm:text-sm text-sand-600">
+        <p className="text-xs sm:text-sm text-slate-500">
           Hãy mô tả chân thực tình trạng để kết nối với những người trân trọng đồ cũ như bạn.
         </p>
       </div>
@@ -168,9 +168,10 @@ export const CreateListingPage: React.FC = () => {
       <form onSubmit={handleSubmit} className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2 space-y-6">
           {/* Section: Basic info */}
-          <div className="p-6 sm:p-8 bg-white rounded-3xl border border-sand-200 shadow-soft space-y-5">
-            <h3 className="font-bold text-base text-charcoal-900 border-b border-sand-100 pb-3">
-              1. Thông tin cơ bản
+          <div className="p-6 sm:p-8 bg-white rounded-3xl border border-slate-200/90 shadow-card space-y-5">
+            <h3 className="font-bold text-base text-charcoal-900 border-b border-slate-100 pb-3 flex items-center gap-2">
+              <span className="w-6 h-6 rounded-full bg-eco-100 text-eco-800 text-xs font-extrabold flex items-center justify-center">1</span>
+              <span>Thông tin cơ bản</span>
             </h3>
 
             {/* Title */}
@@ -184,9 +185,9 @@ export const CreateListingPage: React.FC = () => {
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 placeholder="Ví dụ: Bàn phím cơ Keychron K2 V2 nhôm Hot-swap bản RGB"
-                className="w-full text-sm bg-sand-50 border border-sand-200 rounded-xl p-3 text-charcoal-900 focus:outline-none focus:ring-2 focus:ring-eco-500/20 focus:border-eco-600"
+                className="w-full text-sm bg-slate-50 border border-slate-200 rounded-xl p-3 text-charcoal-900 focus:outline-none focus:ring-4 focus:ring-eco-500/15 focus:border-eco-500 transition-all"
               />
-              <span className="text-[11px] text-sand-500 mt-1 block">
+              <span className="text-[11px] text-slate-400 mt-1 block">
                 Nêu rõ tên hãng, dòng đời, màu sắc để người mua dễ tìm thấy.
               </span>
             </div>
@@ -200,7 +201,7 @@ export const CreateListingPage: React.FC = () => {
                 <select
                   value={categoryId}
                   onChange={(e) => setCategoryId(e.target.value)}
-                  className="w-full text-xs sm:text-sm bg-sand-50 border border-sand-200 rounded-xl p-3 text-charcoal-900 focus:outline-none focus:ring-2 focus:ring-eco-500/20"
+                  className="w-full text-xs sm:text-sm bg-slate-50 border border-slate-200 rounded-xl p-3 text-charcoal-900 focus:outline-none focus:ring-4 focus:ring-eco-500/15 focus:border-eco-500"
                 >
                   {categories.map((c) => (
                     <option key={c.id} value={c.id}>
@@ -217,7 +218,7 @@ export const CreateListingPage: React.FC = () => {
                 <select
                   value={condition}
                   onChange={(e) => setCondition(e.target.value as ProductCondition)}
-                  className="w-full text-xs sm:text-sm bg-sand-50 border border-sand-200 rounded-xl p-3 text-charcoal-900 focus:outline-none focus:ring-2 focus:ring-eco-500/20"
+                  className="w-full text-xs sm:text-sm bg-slate-50 border border-slate-200 rounded-xl p-3 text-charcoal-900 focus:outline-none focus:ring-4 focus:ring-eco-500/15 focus:border-eco-500"
                 >
                   <option value="Mới 99%">Mới 99% (Như mới, đầy đủ phụ kiện)</option>
                   <option value="Còn tốt">Còn tốt (Có xước nhẹ, hoạt động hoàn hảo)</option>
@@ -244,12 +245,12 @@ export const CreateListingPage: React.FC = () => {
                     onClick={() => setType(item.id as TransactionType)}
                     className={`p-3 rounded-2xl border text-center transition-all ${
                       type === item.id
-                        ? 'bg-eco-800 text-white border-eco-800 shadow-soft'
-                        : 'bg-sand-50 border-sand-200 text-charcoal-800 hover:bg-sand-100'
+                        ? 'bg-gradient-to-r from-eco-700 to-eco-600 text-white border-transparent shadow-glow-emerald'
+                        : 'bg-slate-50 border-slate-200 text-charcoal-800 hover:bg-slate-100'
                     }`}
                   >
                     <div className="text-xs font-bold">{item.label}</div>
-                    <div className={`text-[10px] mt-0.5 ${type === item.id ? 'text-emerald-200' : 'text-sand-500'}`}>
+                    <div className={`text-[10px] mt-0.5 ${type === item.id ? 'text-emerald-100' : 'text-slate-400'}`}>
                       {item.sub}
                     </div>
                   </button>
@@ -270,7 +271,7 @@ export const CreateListingPage: React.FC = () => {
                     step={50000}
                     value={price}
                     onChange={(e) => setPrice(parseInt(e.target.value) || 0)}
-                    className="w-full text-sm font-bold text-clay-700 bg-sand-50 border border-sand-200 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-eco-500/20"
+                    className="w-full text-sm font-black text-clay-600 bg-slate-50 border border-slate-200 rounded-xl p-3 focus:outline-none focus:ring-4 focus:ring-eco-500/15 focus:border-eco-500"
                   />
                 </div>
                 <div>
@@ -283,7 +284,7 @@ export const CreateListingPage: React.FC = () => {
                     step={50000}
                     value={originalPrice}
                     onChange={(e) => setOriginalPrice(parseInt(e.target.value) || 0)}
-                    className="w-full text-sm bg-sand-50 border border-sand-200 rounded-xl p-3 text-sand-700 focus:outline-none focus:ring-2 focus:ring-eco-500/20"
+                    className="w-full text-sm bg-slate-50 border border-slate-200 rounded-xl p-3 text-slate-700 focus:outline-none focus:ring-4 focus:ring-eco-500/15 focus:border-eco-500"
                   />
                 </div>
               </div>
@@ -300,16 +301,17 @@ export const CreateListingPage: React.FC = () => {
                   value={wantedExchangeItems}
                   onChange={(e) => setWantedExchangeItems(e.target.value)}
                   placeholder="Ví dụ: Đổi bàn phím cơ Keychron Q1, loa Marshall hoặc tai nghe Sony..."
-                  className="w-full text-sm bg-sand-50 border border-sand-200 rounded-xl p-3 text-charcoal-900 focus:outline-none focus:ring-2 focus:ring-eco-500/20"
+                  className="w-full text-sm bg-slate-50 border border-slate-200 rounded-xl p-3 text-charcoal-900 focus:outline-none focus:ring-4 focus:ring-eco-500/15 focus:border-eco-500"
                 />
               </div>
             )}
           </div>
 
           {/* Section: Image upload & Description */}
-          <div className="p-6 sm:p-8 bg-white rounded-3xl border border-sand-200 shadow-soft space-y-5">
-            <h3 className="font-bold text-base text-charcoal-900 border-b border-sand-100 pb-3">
-              2. Hình ảnh & Mô tả thực tế
+          <div className="p-6 sm:p-8 bg-white rounded-3xl border border-slate-200/90 shadow-card space-y-5">
+            <h3 className="font-bold text-base text-charcoal-900 border-b border-slate-100 pb-3 flex items-center gap-2">
+              <span className="w-6 h-6 rounded-full bg-eco-100 text-eco-800 text-xs font-extrabold flex items-center justify-center">2</span>
+              <span>Hình ảnh & Mô tả thực tế</span>
             </h3>
 
             {/* Images */}
@@ -327,14 +329,14 @@ export const CreateListingPage: React.FC = () => {
                 <label className="text-xs font-bold text-charcoal-800">
                   Ảnh chụp thực tế sản phẩm (Tối đa 5 ảnh) <span className="text-rose-500">*</span>
                 </label>
-                <span className="text-[11px] text-sand-500 font-medium">
+                <span className="text-[11px] text-slate-500 font-medium">
                   {images.length}/5 ảnh
                 </span>
               </div>
 
               <div className="flex flex-wrap gap-3 mb-4">
                 {images.map((img, idx) => (
-                  <div key={idx} className="relative w-20 h-20 rounded-2xl overflow-hidden border border-sand-200 group shadow-subtle">
+                  <div key={idx} className="relative w-20 h-20 rounded-2xl overflow-hidden border border-slate-200 group shadow-subtle">
                     <img src={img} alt="Uploaded" className="w-full h-full object-cover" />
                     <button
                       type="button"
@@ -345,7 +347,7 @@ export const CreateListingPage: React.FC = () => {
                       <X className="w-5 h-5" />
                     </button>
                     {idx === 0 && (
-                      <span className="absolute bottom-1 left-1 bg-eco-800 text-white text-[9px] font-bold px-1.5 py-0.2 rounded">
+                      <span className="absolute bottom-1 left-1 bg-gradient-to-r from-eco-700 to-teal-700 text-white text-[9px] font-bold px-1.5 py-0.5 rounded shadow-subtle">
                         Ảnh bìa
                       </span>
                     )}
@@ -365,8 +367,8 @@ export const CreateListingPage: React.FC = () => {
               </div>
 
               {images.length < 5 && (
-                <div className="p-3 bg-sand-50 rounded-2xl border border-sand-200/80 space-y-2">
-                  <span className="text-[11px] text-sand-600 font-semibold block">
+                <div className="p-3 bg-slate-50 rounded-2xl border border-slate-200/80 space-y-2">
+                  <span className="text-[11px] text-slate-600 font-semibold block">
                     Hoặc chọn nhanh từ thư viện ảnh mẫu sẵn có:
                   </span>
                   <div className="flex flex-wrap gap-2">
@@ -375,7 +377,7 @@ export const CreateListingPage: React.FC = () => {
                         key={i}
                         type="button"
                         onClick={() => handleAddSampleImage(url)}
-                        className="w-12 h-12 rounded-xl border border-sand-300 hover:border-eco-600 overflow-hidden group transition-all"
+                        className="w-12 h-12 rounded-xl border border-slate-200 hover:border-eco-600 overflow-hidden group transition-all"
                         title="Thêm ảnh mẫu này"
                       >
                         <img src={url} alt="Sample" className="w-full h-full object-cover group-hover:scale-110 transition-transform" />
@@ -397,15 +399,16 @@ export const CreateListingPage: React.FC = () => {
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 placeholder="Mô tả nguồn gốc, thời gian sử dụng, phụ kiện đi kèm, lý do sang nhượng hoặc đổi đồ..."
-                className="w-full text-sm bg-sand-50 border border-sand-200 rounded-xl p-3 text-charcoal-900 focus:outline-none focus:ring-2 focus:ring-eco-500/20"
+                className="w-full text-sm bg-slate-50 border border-slate-200 rounded-xl p-3 text-charcoal-900 focus:outline-none focus:ring-4 focus:ring-eco-500/15 focus:border-eco-500"
               />
             </div>
           </div>
 
           {/* Section: Location */}
-          <div className="p-6 sm:p-8 bg-white rounded-3xl border border-sand-200 shadow-soft space-y-4">
-            <h3 className="font-bold text-base text-charcoal-900 border-b border-sand-100 pb-3">
-              3. Khu vực giao dịch gặp mặt
+          <div className="p-6 sm:p-8 bg-white rounded-3xl border border-slate-200/90 shadow-card space-y-4">
+            <h3 className="font-bold text-base text-charcoal-900 border-b border-slate-100 pb-3 flex items-center gap-2">
+              <span className="w-6 h-6 rounded-full bg-eco-100 text-eco-800 text-xs font-extrabold flex items-center justify-center">3</span>
+              <span>Khu vực giao dịch gặp mặt</span>
             </h3>
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
@@ -414,7 +417,7 @@ export const CreateListingPage: React.FC = () => {
                 <select
                   value={province}
                   onChange={(e) => setProvince(e.target.value)}
-                  className="w-full text-xs bg-sand-50 border border-sand-200 rounded-xl p-2.5"
+                  className="w-full text-xs bg-slate-50 border border-slate-200 rounded-xl p-2.5 focus:outline-none focus:ring-4 focus:ring-eco-500/15 focus:border-eco-500"
                 >
                   <option value="Hồ Chí Minh">TP. Hồ Chí Minh</option>
                   <option value="Hà Nội">Hà Nội</option>
@@ -430,7 +433,7 @@ export const CreateListingPage: React.FC = () => {
                   required
                   value={district}
                   onChange={(e) => setDistrict(e.target.value)}
-                  className="w-full text-xs bg-sand-50 border border-sand-200 rounded-xl p-2.5"
+                  className="w-full text-xs bg-slate-50 border border-slate-200 rounded-xl p-2.5 focus:outline-none focus:ring-4 focus:ring-eco-500/15 focus:border-eco-500"
                 />
               </div>
 
@@ -441,12 +444,12 @@ export const CreateListingPage: React.FC = () => {
                   required
                   value={ward}
                   onChange={(e) => setWard(e.target.value)}
-                  className="w-full text-xs bg-sand-50 border border-sand-200 rounded-xl p-2.5"
+                  className="w-full text-xs bg-slate-50 border border-slate-200 rounded-xl p-2.5 focus:outline-none focus:ring-4 focus:ring-eco-500/15 focus:border-eco-500"
                 />
               </div>
             </div>
 
-            <p className="text-[11px] text-sand-500 pt-1">
+            <p className="text-[11px] text-slate-500 pt-1">
               Tuyệt đối không nhập số nhà riêng cụ thể nhằm bảo vệ quyền riêng tư theo Quy định an toàn ReLoop.
             </p>
           </div>
@@ -454,38 +457,38 @@ export const CreateListingPage: React.FC = () => {
 
         {/* RIGHT: STICKY PUBLISH SUMMARY & PREVIEW */}
         <div className="space-y-6">
-          <div className="p-6 bg-white rounded-3xl border border-sand-200 shadow-card sticky top-28 space-y-5">
-            <h3 className="font-bold text-sm text-charcoal-900 border-b border-sand-100 pb-3">
+          <div className="p-6 bg-white rounded-3xl border border-slate-200/90 shadow-card sticky top-28 space-y-5">
+            <h3 className="font-bold text-sm text-charcoal-900 border-b border-slate-100 pb-3">
               Xem trước tóm tắt
             </h3>
 
             {/* Thumbnail Preview */}
-            <div className="aspect-[4/3] rounded-2xl overflow-hidden bg-sand-100 relative border border-sand-200">
+            <div className="aspect-[4/3] rounded-2xl overflow-hidden bg-slate-100 relative border border-slate-200 shadow-subtle">
               {images[0] ? (
                 <img src={images[0]} alt="Preview" className="w-full h-full object-cover" />
               ) : (
-                <div className="w-full h-full flex items-center justify-center text-xs text-sand-400">
+                <div className="w-full h-full flex items-center justify-center text-xs text-slate-400">
                   Chưa có ảnh bìa
                 </div>
               )}
-              <span className="absolute top-2 left-2 text-[10px] font-bold bg-white/90 px-2 py-0.5 rounded-full">
+              <span className="absolute top-2 left-2 text-[10px] font-bold bg-white/95 backdrop-blur-md px-2.5 py-0.5 rounded-full shadow-subtle">
                 {condition}
               </span>
             </div>
 
             <div>
-              <div className="text-xs text-sand-500 font-medium">
+              <div className="text-xs text-slate-500 font-medium">
                 {district}, {province}
               </div>
               <h4 className="font-bold text-sm text-charcoal-900 mt-1 line-clamp-2">
                 {title || 'Tiêu đề sản phẩm hiển thị ở đây...'}
               </h4>
-              <div className="mt-2 text-base font-extrabold text-clay-700">
+              <div className="mt-2 text-base font-black text-clay-600">
                 {type !== 'EXCHANGE' ? `${price.toLocaleString('vi-VN')}₫` : 'Trao đổi đồ'}
               </div>
             </div>
 
-            <div className="pt-4 border-t border-sand-100 space-y-2 text-xs text-sand-600">
+            <div className="pt-4 border-t border-slate-100 space-y-2 text-xs text-slate-600">
               <div className="flex items-center gap-1.5 text-eco-800 font-medium">
                 <CheckCircle2 className="w-4 h-4 text-eco-600" />
                 <span>Trạng thái mặc định: Còn hàng (AVAILABLE)</span>
@@ -498,7 +501,7 @@ export const CreateListingPage: React.FC = () => {
 
             <button
               type="submit"
-              className="w-full py-3.5 px-6 rounded-xl bg-eco-800 hover:bg-eco-700 text-white font-bold text-sm shadow-soft transition-all"
+              className="w-full py-4 px-6 rounded-2xl bg-gradient-to-r from-eco-700 via-eco-600 to-teal-600 hover:from-eco-600 hover:to-teal-500 active:scale-95 text-white font-bold text-sm shadow-glow-emerald hover:shadow-lg transition-all"
             >
               Đăng tin ngay
             </button>

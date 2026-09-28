@@ -9,29 +9,45 @@
   }
   
   body {
-    background-color: #FAF9F5;
-    color: #141C15;
+    background-color: #F8FAF9;
+    color: #0F172A;
   }
 
-  /* Custom scrollbar for eco-aesthetic */
+  /* Custom scrollbar for fresh eco-aesthetic */
   ::-webkit-scrollbar {
     width: 6px;
     height: 6px;
   }
   ::-webkit-scrollbar-track {
-    background: #F3F7F3;
+    background: #F0FDF4;
   }
   ::-webkit-scrollbar-thumb {
-    background: #C7DBC8;
+    background: #A7F3D0;
     border-radius: 9999px;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: #A1C3A3;
+    background: #6EE7B7;
   }
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+  
+  /* Luminous glass and ambient styles */
+  .glass-card {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+  }
+
+  .ambient-glow-emerald {
+    background: radial-gradient(circle at 50% 50%, rgba(16, 185, 129, 0.12), transparent 70%);
+  }
+
+  .ambient-glow-coral {
+    background: radial-gradient(circle at 50% 50%, rgba(249, 115, 22, 0.1), transparent 70%);
   }
 }

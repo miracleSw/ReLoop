@@ -60,34 +60,37 @@ export const SellerProfilePage: React.FC = () => {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-10">
       {/* 1. SELLER HERO BANNER */}
-      <div className="bg-white rounded-3xl border border-sand-200 shadow-card p-6 sm:p-10 relative overflow-hidden">
-        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+      <div className="bg-white rounded-3xl border border-slate-200/90 shadow-soft p-6 sm:p-10 relative overflow-hidden">
+        {/* Subtle ambient glow in corner */}
+        <div className="absolute top-0 right-0 -mr-16 -mt-16 w-64 h-64 bg-eco-400/10 rounded-full blur-3xl pointer-events-none" />
+
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 relative z-10">
           <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5">
             <img
               src={seller.avatar}
               alt={seller.fullName}
-              className="w-20 h-20 sm:w-24 sm:h-24 rounded-3xl object-cover ring-4 ring-eco-500 shadow-soft"
+              className="w-20 h-20 sm:w-24 sm:h-24 rounded-3xl object-cover ring-4 ring-eco-500/80 shadow-soft"
             />
             <div className="space-y-1.5">
               <div className="flex items-center gap-2">
-                <h1 className="text-xl sm:text-2xl font-extrabold text-charcoal-900">
+                <h1 className="text-xl sm:text-2xl font-extrabold text-charcoal-900 tracking-tight">
                   {seller.fullName}
                 </h1>
-                <CheckCircle2 className="w-5 h-5 text-eco-600 flex-shrink-0" />
+                <CheckCircle2 className="w-5 h-5 text-eco-600 fill-eco-100 flex-shrink-0" />
               </div>
-              <div className="flex flex-wrap items-center gap-3 text-xs text-sand-600">
-                <span className="flex items-center gap-1">
+              <div className="flex flex-wrap items-center gap-3 text-xs text-sand-500">
+                <span className="flex items-center gap-1.5 font-medium text-charcoal-700">
                   <MapPin className="w-3.5 h-3.5 text-eco-600" />
                   {seller.district}, {seller.province}
                 </span>
-                <span>•</span>
+                <span className="text-slate-300">•</span>
                 <span className="flex items-center gap-1">
                   <Calendar className="w-3.5 h-3.5 text-sand-400" />
                   Tham gia từ {new Date(seller.createdAt).toLocaleDateString('vi-VN')}
                 </span>
               </div>
               {seller.bio && (
-                <p className="text-xs sm:text-sm text-sand-700 max-w-xl pt-1 leading-relaxed">
+                <p className="text-xs sm:text-sm text-sand-600 max-w-xl pt-1 leading-relaxed">
                   {seller.bio}
                 </p>
               )}
@@ -95,17 +98,17 @@ export const SellerProfilePage: React.FC = () => {
           </div>
 
           {/* Trust Score & Badges */}
-          <div className="flex flex-row md:flex-col items-end gap-3 w-full md:w-auto justify-between md:justify-start pt-4 md:pt-0 border-t md:border-t-0 border-sand-100">
-            <div className="text-left md:text-right">
-              <div className="text-2xl sm:text-3xl font-extrabold text-eco-800">
+          <div className="flex flex-row md:flex-col items-end gap-3 w-full md:w-auto justify-between md:justify-start pt-4 md:pt-0 border-t md:border-t-0 border-slate-100">
+            <div className="text-left md:text-right bg-gradient-to-br from-eco-50 to-teal-50 border border-eco-200/70 p-3.5 px-4 rounded-2xl shadow-subtle">
+              <div className="text-2xl sm:text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-eco-700 to-teal-600">
                 ★ {seller.trustScore}/100
               </div>
-              <div className="text-xs text-sand-500 font-medium">Chỉ số Uy tín cộng đồng</div>
+              <div className="text-[11px] text-eco-900 font-bold uppercase tracking-wider mt-0.5">Chỉ số Uy tín cộng đồng</div>
             </div>
 
             <button
               onClick={() => setIsReportOpen(true)}
-              className="text-xs text-sand-500 hover:text-rose-600 flex items-center gap-1 transition-colors"
+              className="text-xs text-sand-400 hover:text-rose-600 flex items-center gap-1 transition-colors"
             >
               <ShieldAlert className="w-3.5 h-3.5" />
               <span>Báo cáo thành viên</span>
@@ -114,22 +117,22 @@ export const SellerProfilePage: React.FC = () => {
         </div>
 
         {/* METRICS STRIP */}
-        <div className="mt-8 pt-6 border-t border-sand-100 grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
-          <div className="p-3 bg-sand-50 rounded-2xl">
-            <div className="text-lg font-extrabold text-charcoal-900">{seller.totalTransactions}</div>
-            <div className="text-[11px] text-sand-600 font-medium">Giao dịch hoàn tất</div>
+        <div className="mt-8 pt-6 border-t border-slate-100 grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
+          <div className="p-3.5 bg-slate-50 border border-slate-100 rounded-2xl">
+            <div className="text-xl font-extrabold text-charcoal-900">{seller.totalTransactions}</div>
+            <div className="text-[11px] text-sand-500 font-medium mt-0.5">Giao dịch hoàn tất</div>
           </div>
-          <div className="p-3 bg-sand-50 rounded-2xl">
-            <div className="text-lg font-extrabold text-charcoal-900">{seller.rating.toFixed(1)} / 5.0</div>
-            <div className="text-[11px] text-sand-600 font-medium">Đánh giá chung ({sellerReviews.length})</div>
+          <div className="p-3.5 bg-slate-50 border border-slate-100 rounded-2xl">
+            <div className="text-xl font-extrabold text-charcoal-900">{seller.rating.toFixed(1)} / 5.0</div>
+            <div className="text-[11px] text-sand-500 font-medium mt-0.5">Đánh giá chung ({sellerReviews.length})</div>
           </div>
-          <div className="p-3 bg-sand-50 rounded-2xl">
-            <div className="text-lg font-extrabold text-emerald-700">{avgPunctuality} ★</div>
-            <div className="text-[11px] text-sand-600 font-medium">Đúng hẹn khi gặp</div>
+          <div className="p-3.5 bg-slate-50 border border-slate-100 rounded-2xl">
+            <div className="text-xl font-extrabold text-emerald-600">{avgPunctuality} ★</div>
+            <div className="text-[11px] text-sand-500 font-medium mt-0.5">Đúng hẹn khi gặp</div>
           </div>
-          <div className="p-3 bg-sand-50 rounded-2xl">
-            <div className="text-lg font-extrabold text-eco-700">{avgAccuracy} ★</div>
-            <div className="text-[11px] text-sand-600 font-medium">Đúng mô tả sản phẩm</div>
+          <div className="p-3.5 bg-slate-50 border border-slate-100 rounded-2xl">
+            <div className="text-xl font-extrabold text-eco-600">{avgAccuracy} ★</div>
+            <div className="text-[11px] text-sand-500 font-medium mt-0.5">Đúng mô tả sản phẩm</div>
           </div>
         </div>
       </div>
@@ -137,13 +140,13 @@ export const SellerProfilePage: React.FC = () => {
       {/* 2. ACTIVE LISTINGS */}
       <section className="space-y-6">
         <div className="flex items-center justify-between">
-          <h2 className="text-xl font-bold text-charcoal-900">
+          <h2 className="text-xl font-bold text-charcoal-900 tracking-tight">
             Món đồ đang đăng bán / trao đổi ({sellerListings.length})
           </h2>
         </div>
 
         {sellerListings.length === 0 ? (
-          <div className="p-8 bg-white rounded-3xl border border-sand-200 text-center text-sm text-sand-500">
+          <div className="p-8 bg-white rounded-3xl border border-slate-200/90 text-center text-sm text-sand-400">
             Thành viên hiện chưa có bài đăng nào đang mở.
           </div>
         ) : (
@@ -156,25 +159,25 @@ export const SellerProfilePage: React.FC = () => {
       </section>
 
       {/* 3. REVIEWS & RATINGS RECEIVED */}
-      <section className="bg-white rounded-3xl border border-sand-200 shadow-card p-6 sm:p-8 space-y-6">
-        <h3 className="text-lg font-bold text-charcoal-900">
+      <section className="bg-white rounded-3xl border border-slate-200/90 shadow-soft p-6 sm:p-8 space-y-6">
+        <h3 className="text-lg font-bold text-charcoal-900 tracking-tight">
           Đánh giá minh bạch từ đối tác sau buổi hẹn gặp ({sellerReviews.length})
         </h3>
 
         {sellerReviews.length === 0 ? (
-          <p className="text-xs text-sand-500 italic">Chưa có đánh giá nào được ghi nhận.</p>
+          <p className="text-xs text-sand-400 italic">Chưa có đánh giá nào được ghi nhận.</p>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {sellerReviews.map((rev) => {
               const reviewer = users.find((u) => u.id === rev.reviewerId);
               return (
-                <div key={rev.id} className="p-5 rounded-2xl bg-sand-50/70 border border-sand-200 space-y-3">
+                <div key={rev.id} className="p-5 rounded-2xl bg-slate-50/80 border border-slate-200/80 space-y-3 shadow-subtle">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2.5">
                       <img
                         src={reviewer?.avatar}
                         alt={reviewer?.fullName}
-                        className="w-8 h-8 rounded-full object-cover"
+                        className="w-8 h-8 rounded-full object-cover ring-2 ring-white"
                       />
                       <div>
                         <div className="text-xs font-bold text-charcoal-900">
@@ -188,11 +191,11 @@ export const SellerProfilePage: React.FC = () => {
                     <RatingStars rating={rev.rating} size="sm" showNumber={false} />
                   </div>
 
-                  <p className="text-xs text-sand-800 leading-relaxed font-normal">
+                  <p className="text-xs text-sand-700 leading-relaxed font-normal">
                     "{rev.comment}"
                   </p>
 
-                  <div className="pt-2 border-t border-sand-200/60 flex items-center justify-between text-[11px] text-sand-500">
+                  <div className="pt-2 border-t border-slate-200/60 flex items-center justify-between text-[11px] text-sand-500 font-medium">
                     <span>Đúng giờ: {rev.criteria.punctuality}★</span>
                     <span>Lịch sự: {rev.criteria.courtesy}★</span>
                     <span>Chuẩn mô tả: {rev.criteria.accuracy}★</span>

@@ -15,7 +15,9 @@ import {
   CheckCircle2,
   AlertTriangle,
   RotateCcw,
-  MoreVertical
+  Sparkles,
+  ExternalLink,
+  Package
 } from 'lucide-react';
 
 export const MyInventoryPage: React.FC = () => {
@@ -25,8 +27,8 @@ export const MyInventoryPage: React.FC = () => {
   if (!currentUser) {
     return (
       <div className="max-w-md mx-auto px-4 py-20 text-center">
-        <h2 className="text-xl font-bold text-charcoal-900">Vui lòng đăng nhập</h2>
-        <Link to="/login" className="mt-4 inline-block text-eco-800 text-sm font-semibold hover:underline">
+        <h2 className="text-xl font-bold text-slate-900">Vui lòng đăng nhập</h2>
+        <Link to="/login" className="mt-4 inline-block text-eco-700 text-sm font-semibold hover:underline">
           Đăng nhập ngay
         </Link>
       </div>
@@ -49,19 +51,26 @@ export const MyInventoryPage: React.FC = () => {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-8">
       {/* 1. HEADER */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200/80">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-charcoal-900">
-            Kho đồ cá nhân (Personal Inventory)
+          <div className="inline-flex items-center gap-1.5 text-xs font-bold text-eco-800 uppercase tracking-wider bg-eco-100/70 px-3 py-1 rounded-full border border-eco-200/80 mb-2 shadow-xs">
+            <Package className="w-3.5 h-3.5 text-eco-700" />
+            <span>Kho hàng cá nhân</span>
+          </div>
+          <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight flex items-center gap-2.5">
+            <span>Kho đồ cá nhân (Personal Inventory)</span>
+            <span className="inline-flex items-center justify-center p-1 rounded-lg bg-eco-100/70 text-eco-700">
+              <Sparkles className="w-4 h-4" />
+            </span>
           </h1>
-          <p className="text-xs sm:text-sm text-sand-600 mt-1">
+          <p className="text-xs sm:text-sm text-slate-500 mt-1">
             Quản lý toàn bộ danh sách sản phẩm đăng tải và theo dõi trạng thái các giao dịch gặp mặt.
           </p>
         </div>
 
         <Link
           to="/user/create-listing"
-          className="px-5 py-3 rounded-xl bg-eco-800 hover:bg-eco-700 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-soft transition-all"
+          className="px-5 py-3 rounded-xl bg-gradient-to-r from-eco-700 via-eco-600 to-teal-600 hover:from-eco-600 hover:to-teal-500 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-glow-emerald hover:shadow-lg transition-all"
         >
           <PlusCircle className="w-4 h-4" />
           <span>+ Đăng món đồ mới</span>
@@ -69,7 +78,7 @@ export const MyInventoryPage: React.FC = () => {
       </div>
 
       {/* 2. STATUS TABS (UC07) */}
-      <div className="flex items-center gap-2 overflow-x-auto pb-2 border-b border-sand-200 scrollbar-none">
+      <div className="flex items-center gap-2 overflow-x-auto pb-1 border-b border-slate-200/80 scrollbar-none">
         {[
           { id: 'ALL', label: 'Tất cả bài đăng', count: myListings.length },
           {
@@ -101,16 +110,16 @@ export const MyInventoryPage: React.FC = () => {
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
-            className={`px-4 py-2.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all flex items-center gap-2 ${
+            className={`px-4 py-2.5 rounded-full text-xs font-bold whitespace-nowrap transition-all flex items-center gap-2 ${
               activeTab === tab.id
-                ? 'bg-eco-800 text-white shadow-soft'
-                : 'bg-white text-charcoal-700 hover:bg-sand-100 border border-sand-200'
+                ? 'bg-gradient-to-r from-eco-700 via-eco-600 to-teal-600 text-white shadow-glow-emerald'
+                : 'bg-white text-slate-700 hover:bg-slate-50 border border-slate-200/90 shadow-xs'
             }`}
           >
             <span>{tab.label}</span>
             <span
-              className={`text-[10px] px-1.5 py-0.2 rounded-full font-bold ${
-                activeTab === tab.id ? 'bg-white/20 text-white' : 'bg-sand-100 text-sand-600'
+              className={`text-[10px] px-2 py-0.5 rounded-full font-black ${
+                activeTab === tab.id ? 'bg-white/20 text-white' : 'bg-slate-100 text-slate-600'
               }`}
             >
               {tab.count}
@@ -121,12 +130,14 @@ export const MyInventoryPage: React.FC = () => {
 
       {/* 3. LISTINGS TABLE / CARD LIST */}
       {filteredListings.length === 0 ? (
-        <div className="p-12 text-center bg-white rounded-3xl border border-sand-200 space-y-3">
-          <Layers className="w-12 h-12 text-sand-300 mx-auto" />
-          <h3 className="text-base font-bold text-charcoal-900">
+        <div className="p-16 text-center bg-white rounded-3xl border border-slate-200/90 shadow-sm space-y-3">
+          <div className="w-16 h-16 mx-auto rounded-2xl bg-slate-50 border border-slate-200 flex items-center justify-center text-slate-400">
+            <Layers className="w-8 h-8" />
+          </div>
+          <h3 className="text-base font-bold text-slate-900">
             Không có món đồ nào trong mục này
           </h3>
-          <p className="text-xs text-sand-600">
+          <p className="text-xs text-slate-500">
             Bạn chưa có sản phẩm nào thuộc trạng thái "{activeTab}".
           </p>
         </div>
@@ -138,46 +149,49 @@ export const MyInventoryPage: React.FC = () => {
             return (
               <div
                 key={prod.id}
-                className="bg-white rounded-2xl border border-sand-200 p-4 sm:p-5 shadow-soft flex flex-col md:flex-row items-start md:items-center justify-between gap-4"
+                className="bg-white rounded-3xl border border-slate-200/90 p-5 sm:p-6 shadow-[0_8px_30px_-6px_rgba(0,0,0,0.05)] hover:shadow-[0_12px_40px_-6px_rgba(16,185,129,0.1)] transition-all flex flex-col md:flex-row items-start md:items-center justify-between gap-5 group"
               >
                 {/* Product details */}
                 <div className="flex items-center gap-4 min-w-0 flex-1">
-                  <img
-                    src={prod.images[0]}
-                    alt={prod.title}
-                    className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl object-cover border border-sand-200 flex-shrink-0"
-                  />
-                  <div className="min-w-0 flex-1 space-y-1">
+                  <div className="relative overflow-hidden rounded-2xl border border-slate-200 flex-shrink-0 bg-slate-50">
+                    <img
+                      src={prod.images[0]}
+                      alt={prod.title}
+                      className="w-18 h-18 sm:w-20 sm:h-20 object-cover transition-transform duration-300 group-hover:scale-105"
+                    />
+                  </div>
+                  <div className="min-w-0 flex-1 space-y-1.5">
                     <div className="flex flex-wrap items-center gap-2">
                       <StatusBadge status={prod.status} size="sm" />
-                      <span className="text-[11px] font-semibold bg-sand-100 text-charcoal-700 px-2 py-0.5 rounded">
+                      <span className="text-[11px] font-bold bg-slate-100 text-slate-700 px-2 py-0.5 rounded-full border border-slate-200">
                         {prod.condition}
                       </span>
-                      <span className="text-[11px] text-sand-500">
+                      <span className="text-[11px] text-slate-500 font-medium">
                         {prod.location.district}, {prod.location.province}
                       </span>
                     </div>
 
                     <Link to={`/products/${prod.id}`}>
-                      <h3 className="text-sm sm:text-base font-bold text-charcoal-900 hover:text-eco-800 truncate">
-                        {prod.title}
+                      <h3 className="text-sm sm:text-base font-black text-slate-900 hover:text-eco-700 truncate transition-colors flex items-center gap-1.5">
+                        <span>{prod.title}</span>
+                        <ExternalLink className="w-3.5 h-3.5 text-slate-400 group-hover:text-eco-600 transition-colors" />
                       </h3>
                     </Link>
 
                     <div className="flex items-center gap-3 text-xs">
                       {prod.price ? (
-                        <span className="font-extrabold text-clay-700">
+                        <span className="font-black text-clay-600 text-sm">
                           {prod.price.toLocaleString('vi-VN')}₫
                         </span>
                       ) : (
-                        <span className="font-bold text-eco-800 flex items-center gap-1">
-                          <ArrowRightLeft className="w-3 h-3" /> Trao đổi
+                        <span className="font-bold text-eco-700 flex items-center gap-1">
+                          <ArrowRightLeft className="w-3 h-3" /> Trao đổi đồ
                         </span>
                       )}
-                      <span className="text-sand-400">•</span>
-                      <span className="text-sand-500">{prod.views} lượt xem</span>
-                      <span className="text-sand-400">•</span>
-                      <span className="text-sand-500">{prod.favoritesCount} quan tâm</span>
+                      <span className="text-slate-300">•</span>
+                      <span className="text-slate-500">{prod.views} lượt xem</span>
+                      <span className="text-slate-300">•</span>
+                      <span className="text-slate-500">{prod.favoritesCount} quan tâm</span>
                     </div>
                   </div>
                 </div>
@@ -186,35 +200,35 @@ export const MyInventoryPage: React.FC = () => {
                 {pendingOffersCount > 0 && (
                   <Link
                     to="/user/exchanges"
-                    className="px-3 py-1.5 rounded-xl bg-sky-100 text-sky-800 text-xs font-bold flex items-center gap-1.5 animate-pulse"
+                    className="px-3.5 py-2 rounded-xl bg-emerald-50 text-emerald-800 border border-emerald-200/90 text-xs font-bold flex items-center gap-2 shadow-xs hover:bg-emerald-100 transition-colors animate-pulse"
                   >
-                    <ArrowRightLeft className="w-3.5 h-3.5" />
+                    <ArrowRightLeft className="w-4 h-4 text-emerald-600" />
                     <span>{pendingOffersCount} đề nghị mới đang chờ duyệt!</span>
                   </Link>
                 )}
 
                 {/* Actions dropdown/buttons */}
-                <div className="flex flex-wrap items-center gap-2 w-full md:w-auto justify-end pt-3 md:pt-0 border-t md:border-t-0 border-sand-100">
+                <div className="flex flex-wrap items-center gap-2 w-full md:w-auto justify-end pt-3 md:pt-0 border-t md:border-t-0 border-slate-100">
                   {/* Status Toggle Button (UC08: Ẩn/Hiện tin) */}
                   {prod.status === 'AVAILABLE' && (
                     <button
                       onClick={() => setProductStatus(prod.id, 'HIDDEN')}
-                      className="p-2 text-sand-600 hover:text-charcoal-900 hover:bg-sand-100 rounded-xl transition-colors text-xs font-semibold flex items-center gap-1"
+                      className="px-3 py-2 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-xl transition-colors text-xs font-bold flex items-center gap-1.5 border border-slate-200"
                       title="Tạm ẩn bài đăng"
                     >
                       <EyeOff className="w-4 h-4" />
-                      <span className="hidden sm:inline">Ẩn tin</span>
+                      <span>Ẩn tin</span>
                     </button>
                   )}
 
                   {prod.status === 'HIDDEN' && (
                     <button
                       onClick={() => setProductStatus(prod.id, 'AVAILABLE')}
-                      className="p-2 text-eco-700 hover:text-eco-900 hover:bg-eco-50 rounded-xl transition-colors text-xs font-semibold flex items-center gap-1"
+                      className="px-3 py-2 text-eco-700 hover:text-eco-900 hover:bg-eco-50 rounded-xl transition-colors text-xs font-bold flex items-center gap-1.5 border border-eco-200"
                       title="Mở lại bài đăng"
                     >
                       <Eye className="w-4 h-4" />
-                      <span className="hidden sm:inline">Hiện tin</span>
+                      <span>Hiện tin</span>
                     </button>
                   )}
 
@@ -222,11 +236,11 @@ export const MyInventoryPage: React.FC = () => {
                   {prod.status !== 'LOCKED' && (
                     <Link
                       to={`/user/edit-listing/${prod.id}`}
-                      className="p-2 text-sand-600 hover:text-charcoal-900 hover:bg-sand-100 rounded-xl transition-colors text-xs font-semibold flex items-center gap-1"
+                      className="px-3 py-2 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-xl transition-colors text-xs font-bold flex items-center gap-1.5 border border-slate-200"
                       title="Chỉnh sửa bài đăng"
                     >
                       <Edit className="w-4 h-4" />
-                      <span className="hidden sm:inline">Sửa</span>
+                      <span>Sửa</span>
                     </Link>
                   )}
 
@@ -237,11 +251,11 @@ export const MyInventoryPage: React.FC = () => {
                         deleteProduct(prod.id);
                       }
                     }}
-                    className="p-2 text-rose-600 hover:bg-rose-50 rounded-xl transition-colors text-xs font-semibold flex items-center gap-1"
+                    className="px-3 py-2 text-rose-600 hover:bg-rose-50 rounded-xl transition-colors text-xs font-bold flex items-center gap-1.5 border border-rose-200"
                     title="Xóa bài đăng"
                   >
                     <Trash2 className="w-4 h-4" />
-                    <span className="hidden sm:inline">Xóa</span>
+                    <span>Xóa</span>
                   </button>
                 </div>
               </div>

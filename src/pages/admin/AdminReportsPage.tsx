@@ -55,15 +55,15 @@ export const AdminReportsPage: React.FC = () => {
       </div>
 
       {/* TABS */}
-      <div className="flex items-center gap-2 border-b border-sand-200 pb-2 text-xs">
+      <div className="flex items-center gap-2 border-b border-slate-200/80 pb-3 text-xs">
         {(['ALL', 'PENDING', 'PROCESSED'] as const).map((st) => (
           <button
             key={st}
             onClick={() => setStatusFilter(st)}
-            className={`px-4 py-2 rounded-full font-semibold transition-all ${
+            className={`px-4 py-2 rounded-full font-bold transition-all ${
               statusFilter === st
-                ? 'bg-eco-800 text-white shadow-soft'
-                : 'bg-white text-charcoal-700 hover:bg-sand-100 border border-sand-200'
+                ? 'bg-gradient-to-r from-eco-700 to-eco-600 text-white shadow-glow-emerald'
+                : 'bg-white text-slate-700 hover:bg-slate-50 border border-slate-200/90'
             }`}
           >
             {st === 'ALL'
@@ -78,7 +78,7 @@ export const AdminReportsPage: React.FC = () => {
       {/* REPORTS LIST */}
       <div className="space-y-4">
         {filteredReports.length === 0 ? (
-          <div className="p-12 text-center bg-white rounded-3xl border border-sand-200 text-xs text-sand-500">
+          <div className="p-12 text-center bg-white rounded-3xl border border-slate-200/90 shadow-soft text-xs text-slate-500">
             Không có báo cáo vi phạm nào trong mục này.
           </div>
         ) : (
@@ -92,36 +92,36 @@ export const AdminReportsPage: React.FC = () => {
             return (
               <div
                 key={rep.id}
-                className="bg-white rounded-3xl border border-sand-200 shadow-soft p-6 space-y-4"
+                className="bg-white rounded-3xl border border-slate-200/90 shadow-card p-6 sm:p-8 space-y-4 hover:shadow-elevated transition-all"
               >
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-sand-100">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-100">
                   <div className="flex items-center gap-2.5">
                     <span
-                      className={`text-[11px] font-bold px-2.5 py-1 rounded-full ${
+                      className={`text-[11px] font-bold px-3 py-1 rounded-full ${
                         rep.status === 'PENDING'
-                          ? 'bg-rose-100 text-rose-800 animate-pulse'
-                          : 'bg-emerald-100 text-emerald-800'
+                          ? 'bg-rose-100 text-rose-800 animate-pulse border border-rose-200'
+                          : 'bg-emerald-100 text-emerald-800 border border-emerald-200'
                       }`}
                     >
                       {rep.status === 'PENDING' ? 'Chờ thẩm định' : 'Đã xử lý xong'}
                     </span>
-                    <span className="text-xs text-sand-500 font-medium">Mã báo cáo: #{rep.id}</span>
+                    <span className="text-xs text-slate-500 font-medium">Mã báo cáo: #{rep.id}</span>
                   </div>
 
-                  <span className="text-xs text-sand-400">
+                  <span className="text-xs text-slate-400">
                     {new Date(rep.createdAt).toLocaleString('vi-VN')}
                   </span>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
                   <div>
-                    <span className="text-sand-500 font-semibold block">Người gửi báo cáo:</span>
+                    <span className="text-slate-500 font-semibold block">Người gửi báo cáo:</span>
                     <span className="font-bold text-charcoal-900">{reporter?.fullName}</span>
-                    <span className="text-[11px] text-sand-500 block">{reporter?.email}</span>
+                    <span className="text-[11px] text-slate-500 block">{reporter?.email}</span>
                   </div>
 
                   <div>
-                    <span className="text-sand-500 font-semibold block">Đối tượng bị báo cáo:</span>
+                    <span className="text-slate-500 font-semibold block">Đối tượng bị báo cáo:</span>
                     {targetUser && (
                       <span className="font-bold text-rose-700">
                         Thành viên: {targetUser.fullName} ({targetUser.email})
@@ -135,14 +135,14 @@ export const AdminReportsPage: React.FC = () => {
                   </div>
 
                   <div>
-                    <span className="text-sand-500 font-semibold block">Lý do vi phạm:</span>
+                    <span className="text-slate-500 font-semibold block">Lý do vi phạm:</span>
                     <span className="font-bold text-charcoal-900">{rep.reason}</span>
                   </div>
                 </div>
 
-                <div className="p-4 bg-sand-50 rounded-2xl text-xs space-y-1">
+                <div className="p-4 bg-slate-50 rounded-2xl text-xs space-y-1 border border-slate-200/80">
                   <span className="font-bold text-charcoal-800">Nội dung tố cáo chi tiết:</span>
-                  <p className="text-sand-700 leading-relaxed whitespace-pre-line font-normal">
+                  <p className="text-slate-700 leading-relaxed whitespace-pre-line font-normal">
                     {rep.description}
                   </p>
                 </div>
@@ -159,7 +159,7 @@ export const AdminReportsPage: React.FC = () => {
                           <img
                             src={img}
                             alt="Bằng chứng"
-                            className="w-20 h-20 rounded-xl object-cover border border-sand-300 group-hover:scale-105 transition-transform"
+                            className="w-20 h-20 rounded-xl object-cover border border-slate-200 group-hover:scale-105 transition-transform shadow-subtle"
                           />
                         </a>
                       ))}
@@ -189,7 +189,7 @@ export const AdminReportsPage: React.FC = () => {
                         setSelectedReport(rep);
                         setChosenSanction(rep.targetType === 'USER' ? 'LOCK_USER' : 'REMOVE_POST');
                       }}
-                      className="px-5 py-2.5 bg-rose-600 hover:bg-rose-700 text-white rounded-xl text-xs font-bold shadow-soft flex items-center gap-1.5 transition-all"
+                      className="px-5 py-2.5 bg-gradient-to-r from-rose-600 to-rose-700 hover:from-rose-500 hover:to-rose-600 text-white rounded-xl text-xs font-bold shadow-md shadow-rose-600/25 flex items-center gap-1.5 transition-all"
                     >
                       <ShieldAlert className="w-4 h-4" />
                       <span>Thẩm định & Áp dụng chế tài</span>
@@ -205,7 +205,7 @@ export const AdminReportsPage: React.FC = () => {
       {/* RESOLUTION MODAL */}
       {selectedReport && (
         <div className="fixed inset-0 z-50 bg-charcoal-900/60 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 space-y-5 shadow-elevated">
+          <div className="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 space-y-5 shadow-elevated border border-slate-200 animate-slide-up">
             <h3 className="text-lg font-bold text-charcoal-900">
               Quyết định Xử lý Báo cáo #{selectedReport.id}
             </h3>
@@ -218,7 +218,7 @@ export const AdminReportsPage: React.FC = () => {
                 <select
                   value={chosenSanction}
                   onChange={(e) => setChosenSanction(e.target.value as any)}
-                  className="w-full text-xs bg-sand-50 border border-sand-200 rounded-xl p-3 font-semibold"
+                  className="w-full text-xs bg-slate-50 border border-slate-200 rounded-xl p-3 font-semibold focus:outline-none focus:ring-4 focus:ring-rose-500/15 focus:border-rose-500"
                 >
                   <option value="LOCK_USER">Khóa tài khoản thành viên 30 ngày</option>
                   <option value="DOCK_TRUST">Trừ 15 điểm uy tín thành viên</option>
@@ -238,21 +238,21 @@ export const AdminReportsPage: React.FC = () => {
                   value={resolutionNote}
                   onChange={(e) => setResolutionNote(e.target.value)}
                   placeholder="Ghi rõ cơ sở pháp lý, bằng chứng đối soát với Hộp thư giao dịch..."
-                  className="w-full text-xs bg-sand-50 border border-sand-200 rounded-xl p-3"
+                  className="w-full text-xs bg-slate-50 border border-slate-200 rounded-xl p-3 focus:outline-none focus:ring-4 focus:ring-rose-500/15 focus:border-rose-500"
                 />
               </div>
 
-              <div className="pt-3 flex items-center justify-end gap-3">
+              <div className="pt-3 border-t border-slate-100 flex items-center justify-end gap-3">
                 <button
                   type="button"
                   onClick={() => setSelectedReport(null)}
-                  className="px-4 py-2 text-xs font-semibold text-sand-700"
+                  className="px-4 py-2 text-xs font-semibold text-slate-600 hover:bg-slate-100 rounded-xl"
                 >
                   Hủy
                 </button>
                 <button
                   type="submit"
-                  className="px-6 py-2.5 bg-rose-600 hover:bg-rose-700 text-white rounded-xl text-xs font-bold shadow-soft"
+                  className="px-6 py-2.5 bg-gradient-to-r from-rose-600 to-rose-700 hover:from-rose-500 hover:to-rose-600 text-white rounded-xl text-xs font-bold shadow-md shadow-rose-600/25"
                 >
                   Thực thi quyết định
                 </button>

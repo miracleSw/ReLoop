@@ -143,7 +143,7 @@ export const ReportModal: React.FC<ReportModalProps> = ({
                 <select
                   value={reason}
                   onChange={(e) => setReason(e.target.value as ReportReason)}
-                  className="w-full text-sm bg-sand-50 border border-sand-200 rounded-xl p-2.5 text-charcoal-900 focus:outline-none focus:ring-2 focus:ring-eco-500/20 focus:border-eco-600"
+                  className="w-full text-sm bg-slate-50 border border-slate-200/90 rounded-xl p-2.5 text-charcoal-900 focus:outline-none focus:ring-4 focus:ring-eco-500/15 focus:border-eco-500"
                 >
                   <option value="Hàng cấm / Vi phạm pháp luật">
                     Hàng cấm / Vi phạm pháp luật (Vũ khí, rượu bia, chất cấm...)
@@ -176,7 +176,7 @@ export const ReportModal: React.FC<ReportModalProps> = ({
                   }}
                   rows={3}
                   placeholder="Vui lòng cung cấp chi tiết hành vi vi phạm, thời gian xảy ra để Admin thuận tiện đối soát..."
-                  className="w-full text-sm bg-sand-50 border border-sand-200 rounded-xl p-3 text-charcoal-900 focus:outline-none focus:ring-2 focus:ring-eco-500/20 focus:border-eco-600 placeholder:text-sand-400"
+                  className="w-full text-sm bg-slate-50 border border-slate-200/90 rounded-xl p-3 text-charcoal-900 focus:outline-none focus:ring-4 focus:ring-eco-500/15 focus:border-eco-500 placeholder:text-sand-400"
                 />
               </div>
 
@@ -187,7 +187,7 @@ export const ReportModal: React.FC<ReportModalProps> = ({
                 </label>
                 <div className="flex flex-wrap gap-2.5 mb-2">
                   {evidenceImages.map((img, i) => (
-                    <div key={i} className="relative w-16 h-16 rounded-xl overflow-hidden border border-sand-200 group">
+                    <div key={i} className="relative w-16 h-16 rounded-xl overflow-hidden border border-slate-200 group">
                       <img src={img} alt="Evidence" className="w-full h-full object-cover" />
                       <button
                         type="button"
@@ -212,7 +212,7 @@ export const ReportModal: React.FC<ReportModalProps> = ({
                       <button
                         type="button"
                         onClick={() => fileInputRef.current?.click()}
-                        className="w-16 h-16 rounded-xl border-2 border-dashed border-sand-300 hover:border-eco-500 hover:bg-eco-50 flex flex-col items-center justify-center text-sand-500 hover:text-eco-700 transition-colors text-[10px]"
+                        className="w-16 h-16 rounded-xl border-2 border-dashed border-slate-300 hover:border-eco-500 hover:bg-eco-50 flex flex-col items-center justify-center text-slate-500 hover:text-eco-700 transition-colors text-[10px]"
                         title="Tải ảnh chụp từ máy"
                       >
                         <UploadCloud className="w-4 h-4 mb-0.5" />
@@ -225,7 +225,7 @@ export const ReportModal: React.FC<ReportModalProps> = ({
                             'https://images.unsplash.com/photo-1527061011665-3652c757a4d4?auto=format&fit=crop&w=400&q=80'
                           )
                         }
-                        className="px-2 py-1 text-[10px] text-sand-600 hover:text-eco-800 border border-sand-200 hover:border-eco-400 rounded-lg bg-sand-50 transition-colors"
+                        className="px-2 py-1 text-[10px] text-slate-600 hover:text-eco-800 border border-slate-200 hover:border-eco-400 rounded-lg bg-slate-50 transition-colors"
                         title="Dùng ảnh mẫu nếu chưa có tệp"
                       >
                         + Ảnh mẫu
@@ -233,22 +233,22 @@ export const ReportModal: React.FC<ReportModalProps> = ({
                     </div>
                   )}
                 </div>
-                <p className="text-[11px] text-sand-500">
+                <p className="text-[11px] text-slate-500">
                   Hệ thống tự động liên kết toàn bộ lịch sử tin nhắn trong Hộp thư đề nghị làm bằng chứng đối soát chính thức.
                 </p>
               </div>
 
-              <div className="pt-3 border-t border-sand-100 flex items-center justify-end gap-3">
+              <div className="pt-3 border-t border-slate-100 flex items-center justify-end gap-3">
                 <button
                   type="button"
                   onClick={onClose}
-                  className="px-4 py-2 text-xs sm:text-sm font-semibold text-sand-700 hover:bg-sand-100 rounded-xl transition-colors"
+                  className="px-4 py-2 text-xs sm:text-sm font-semibold text-slate-600 hover:bg-slate-100 rounded-xl transition-colors"
                 >
                   Hủy bỏ
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2 text-xs sm:text-sm font-semibold bg-rose-600 hover:bg-rose-700 text-white rounded-xl shadow-soft transition-all"
+                  className="px-5 py-2 text-xs sm:text-sm font-bold bg-gradient-to-r from-rose-600 to-rose-700 hover:from-rose-500 hover:to-rose-600 text-white rounded-xl shadow-md shadow-rose-600/25 transition-all"
                 >
                   Gửi báo cáo
                 </button>

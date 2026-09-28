@@ -61,17 +61,17 @@ export const AdminLayout: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-[#F4F6F4] text-charcoal-900 flex flex-col">
+    <div className="min-h-screen bg-[#F8FAF9] text-charcoal-900 flex flex-col">
       {/* ADMIN TOPBAR */}
-      <header className="h-16 bg-charcoal-900 text-white px-6 flex items-center justify-between border-b border-charcoal-800 z-30 sticky top-0">
+      <header className="h-16 bg-slate-900 text-white px-6 flex items-center justify-between border-b border-slate-800/80 z-30 sticky top-0 backdrop-blur-md">
         <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-lg bg-eco-600 text-white flex items-center justify-center font-bold text-xs">
+          <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-eco-500 to-teal-500 text-white flex items-center justify-center font-black text-xs shadow-glow-emerald">
             RL
           </div>
           <span className="font-extrabold text-base tracking-tight">
-            Re<span className="text-eco-400">Loop</span> Admin Portal
+            Re<span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-300">Loop</span> Admin Portal
           </span>
-          <span className="text-[10px] bg-white/10 text-emerald-300 font-semibold px-2 py-0.5 rounded ml-2">
+          <span className="text-[10px] bg-white/10 text-emerald-300 border border-white/15 font-bold px-2.5 py-0.5 rounded-full ml-2">
             HUSC-33 Management
           </span>
         </div>
@@ -87,11 +87,11 @@ export const AdminLayout: React.FC = () => {
 
           <div className="h-4 w-px bg-white/20" />
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2.5">
             <img
               src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=100&q=80"
               alt="Admin"
-              className="w-7 h-7 rounded-full object-cover ring-1 ring-emerald-400"
+              className="w-7 h-7 rounded-full object-cover ring-2 ring-emerald-400/80"
             />
             <span className="text-xs font-semibold text-white hidden sm:inline">
               Trọng Nghĩa (Lead Admin)
@@ -103,12 +103,12 @@ export const AdminLayout: React.FC = () => {
       {/* ADMIN WORKSPACE (SIDEBAR + MAIN CONTENT) */}
       <div className="flex-1 flex flex-col md:flex-row">
         {/* SIDEBAR */}
-        <aside className="w-full md:w-64 bg-white border-r border-sand-200 p-4 space-y-6 flex-shrink-0">
-          <div className="text-[11px] font-bold text-sand-500 uppercase tracking-wider px-3">
+        <aside className="w-full md:w-64 bg-white border-r border-slate-200/90 p-4 space-y-6 flex-shrink-0">
+          <div className="text-[11px] font-bold text-sand-400 uppercase tracking-wider px-3">
             Hệ thống Quản trị
           </div>
 
-          <nav className="space-y-1 text-xs font-semibold">
+          <nav className="space-y-1.5 text-xs font-semibold">
             {navItems.map((item) => {
               const isActive = item.exact
                 ? location.pathname === item.to
@@ -118,10 +118,10 @@ export const AdminLayout: React.FC = () => {
                 <Link
                   key={item.to}
                   to={item.to}
-                  className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl transition-colors ${
+                  className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl transition-all ${
                     isActive
-                      ? 'bg-eco-800 text-white font-bold shadow-soft'
-                      : 'text-charcoal-700 hover:bg-sand-50'
+                      ? 'bg-gradient-to-r from-eco-700 to-eco-600 text-white font-bold shadow-glow-emerald'
+                      : 'text-charcoal-700 hover:bg-slate-50 hover:text-eco-700'
                   }`}
                 >
                   <div className="flex items-center gap-2.5">
@@ -130,7 +130,7 @@ export const AdminLayout: React.FC = () => {
                   </div>
                   {item.badge && (
                     <span
-                      className={`text-[10px] font-bold px-1.5 py-0.2 rounded-full ${item.badgeColor}`}
+                      className={`text-[10px] font-bold px-1.5 py-0.5 rounded-full ${item.badgeColor}`}
                     >
                       {item.badge}
                     </span>
@@ -140,13 +140,13 @@ export const AdminLayout: React.FC = () => {
             })}
           </nav>
 
-          <div className="pt-6 border-t border-sand-100">
-            <div className="p-3 bg-eco-50 rounded-2xl border border-eco-200 text-xs text-eco-900 space-y-1">
-              <div className="font-bold flex items-center gap-1">
+          <div className="pt-6 border-t border-slate-100">
+            <div className="p-3.5 bg-gradient-to-br from-eco-50/80 to-teal-50/80 rounded-2xl border border-eco-200/80 text-xs text-eco-950 space-y-1 shadow-subtle">
+              <div className="font-bold flex items-center gap-1.5 text-eco-800">
                 <ShieldCheck className="w-4 h-4 text-eco-700" />
                 <span>Quyền hạn Admin</span>
               </div>
-              <p className="text-[11px] text-eco-800 leading-snug">
+              <p className="text-[11px] text-eco-800 leading-snug font-normal">
                 Toàn quyền kiểm duyệt hàng cấm, khóa tài khoản vi phạm và đối soát bằng chứng giao dịch.
               </p>
             </div>

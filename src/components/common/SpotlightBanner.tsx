@@ -368,7 +368,7 @@ export const SpotlightBanner: React.FC<SpotlightBannerProps> = ({
   return (
     <div
       className={clsx(
-        'relative rounded-3xl lg:rounded-4xl bg-gradient-to-br from-eco-950 via-[#122416] to-charcoal-900 text-white p-6 sm:p-10 lg:p-14 overflow-hidden shadow-elevated border border-eco-900/60 select-none group/banner touch-pan-y',
+        'relative rounded-3xl lg:rounded-4xl bg-gradient-to-br from-[#064E3B] via-[#043E30] to-[#022C22] text-white p-6 sm:p-10 lg:p-14 overflow-hidden shadow-elevated border border-emerald-500/25 select-none group/banner touch-pan-y',
         className
       )}
       onMouseEnter={() => setIsPaused(true)}
@@ -382,21 +382,27 @@ export const SpotlightBanner: React.FC<SpotlightBannerProps> = ({
       aria-roledescription="carousel"
       aria-label="ReLoop Spotlight Showcase Banner"
     >
-      {/* Ambient Lighting Blobs (Emerald & Terracotta Clay) */}
+      {/* Radiant Ambient Lighting Blobs (Luminous Emerald & Sunset Amber) */}
       <div
-        className="absolute -top-20 -right-20 w-96 h-96 bg-eco-500/15 rounded-full blur-3xl pointer-events-none animate-pulse"
+        className="absolute -top-24 -right-20 w-[480px] h-[480px] bg-gradient-to-br from-emerald-400/25 via-teal-400/20 to-transparent rounded-full blur-3xl pointer-events-none animate-pulse"
         style={{ animationDuration: '6s' }}
         aria-hidden="true"
       />
       <div
-        className="absolute -bottom-20 -left-16 w-80 h-80 bg-clay-500/15 rounded-full blur-3xl pointer-events-none animate-pulse"
+        className="absolute -bottom-24 -left-16 w-[420px] h-[420px] bg-gradient-to-tr from-amber-500/20 via-clay-500/20 to-transparent rounded-full blur-3xl pointer-events-none animate-pulse"
         style={{ animationDuration: '8s' }}
+        aria-hidden="true"
+      />
+
+      {/* Decorative Radial Aurora Beam */}
+      <div
+        className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(52,211,153,0.18),transparent_60%)] pointer-events-none"
         aria-hidden="true"
       />
 
       {/* 45-degree Diagonal Micro-grid Texture */}
       <div
-        className="absolute inset-0 opacity-10 pointer-events-none"
+        className="absolute inset-0 opacity-15 pointer-events-none"
         style={{
           backgroundImage:
             'repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 0, rgba(255, 255, 255, 0.15) 1px, transparent 0, transparent 18px)'
@@ -411,7 +417,7 @@ export const SpotlightBanner: React.FC<SpotlightBannerProps> = ({
           e.stopPropagation();
           prevSlide();
         }}
-        className="absolute left-3 lg:left-5 top-1/2 -translate-y-1/2 z-40 w-11 h-11 rounded-full bg-white/10 hover:bg-white/25 active:scale-95 backdrop-blur-md text-white border border-white/15 hidden md:flex items-center justify-center transition-all shadow-lg hover:shadow-emerald-500/20"
+        className="absolute left-3 lg:left-5 top-1/2 -translate-y-1/2 z-40 w-11 h-11 rounded-full bg-white/15 hover:bg-white/30 active:scale-95 backdrop-blur-md text-white border border-white/25 hidden md:flex items-center justify-center transition-all shadow-lg hover:shadow-emerald-400/30"
         aria-label="Xem sản phẩm trước"
       >
         <ChevronLeft className="w-5 h-5 text-white" />
@@ -423,7 +429,7 @@ export const SpotlightBanner: React.FC<SpotlightBannerProps> = ({
           e.stopPropagation();
           nextSlide();
         }}
-        className="absolute right-3 lg:right-5 top-1/2 -translate-y-1/2 z-40 w-11 h-11 rounded-full bg-white/10 hover:bg-white/25 active:scale-95 backdrop-blur-md text-white border border-white/15 hidden md:flex items-center justify-center transition-all shadow-lg hover:shadow-emerald-500/20"
+        className="absolute right-3 lg:right-5 top-1/2 -translate-y-1/2 z-40 w-11 h-11 rounded-full bg-white/15 hover:bg-white/30 active:scale-95 backdrop-blur-md text-white border border-white/25 hidden md:flex items-center justify-center transition-all shadow-lg hover:shadow-emerald-400/30"
         aria-label="Xem sản phẩm tiếp theo"
       >
         <ChevronRight className="w-5 h-5 text-white" />
@@ -438,7 +444,7 @@ export const SpotlightBanner: React.FC<SpotlightBannerProps> = ({
         >
           {/* Top Pill Badge */}
           <div>
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/15 text-xs font-semibold text-emerald-300 shadow-sm">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/15 backdrop-blur-md border border-white/25 text-xs font-bold text-emerald-200 shadow-sm">
               <Sparkles className="w-3.5 h-3.5 text-emerald-300 animate-pulse flex-shrink-0" />
               <span className="truncate">{current.pillBadge}</span>
             </div>
@@ -450,7 +456,9 @@ export const SpotlightBanner: React.FC<SpotlightBannerProps> = ({
             <span
               className={clsx(
                 'font-editorial italic font-normal block sm:inline',
-                current.highlightColor === 'clay' ? 'text-clay-300' : 'text-emerald-300'
+                current.highlightColor === 'clay'
+                  ? 'text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-orange-300 to-clay-300'
+                  : 'text-transparent bg-clip-text bg-gradient-to-r from-emerald-300 via-teal-200 to-emerald-400'
               )}
             >
               {current.headlineHighlight}
@@ -458,22 +466,22 @@ export const SpotlightBanner: React.FC<SpotlightBannerProps> = ({
           </h2>
 
           {/* Sub-author / Owner info & Verification */}
-          <div className="flex flex-wrap items-center gap-2 sm:gap-2.5 text-sand-300 text-xs sm:text-sm font-medium">
+          <div className="flex flex-wrap items-center gap-2 sm:gap-2.5 text-sand-200 text-xs sm:text-sm font-medium">
             <img
               src={current.author.avatar}
               alt={current.author.name}
-              className="w-6 h-6 sm:w-7 sm:h-7 rounded-full object-cover ring-1 ring-white/30 flex-shrink-0"
+              className="w-6 h-6 sm:w-7 sm:h-7 rounded-full object-cover ring-2 ring-emerald-400/50 flex-shrink-0"
             />
             <span className="text-white font-semibold">{current.author.name}</span>
-            <span className="text-sand-500">•</span>
+            <span className="text-sand-400">•</span>
             <span>{current.author.location}</span>
-            <span className="text-sand-500">•</span>
-            <span className="inline-flex items-center gap-1 bg-white/10 px-2 py-0.5 rounded-full text-xs font-semibold text-amber-300 border border-white/10">
+            <span className="text-sand-400">•</span>
+            <span className="inline-flex items-center gap-1 bg-white/15 px-2.5 py-0.5 rounded-full text-xs font-bold text-amber-300 border border-white/15 shadow-subtle">
               <Star className="w-3 h-3 fill-amber-400 text-amber-400 flex-shrink-0" />
               <span>{current.author.rating}</span>
             </span>
             {current.author.verified && (
-              <span className="inline-flex items-center gap-1 text-[11px] text-emerald-300 bg-emerald-950/70 border border-emerald-500/30 px-2 py-0.5 rounded-full">
+              <span className="inline-flex items-center gap-1 text-[11px] text-emerald-300 bg-emerald-900/60 border border-emerald-400/40 px-2.5 py-0.5 rounded-full font-semibold shadow-subtle">
                 <CheckCircle2 className="w-3 h-3 text-emerald-400 flex-shrink-0" />
                 <span>Đã xác minh</span>
               </span>
@@ -481,7 +489,7 @@ export const SpotlightBanner: React.FC<SpotlightBannerProps> = ({
           </div>
 
           {/* Concise Description (Max 3 lines) */}
-          <p className="text-sand-200/90 text-sm sm:text-base leading-relaxed max-w-xl line-clamp-3 font-normal">
+          <p className="text-emerald-50/90 text-sm sm:text-base leading-relaxed max-w-xl line-clamp-3 font-normal">
             {current.description}
           </p>
 
@@ -490,7 +498,7 @@ export const SpotlightBanner: React.FC<SpotlightBannerProps> = ({
             {current.metadataBadges.map((badge, idx) => (
               <span
                 key={idx}
-                className="px-3 py-1 rounded-full text-xs font-medium bg-white/10 backdrop-blur-md border border-white/15 text-sand-100 shadow-sm"
+                className="px-3.5 py-1 rounded-full text-xs font-semibold bg-white/15 backdrop-blur-md border border-white/20 text-white shadow-sm"
               >
                 {badge}
               </span>
@@ -501,14 +509,14 @@ export const SpotlightBanner: React.FC<SpotlightBannerProps> = ({
           <div className="flex flex-wrap items-center gap-3 sm:gap-4 pt-1">
             <Link
               to={current.primaryCta.link}
-              className="bg-white text-charcoal-900 hover:bg-sand-100 font-bold px-6 py-3 rounded-full flex items-center gap-2 shadow-elevated transition-all duration-300 hover:gap-3 group"
+              className="bg-gradient-to-r from-emerald-400 via-teal-300 to-emerald-400 text-eco-950 hover:shadow-lg hover:shadow-emerald-400/35 hover:-translate-y-0.5 font-bold px-7 py-3 rounded-full flex items-center gap-2 transition-all duration-300 group"
             >
               <span>{current.primaryCta.label}</span>
               <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
             </Link>
             <Link
               to={current.secondaryCta.link}
-              className="border border-white/20 bg-white/5 hover:bg-white/10 text-white backdrop-blur-sm px-5 py-3 rounded-full flex items-center gap-2 transition-all group"
+              className="border border-white/30 bg-white/10 hover:bg-white/20 text-white backdrop-blur-md px-6 py-3 rounded-full flex items-center gap-2 transition-all group font-semibold shadow-subtle hover:-translate-y-0.5"
             >
               <ArrowRightLeft className="w-4 h-4 text-emerald-300 transition-transform group-hover:rotate-180" />
               <span>{current.secondaryCta.label}</span>
@@ -520,15 +528,15 @@ export const SpotlightBanner: React.FC<SpotlightBannerProps> = ({
             {current.ecoMetrics.map((metric, idx) => (
               <div
                 key={idx}
-                className="bg-black/25 backdrop-blur-md border border-white/10 rounded-2xl p-3 sm:p-3.5 flex-1 min-w-[85px] sm:min-w-[90px] flex flex-col justify-between transition-colors hover:bg-black/35"
+                className="bg-white/10 hover:bg-white/15 backdrop-blur-md border border-white/15 rounded-2xl p-3 sm:p-3.5 flex-1 min-w-[85px] sm:min-w-[90px] flex flex-col justify-between transition-colors shadow-subtle"
               >
-                <div className="flex items-center gap-1.5 text-emerald-400 mb-1">
+                <div className="flex items-center gap-1.5 text-emerald-300 mb-1">
                   {renderEcoIcon(metric.iconName)}
-                  <span className="text-[10px] sm:text-[11px] text-sand-300 font-medium truncate">
+                  <span className="text-[10px] sm:text-[11px] text-emerald-100 font-medium truncate">
                     {metric.label}
                   </span>
                 </div>
-                <div className="text-xs sm:text-sm lg:text-base font-bold text-white tracking-tight truncate">
+                <div className="text-xs sm:text-sm lg:text-base font-extrabold text-white tracking-tight truncate">
                   {metric.value}
                 </div>
               </div>

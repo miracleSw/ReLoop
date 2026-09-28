@@ -15,10 +15,10 @@ export const ToastContainer: React.FC = () => {
   };
 
   const borders = {
-    success: 'border-emerald-200 bg-white shadow-card',
-    error: 'border-rose-200 bg-white shadow-card',
-    warning: 'border-amber-200 bg-white shadow-card',
-    info: 'border-sky-200 bg-white shadow-card',
+    success: 'border-emerald-200 bg-white/95 backdrop-blur-xl shadow-glow-emerald',
+    error: 'border-rose-200 bg-white/95 backdrop-blur-xl shadow-card',
+    warning: 'border-amber-200 bg-white/95 backdrop-blur-xl shadow-card',
+    info: 'border-sky-200 bg-white/95 backdrop-blur-xl shadow-card',
   };
 
   return (
@@ -26,10 +26,10 @@ export const ToastContainer: React.FC = () => {
       {toasts.map((toast) => (
         <div
           key={toast.id}
-          className={`pointer-events-auto flex items-start gap-3 p-4 rounded-xl border transition-all duration-300 transform translate-y-0 opacity-100 ${borders[toast.type]}`}
+          className={`pointer-events-auto flex items-start gap-3 p-4 rounded-2xl border transition-all duration-300 transform translate-y-0 opacity-100 ${borders[toast.type]}`}
         >
           {icons[toast.type]}
-          <div className="flex-1 text-sm font-medium text-charcoal-900 leading-snug">
+          <div className="flex-1 text-sm font-semibold text-charcoal-900 leading-snug">
             {toast.message}
           </div>
           <button

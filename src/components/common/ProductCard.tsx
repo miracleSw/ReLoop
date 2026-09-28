@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Product } from '../../types';
 import { useApp } from '../../context/AppContext';
 import { StatusBadge } from './StatusBadge';
-import { Heart, MapPin, ArrowRightLeft, ShieldCheck, Star, ChevronRight } from 'lucide-react';
+import { Heart, MapPin, ArrowRightLeft, ShieldCheck, Star, ChevronRight, Trash2 } from 'lucide-react';
 
 const FALLBACK_IMAGE = 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=1000&q=80';
 const FALLBACK_AVATAR = 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&q=80';
@@ -11,14 +11,19 @@ const FALLBACK_AVATAR = 'https://images.unsplash.com/photo-1534528741775-53994a6
 interface ProductCardProps {
   product: Product;
   variant?: 'standard' | 'featured' | 'compact';
+  onRemove?: () => void;
+  showRemoveButton?: boolean;
 }
 
 export const ProductCard: React.FC<ProductCardProps> = ({
   product,
   variant = 'standard',
+  onRemove,
+  showRemoveButton = false,
 }) => {
-  const { favorites, toggleFavorite, users, categories } = useApp();
+  const { favorites, toggleFavorite, users, categories, currentUser } = useApp();
   const isFavorite = favorites.includes(product.id);
+  const isOwner = currentUser?.id === product.sellerId;
   const seller = users.find((u) => u.id === product.sellerId);
   const category = categories.find((c) => c.id === product.categoryId);
 
@@ -99,7 +104,9 @@ export const ProductCard: React.FC<ProductCardProps> = ({
               <span className="text-xs font-bold bg-white/95 backdrop-blur-md text-eco-900 px-3.5 py-1.5 rounded-full shadow-subtle border border-white/80 whitespace-nowrap">
                 {product.condition}
               </span>
-              {product.status !== 'AVAILABLE' && <StatusBadge status={product.status} size="sm" />}
+              {(showRemoveButton || product.status !== 'AVAILABLE') && (
+                <StatusBadge status={product.status} size="sm" />
+              )}
               {category && (
                 <span className="hidden sm:inline-block text-xs font-semibold bg-charcoal-900/80 backdrop-blur-md text-white px-3 py-1.5 rounded-full whitespace-nowrap">
                   {category.name}
@@ -107,21 +114,40 @@ export const ProductCard: React.FC<ProductCardProps> = ({
               )}
             </div>
 
-            {/* Favorite button */}
-            <button
-              onClick={(e) => {
-                e.preventDefault();
-                toggleFavorite(product.id);
-              }}
-              className={`absolute top-4 right-4 w-10 h-10 rounded-full flex items-center justify-center backdrop-blur-md transition-all shadow-subtle ${
-                isFavorite
-                  ? 'bg-rose-500 text-white shadow-rose-500/40'
-                  : 'bg-white/90 text-charcoal-700 hover:bg-white hover:text-rose-500 hover:scale-105'
-              }`}
-              aria-label="Lưu sản phẩm"
-            >
-              <Heart className={`w-4 h-4 ${isFavorite ? 'fill-current' : ''}`} />
-            </button>
+            {/* Favorite / Remove button (hidden for post owner) */}
+            {!isOwner && (
+              showRemoveButton ? (
+                <button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    if (onRemove) onRemove();
+                    else toggleFavorite(product.id);
+                  }}
+                  className="absolute top-4 right-4 w-10 h-10 rounded-full flex items-center justify-center bg-white/95 text-rose-600 hover:bg-rose-500 hover:text-white transition-all shadow-subtle"
+                  title="Xóa khỏi danh sách yêu thích"
+                  aria-label="Xóa khỏi danh sách yêu thích"
+                >
+                  <Trash2 className="w-5 h-5" />
+                </button>
+              ) : (
+                <button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    toggleFavorite(product.id);
+                  }}
+                  className={`absolute top-4 right-4 w-10 h-10 rounded-full flex items-center justify-center backdrop-blur-md transition-all shadow-subtle ${
+                    isFavorite
+                      ? 'bg-rose-500 text-white shadow-rose-500/40'
+                      : 'bg-white/90 text-charcoal-700 hover:bg-white hover:text-rose-500 hover:scale-105'
+                  }`}
+                  aria-label="Lưu sản phẩm"
+                >
+                  <Heart className={`w-4 h-4 ${isFavorite ? 'fill-current' : ''}`} />
+                </button>
+              )
+            )}
 
             {/* Barter Tag on image */}
             {(product.type === 'EXCHANGE' || product.type === 'BOTH') && (
@@ -288,7 +314,9 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           <span className="text-[11px] font-bold bg-white/95 backdrop-blur-md text-charcoal-800 px-3 py-1 rounded-full shadow-subtle border border-white/60 whitespace-nowrap">
             {product.condition}
           </span>
-          {product.status !== 'AVAILABLE' && <StatusBadge status={product.status} size="sm" />}
+          {(showRemoveButton || product.status !== 'AVAILABLE') && (
+            <StatusBadge status={product.status} size="sm" />
+          )}
         </div>
 
         {/* Barter Pill if supports exchange */}
@@ -301,21 +329,40 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           </div>
         )}
 
-        {/* Favorite button */}
-        <button
-          onClick={(e) => {
-            e.preventDefault();
-            toggleFavorite(product.id);
-          }}
-          className={`absolute top-3 right-3 w-8 h-8 rounded-full flex items-center justify-center backdrop-blur-md transition-all shadow-subtle ${
-            isFavorite
-              ? 'bg-rose-500 text-white shadow-rose-500/40'
-              : 'bg-white/85 text-charcoal-700 hover:bg-white hover:text-rose-500'
-          }`}
-          aria-label="Lưu sản phẩm"
-        >
-          <Heart className={`w-3.5 h-3.5 ${isFavorite ? 'fill-current' : ''}`} />
-        </button>
+        {/* Favorite / Remove button (hidden for post owner) */}
+        {!isOwner && (
+          showRemoveButton ? (
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                if (onRemove) onRemove();
+                else toggleFavorite(product.id);
+              }}
+              className="absolute top-3 right-3 w-8 h-8 rounded-full flex items-center justify-center bg-white/95 text-rose-600 hover:bg-rose-500 hover:text-white transition-all shadow-subtle"
+              title="Xóa khỏi danh sách yêu thích"
+              aria-label="Xóa khỏi danh sách yêu thích"
+            >
+              <Trash2 className="w-4 h-4" />
+            </button>
+          ) : (
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                toggleFavorite(product.id);
+              }}
+              className={`absolute top-3 right-3 w-8 h-8 rounded-full flex items-center justify-center backdrop-blur-md transition-all shadow-subtle ${
+                isFavorite
+                  ? 'bg-rose-500 text-white shadow-rose-500/40'
+                  : 'bg-white/85 text-charcoal-700 hover:bg-white hover:text-rose-500'
+              }`}
+              aria-label="Lưu sản phẩm"
+            >
+              <Heart className={`w-3.5 h-3.5 ${isFavorite ? 'fill-current' : ''}`} />
+            </button>
+          )
+        )}
       </div>
 
       {/* Details Container */}

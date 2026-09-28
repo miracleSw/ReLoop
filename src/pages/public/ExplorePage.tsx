@@ -2,6 +2,7 @@ import React, { useState, useMemo, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useApp } from '../../context/AppContext';
 import { ProductCard } from '../../components/common/ProductCard';
+import { VIETNAM_LOCATIONS } from '../../data/mockData';
 import {
   Search,
   Filter,
@@ -13,125 +14,320 @@ import {
   Tag,
   ArrowRightLeft,
   ChevronDown,
-  Sparkles
+  ChevronLeft,
+  ChevronRight,
+  Sparkles,
+  AlertCircle
 } from 'lucide-react';
 
+const PAGE_SIZE = 12;
+
 export const ExplorePage: React.FC = () => {
-  const { products, categories } = useApp();
+  const { products, categories, currentUser } = useApp();
   const [searchParams, setSearchParams] = useSearchParams();
 
-  // Search params extraction
+  // URL search params extraction
   const urlQuery = searchParams.get('q') || '';
   const urlCategory = searchParams.get('category') || 'all';
   const urlType = searchParams.get('type') || 'all';
   const urlCondition = searchParams.get('condition') || 'all';
   const urlProvince = searchParams.get('province') || 'all';
+  const urlDistrict = searchParams.get('district') || 'all';
+  const urlMin = searchParams.get('min') || '';
+  const urlMax = searchParams.get('max') || '';
 
-  // Local filter states
+  // Filter states
   const [searchTerm, setSearchTerm] = useState(urlQuery);
   const [selectedCategory, setSelectedCategory] = useState(urlCategory);
   const [selectedType, setSelectedType] = useState(urlType);
   const [selectedCondition, setSelectedCondition] = useState(urlCondition);
   const [selectedProvince, setSelectedProvince] = useState(urlProvince);
-  const [priceRange, setPriceRange] = useState<string>('all');
-  const [sortBy, setSortBy] = useState<string>('newest');
+  const [selectedDistrict, setSelectedDistrict] = useState(urlDistrict);
+
+  // Price filter states (Custom inputs & Presets)
+  const [priceMin, setPriceMin] = useState<string>(urlMin);
+  const [priceMax, setPriceMax] = useState<string>(urlMax);
+  const [priceError, setPriceError] = useState<string>('');
+  const [pricePreset, setPricePreset] = useState<string>(urlMin || urlMax ? 'custom' : 'all');
+
+  // Tabs: 'latest' (Mới nhất) | 'featured' (Nổi bật)
+  const [activeTab, setActiveTab] = useState<'latest' | 'featured'>('latest');
+  const [sortBy, setSortBy] = useState<string>('default');
+
+  // Pagination state
+  const [currentPage, setCurrentPage] = useState<number>(1);
   const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
 
-  // Sync state if URL changes
+  // Location prioritization preference
+  const [prioritizeNearMe, setPrioritizeNearMe] = useState(true);
+
+  // Sync state if URL search params change
   useEffect(() => {
     setSearchTerm(urlQuery);
     setSelectedCategory(urlCategory);
     setSelectedType(urlType);
     setSelectedCondition(urlCondition);
     setSelectedProvince(urlProvince);
-  }, [urlQuery, urlCategory, urlType, urlCondition, urlProvince]);
+    setSelectedDistrict(urlDistrict);
+    if (urlMin || urlMax) {
+      setPriceMin(urlMin);
+      setPriceMax(urlMax);
+      setPricePreset('custom');
+      validateAndSetPrice(urlMin, urlMax);
+    }
+  }, [urlQuery, urlCategory, urlType, urlCondition, urlProvince, urlDistrict, urlMin, urlMax]);
 
-  const provinces = ['Hồ Chí Minh', 'Hà Nội', 'Thừa Thiên Huế', 'Đà Nẵng'];
+  // When province changes, reset district
+  const handleProvinceChange = (province: string) => {
+    setSelectedProvince(province);
+    setSelectedDistrict('all');
+    setCurrentPage(1);
+  };
 
-  // Filter logic
-  const filteredProducts = useMemo(() => {
-    return products.filter((p) => {
-      // Must be visible in public search (UC10: only APPROVED/AVAILABLE/RESERVED, exclude LOCKED, HIDDEN, REMOVED)
-      if (p.status === 'LOCKED' || p.status === 'HIDDEN' || p.status === 'REMOVED') {
-        return false;
-      }
+  // Price validation
+  const validateAndSetPrice = (minVal: string, maxVal: string) => {
+    setPriceError('');
+    const minNum = minVal.trim() !== '' ? Number(minVal) : null;
+    const maxNum = maxVal.trim() !== '' ? Number(maxVal) : null;
 
-      // Keyword search (title + description)
-      if (searchTerm.trim()) {
-        const q = searchTerm.toLowerCase();
-        const matchTitle = p.title.toLowerCase().includes(q);
-        const matchDesc = p.description.toLowerCase().includes(q);
-        if (!matchTitle && !matchDesc) return false;
-      }
+    if (minNum !== null && (isNaN(minNum) || minNum < 0 || !Number.isInteger(minNum))) {
+      setPriceError('Giá "Từ" phải là số nguyên không âm.');
+      return false;
+    }
+    if (maxNum !== null && (isNaN(maxNum) || maxNum < 0 || !Number.isInteger(maxNum))) {
+      setPriceError('Giá "Đến" phải là số nguyên không âm.');
+      return false;
+    }
+    if (minNum !== null && maxNum !== null && minNum > maxNum) {
+      setPriceError('Giá "Từ" phải nhỏ hơn hoặc bằng giá "Đến".');
+      return false;
+    }
+    return true;
+  };
 
-      // Category
-      if (selectedCategory !== 'all' && p.categoryId !== selectedCategory) {
-        return false;
-      }
+  const handlePriceMinChange = (val: string) => {
+    setPriceMin(val);
+    setPricePreset('custom');
+    validateAndSetPrice(val, priceMax);
+    setCurrentPage(1);
+  };
 
-      // Transaction Type
-      if (selectedType !== 'all') {
-        if (selectedType === 'EXCHANGE' && p.type === 'SELL') return false;
-        if (selectedType === 'SELL' && p.type === 'EXCHANGE') return false;
-        if (selectedType === 'BOTH' && p.type !== 'BOTH') return false;
-      }
+  const handlePriceMaxChange = (val: string) => {
+    setPriceMax(val);
+    setPricePreset('custom');
+    validateAndSetPrice(priceMin, val);
+    setCurrentPage(1);
+  };
 
-      // Condition
-      if (selectedCondition !== 'all' && p.condition !== selectedCondition) {
-        return false;
-      }
+  const applyPricePreset = (presetId: string) => {
+    setPricePreset(presetId);
+    setPriceError('');
+    setCurrentPage(1);
+    if (presetId === 'all') {
+      setPriceMin('');
+      setPriceMax('');
+    } else if (presetId === 'under500k') {
+      setPriceMin('0');
+      setPriceMax('500000');
+    } else if (presetId === '500k-2m') {
+      setPriceMin('500000');
+      setPriceMax('2000000');
+    } else if (presetId === '2m-5m') {
+      setPriceMin('2000000');
+      setPriceMax('5000000');
+    } else if (presetId === 'over5m') {
+      setPriceMin('5000000');
+      setPriceMax('');
+    }
+  };
 
-      // Province
-      if (selectedProvince !== 'all' && p.location.province !== selectedProvince) {
-        return false;
-      }
-
-      // Price range
-      if (priceRange !== 'all') {
-        const price = p.price || 0;
-        if (priceRange === 'under500k' && price > 500000) return false;
-        if (priceRange === '500k-2m' && (price < 500000 || price > 2000000)) return false;
-        if (priceRange === '2m-5m' && (price < 2000000 || price > 5000000)) return false;
-        if (priceRange === 'over5m' && price < 5000000) return false;
-      }
-
-      return true;
-    }).sort((a, b) => {
-      if (sortBy === 'newest') {
-        return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
-      }
-      if (sortBy === 'price-asc') {
-        return (a.price || 0) - (b.price || 0);
-      }
-      if (sortBy === 'price-desc') {
-        return (b.price || 0) - (a.price || 0);
-      }
-      if (sortBy === 'views') {
-        return b.views - a.views;
-      }
-      return 0;
-    });
-  }, [
-    products,
-    searchTerm,
-    selectedCategory,
-    selectedType,
-    selectedCondition,
-    selectedProvince,
-    priceRange,
-    sortBy,
-  ]);
-
+  // Reset all filters
   const handleClearFilters = () => {
     setSearchTerm('');
     setSelectedCategory('all');
     setSelectedType('all');
     setSelectedCondition('all');
     setSelectedProvince('all');
-    setPriceRange('all');
-    setSortBy('newest');
+    setSelectedDistrict('all');
+    setPriceMin('');
+    setPriceMax('');
+    setPricePreset('all');
+    setPriceError('');
+    setActiveTab('latest');
+    setSortBy('default');
+    setCurrentPage(1);
     setSearchParams({});
   };
+
+  // Reset page when any core filter changes
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchTerm, selectedCategory, selectedType, selectedCondition, selectedProvince, selectedDistrict, activeTab, sortBy]);
+
+  // Province list
+  const provinces = Object.keys(VIETNAM_LOCATIONS);
+  const availableDistricts = selectedProvince !== 'all' ? VIETNAM_LOCATIONS[selectedProvince] || [] : [];
+
+  // Filter products
+  const filteredProducts = useMemo(() => {
+    const minPriceNum = priceMin.trim() !== '' ? Number(priceMin) : null;
+    const maxPriceNum = priceMax.trim() !== '' ? Number(priceMax) : null;
+    const isPriceValid = !priceError && (minPriceNum === null || minPriceNum >= 0) && (maxPriceNum === null || maxPriceNum >= 0) && (minPriceNum === null || maxPriceNum === null || minPriceNum <= maxPriceNum);
+
+    return products.filter((p) => {
+      // UC10 Requirement: AVAILABLE-only default feed (strictly excludes RESERVED, COMPLETED, LOCKED, HIDDEN, REMOVED)
+      if (p.status !== 'AVAILABLE') {
+        return false;
+      }
+
+      // Keyword search (case-insensitive across product title, description, and category name, with Vietnamese diacritics and token matching support)
+      if (searchTerm.trim()) {
+        const rawQ = searchTerm.trim().toLowerCase();
+        const normQ = rawQ
+          .normalize('NFD')
+          .replace(/[\u0300-\u036f]/g, '')
+          .replace(/đ/g, 'd')
+          .replace(/Đ/g, 'd');
+        const queryTokens = normQ.split(/\s+/).filter(Boolean);
+
+        const catObj = categories.find((c) => c.id === p.categoryId);
+        const catName = catObj ? catObj.name : '';
+
+        const normTitle = p.title
+          .toLowerCase()
+          .normalize('NFD')
+          .replace(/[\u0300-\u036f]/g, '')
+          .replace(/đ/g, 'd')
+          .replace(/Đ/g, 'd');
+        const normDesc = p.description
+          .toLowerCase()
+          .normalize('NFD')
+          .replace(/[\u0300-\u036f]/g, '')
+          .replace(/đ/g, 'd')
+          .replace(/Đ/g, 'd');
+        const normCat = catName
+          .toLowerCase()
+          .normalize('NFD')
+          .replace(/[\u0300-\u036f]/g, '')
+          .replace(/đ/g, 'd')
+          .replace(/Đ/g, 'd');
+
+        const exactMatch =
+          p.title.toLowerCase().includes(rawQ) ||
+          p.description.toLowerCase().includes(rawQ) ||
+          catName.toLowerCase().includes(rawQ);
+
+        const tokensMatch =
+          queryTokens.length > 0 &&
+          queryTokens.every(
+            (token) => normTitle.includes(token) || normDesc.includes(token) || normCat.includes(token)
+          );
+
+        if (!exactMatch && !tokensMatch) {
+          return false;
+        }
+      }
+
+      // Category filter
+      if (selectedCategory !== 'all' && p.categoryId !== selectedCategory) {
+        return false;
+      }
+
+      // Transaction Type filter
+      if (selectedType !== 'all') {
+        if (selectedType === 'EXCHANGE' && p.type === 'SELL') return false;
+        if (selectedType === 'SELL' && p.type === 'EXCHANGE') return false;
+        if (selectedType === 'BOTH' && p.type !== 'BOTH') return false;
+      }
+
+      // Condition filter
+      if (selectedCondition !== 'all' && p.condition !== selectedCondition) {
+        return false;
+      }
+
+      // Province filter
+      if (selectedProvince !== 'all' && p.location.province !== selectedProvince) {
+        return false;
+      }
+
+      // Dependent District filter
+      if (selectedDistrict !== 'all' && p.location.district !== selectedDistrict) {
+        return false;
+      }
+
+      // Price filter validation and check
+      if (isPriceValid) {
+        const itemPrice = p.price || 0;
+        if (minPriceNum !== null && itemPrice < minPriceNum) {
+          return false;
+        }
+        if (maxPriceNum !== null && itemPrice > maxPriceNum) {
+          return false;
+        }
+      }
+
+      return true;
+    }).sort((a, b) => {
+      // Explicit sorts take full priority
+      if (sortBy === 'price-asc') {
+        const diff = (a.price || 0) - (b.price || 0);
+        if (diff !== 0) return diff;
+      } else if (sortBy === 'price-desc') {
+        const diff = (b.price || 0) - (a.price || 0);
+        if (diff !== 0) return diff;
+      } else if (sortBy === 'views') {
+        const diff = b.views - a.views;
+        if (diff !== 0) return diff;
+      }
+
+      // Mock user location prioritization for default feed/tabs (items in user's province bubble up)
+      if (prioritizeNearMe && currentUser?.province) {
+        const aNear = a.location.province === currentUser.province ? 1 : 0;
+        const bNear = b.location.province === currentUser.province ? 1 : 0;
+        if (aNear !== bNear) {
+          return bNear - aNear;
+        }
+      }
+
+      // Tabs
+      if (activeTab === 'featured') {
+        return b.views - a.views;
+      }
+      // 'latest' tab (default)
+      return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+    });
+  }, [
+    products,
+    categories,
+    searchTerm,
+    selectedCategory,
+    selectedType,
+    selectedCondition,
+    selectedProvince,
+    selectedDistrict,
+    priceMin,
+    priceMax,
+    priceError,
+    activeTab,
+    sortBy,
+    prioritizeNearMe,
+    currentUser,
+  ]);
+
+  // Pagination calculation
+  const totalPages = Math.max(1, Math.ceil(filteredProducts.length / PAGE_SIZE));
+  const paginatedProducts = useMemo(() => {
+    const start = (currentPage - 1) * PAGE_SIZE;
+    return filteredProducts.slice(start, start + PAGE_SIZE);
+  }, [filteredProducts, currentPage]);
+
+  // Recommended products for empty state: 6 newest AVAILABLE products
+  const recommendedNewest = useMemo(() => {
+    return products
+      .filter((p) => p.status === 'AVAILABLE')
+      .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+      .slice(0, 6);
+  }, [products]);
 
   const hasActiveFilters =
     searchTerm ||
@@ -139,18 +335,21 @@ export const ExplorePage: React.FC = () => {
     selectedType !== 'all' ||
     selectedCondition !== 'all' ||
     selectedProvince !== 'all' ||
-    priceRange !== 'all';
+    selectedDistrict !== 'all' ||
+    priceMin !== '' ||
+    priceMax !== '' ||
+    pricePreset !== 'all';
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-8">
       {/* 1. TOP HEADER & SEARCH BAR */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-charcoal-900">
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-charcoal-900 tracking-tight">
             Khám phá kho đồ cũ
           </h1>
           <p className="text-xs sm:text-sm text-sand-500 mt-1">
-            Tìm thấy <span className="font-bold text-eco-700">{filteredProducts.length}</span> món đồ sẵn sàng giao dịch gặp mặt
+            Tìm thấy <span className="font-bold text-eco-700">{filteredProducts.length}</span> món đồ sẵn sàng giao dịch gặp mặt trực tiếp (AVAILABLE)
           </p>
         </div>
 
@@ -161,14 +360,15 @@ export const ExplorePage: React.FC = () => {
               type="text"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              placeholder="Tìm kiếm sản phẩm..."
-              className="w-full text-sm bg-white border border-slate-200/90 rounded-full pl-10 pr-4 py-2.5 text-charcoal-900 focus:outline-none focus:ring-4 focus:ring-eco-500/15 focus:border-eco-500 shadow-soft"
+              placeholder="Tìm theo tiêu đề, mô tả hoặc danh mục..."
+              className="w-full text-xs sm:text-sm bg-white border border-slate-200/90 rounded-full pl-10 pr-4 py-2.5 text-charcoal-900 focus:outline-none focus:ring-4 focus:ring-eco-500/15 focus:border-eco-500 shadow-soft"
             />
             <Search className="w-4 h-4 text-sand-400 absolute left-3.5 top-3 pointer-events-none" />
             {searchTerm && (
               <button
                 onClick={() => setSearchTerm('')}
                 className="absolute right-3.5 top-3 text-sand-400 hover:text-charcoal-700"
+                aria-label="Xóa từ khóa"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -178,7 +378,7 @@ export const ExplorePage: React.FC = () => {
           {/* Mobile Filter Drawer Button */}
           <button
             onClick={() => setIsMobileFilterOpen(true)}
-            className="lg:hidden flex items-center gap-1.5 px-4 py-2.5 bg-white border border-slate-200 rounded-full text-xs font-bold text-charcoal-800 shadow-soft hover:bg-slate-50"
+            className="lg:hidden flex items-center gap-1.5 px-4 py-2.5 bg-white border border-slate-200 rounded-full text-xs font-bold text-charcoal-800 shadow-soft hover:bg-slate-50 flex-shrink-0"
           >
             <Filter className="w-4 h-4 text-eco-700" />
             <span>Bộ lọc</span>
@@ -188,7 +388,7 @@ export const ExplorePage: React.FC = () => {
 
       {/* 2. ACTIVE FILTER CHIPS */}
       {hasActiveFilters && (
-        <div className="flex flex-wrap items-center gap-2 mb-6 p-3.5 bg-white rounded-2xl border border-slate-200/80 text-xs shadow-soft">
+        <div className="flex flex-wrap items-center gap-2 p-3.5 bg-white rounded-2xl border border-slate-200/80 text-xs shadow-soft">
           <span className="font-bold text-sand-500 mr-1">Đang lọc theo:</span>
 
           {searchTerm && (
@@ -230,16 +430,25 @@ export const ExplorePage: React.FC = () => {
           {selectedProvince !== 'all' && (
             <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-eco-100 text-eco-800 font-semibold border border-eco-200/60 shadow-subtle">
               Khu vực: {selectedProvince}
-              <button onClick={() => setSelectedProvince('all')} className="hover:text-eco-950">
+              <button onClick={() => handleProvinceChange('all')} className="hover:text-eco-950">
                 <X className="w-3 h-3" />
               </button>
             </span>
           )}
 
-          {priceRange !== 'all' && (
+          {selectedDistrict !== 'all' && (
             <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-eco-100 text-eco-800 font-semibold border border-eco-200/60 shadow-subtle">
-              Khoảng giá
-              <button onClick={() => setPriceRange('all')} className="hover:text-eco-950">
+              Quận/Huyện: {selectedDistrict}
+              <button onClick={() => setSelectedDistrict('all')} className="hover:text-eco-950">
+                <X className="w-3 h-3" />
+              </button>
+            </span>
+          )}
+
+          {(priceMin !== '' || priceMax !== '') && (
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-eco-100 text-eco-800 font-semibold border border-eco-200/60 shadow-subtle">
+              Khoảng giá: {priceMin ? `${Number(priceMin).toLocaleString('vi-VN')}₫` : '0₫'} - {priceMax ? `${Number(priceMax).toLocaleString('vi-VN')}₫` : 'Vô cực'}
+              <button onClick={() => applyPricePreset('all')} className="hover:text-eco-950">
                 <X className="w-3 h-3" />
               </button>
             </span>
@@ -338,17 +547,40 @@ export const ExplorePage: React.FC = () => {
             {/* Filter: Location Province */}
             <div className="pt-4 border-t border-slate-100">
               <label className="block text-xs font-bold text-charcoal-800 uppercase tracking-wider mb-2.5">
-                Khu vực địa phương
+                Tỉnh / Thành phố
               </label>
               <select
                 value={selectedProvince}
-                onChange={(e) => setSelectedProvince(e.target.value)}
+                onChange={(e) => handleProvinceChange(e.target.value)}
                 className="w-full text-xs bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-charcoal-800 focus:outline-none focus:ring-4 focus:ring-eco-500/15 font-medium"
               >
-                <option value="all">Toàn quốc (Tất cả khu vực)</option>
+                <option value="all">Toàn quốc (Tất cả tỉnh/thành)</option>
                 {provinces.map((prov) => (
                   <option key={prov} value={prov}>
                     {prov}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* Filter: Dependent District */}
+            <div>
+              <label className="block text-xs font-bold text-charcoal-800 uppercase tracking-wider mb-2.5">
+                Quận / Huyện {selectedProvince === 'all' && <span className="text-sand-400 font-normal">(Chọn tỉnh trước)</span>}
+              </label>
+              <select
+                value={selectedDistrict}
+                disabled={selectedProvince === 'all'}
+                onChange={(e) => {
+                  setSelectedDistrict(e.target.value);
+                  setCurrentPage(1);
+                }}
+                className="w-full text-xs bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-charcoal-800 focus:outline-none focus:ring-4 focus:ring-eco-500/15 font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                <option value="all">Tất cả quận/huyện</option>
+                {availableDistricts.map((dist) => (
+                  <option key={dist} value={dist}>
+                    {dist}
                   </option>
                 ))}
               </select>
@@ -376,12 +608,52 @@ export const ExplorePage: React.FC = () => {
               </div>
             </div>
 
-            {/* Filter: Price Range */}
-            <div className="pt-4 border-t border-slate-100">
-              <label className="block text-xs font-bold text-charcoal-800 uppercase tracking-wider mb-2.5">
+            {/* Filter: Custom From / To Price Inputs */}
+            <div className="pt-4 border-t border-slate-100 space-y-3">
+              <label className="block text-xs font-bold text-charcoal-800 uppercase tracking-wider">
                 Khoảng giá (VNĐ)
               </label>
-              <div className="space-y-1.5 text-xs">
+
+              {/* Custom From / To inputs */}
+              <div className="grid grid-cols-2 gap-2 text-xs">
+                <div>
+                  <label className="block text-[11px] text-sand-500 mb-1">Từ (VNĐ)</label>
+                  <input
+                    type="number"
+                    min={0}
+                    step={50000}
+                    value={priceMin}
+                    onChange={(e) => handlePriceMinChange(e.target.value)}
+                    placeholder="0"
+                    className="w-full p-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-charcoal-900 focus:outline-none focus:ring-2 focus:ring-eco-500/20"
+                  />
+                </div>
+                <div>
+                  <label className="block text-[11px] text-sand-500 mb-1">Đến (VNĐ)</label>
+                  <input
+                    type="number"
+                    min={0}
+                    step={50000}
+                    value={priceMax}
+                    onChange={(e) => handlePriceMaxChange(e.target.value)}
+                    placeholder="Vô cực"
+                    className="w-full p-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-charcoal-900 focus:outline-none focus:ring-2 focus:ring-eco-500/20"
+                  />
+                </div>
+              </div>
+
+              {priceError && (
+                <div className="p-2.5 bg-rose-50 border border-rose-200 rounded-xl text-[11px] text-rose-700 flex items-start gap-1.5">
+                  <AlertCircle className="w-3.5 h-3.5 flex-shrink-0 mt-0.5" />
+                  <span>{priceError}</span>
+                </div>
+              )}
+
+              {/* Quick Presets */}
+              <div className="space-y-1 text-xs pt-1">
+                <span className="block text-[10px] font-bold text-sand-400 uppercase tracking-wider mb-1">
+                  Mức giá gợi ý nhanh
+                </span>
                 {[
                   { id: 'all', label: 'Tất cả mức giá' },
                   { id: 'under500k', label: 'Dưới 500.000₫' },
@@ -391,11 +663,11 @@ export const ExplorePage: React.FC = () => {
                 ].map((range) => (
                   <button
                     key={range.id}
-                    onClick={() => setPriceRange(range.id)}
-                    className={`w-full text-left px-3.5 py-2 rounded-xl transition-all ${
-                      priceRange === range.id
-                        ? 'bg-eco-50 text-eco-900 font-bold border-l-2 border-eco-600'
-                        : 'text-sand-700 hover:bg-slate-50'
+                    onClick={() => applyPricePreset(range.id)}
+                    className={`w-full text-left px-3 py-1.5 rounded-lg transition-all ${
+                      pricePreset === range.id
+                        ? 'bg-eco-100 text-eco-900 font-bold'
+                        : 'text-sand-600 hover:bg-slate-50'
                     }`}
                   >
                     {range.label}
@@ -406,67 +678,174 @@ export const ExplorePage: React.FC = () => {
           </div>
         </aside>
 
-        {/* PRODUCT GRID & SORT CONTROLS */}
+        {/* PRODUCT GRID & CONTROLS */}
         <div className="lg:col-span-3 space-y-6">
-          {/* Sorting Bar */}
-          <div className="flex items-center justify-between bg-white p-3.5 px-5 rounded-2xl border border-slate-200/80 shadow-soft">
-            <span className="text-xs text-sand-500 font-medium">
-              Hiển thị <span className="font-bold text-charcoal-900">{filteredProducts.length}</span> kết quả
-            </span>
-
-            <div className="flex items-center gap-2 text-xs">
-              <span className="text-sand-500 hidden sm:inline font-medium">Sắp xếp:</span>
-              <select
-                value={sortBy}
-                onChange={(e) => setSortBy(e.target.value)}
-                className="bg-slate-50 border border-slate-200 rounded-xl px-3 py-1.5 text-xs font-semibold text-charcoal-800 focus:outline-none focus:ring-4 focus:ring-eco-500/15"
+          {/* TAB BAR & SORTING HEADER */}
+          <div className="bg-white p-3.5 sm:p-4 rounded-3xl border border-slate-200/80 shadow-soft flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            {/* Latest and Featured Tabs */}
+            <div className="flex items-center gap-1.5 p-1 bg-slate-100 rounded-2xl self-start sm:self-auto">
+              <button
+                onClick={() => {
+                  setActiveTab('latest');
+                  setSortBy('default');
+                }}
+                className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
+                  activeTab === 'latest' && sortBy === 'default'
+                    ? 'bg-white text-eco-900 shadow-subtle'
+                    : 'text-sand-600 hover:text-charcoal-900'
+                }`}
               >
-                <option value="newest">Mới đăng nhất</option>
-                <option value="price-asc">Giá: Thấp đến cao</option>
-                <option value="price-desc">Giá: Cao đến thấp</option>
-                <option value="views">Lượt xem nhiều nhất</option>
-              </select>
+                <Sparkles className="w-3.5 h-3.5 text-eco-600" />
+                <span>Mới nhất</span>
+              </button>
+
+              <button
+                onClick={() => {
+                  setActiveTab('featured');
+                  setSortBy('default');
+                }}
+                className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
+                  activeTab === 'featured' && sortBy === 'default'
+                    ? 'bg-white text-eco-900 shadow-subtle'
+                    : 'text-sand-600 hover:text-charcoal-900'
+                }`}
+              >
+                <span>Nổi bật</span>
+              </button>
+            </div>
+
+            {/* Secondary Sort & Count */}
+            <div className="flex items-center justify-between sm:justify-end gap-3 text-xs w-full sm:w-auto">
+              <span className="text-sand-500 font-medium">
+                <span className="font-bold text-charcoal-900">{filteredProducts.length}</span> sản phẩm
+              </span>
+
+              <div className="flex items-center gap-1.5">
+                <select
+                  value={sortBy}
+                  onChange={(e) => setSortBy(e.target.value)}
+                  className="bg-slate-50 border border-slate-200 rounded-xl px-3 py-1.5 text-xs font-semibold text-charcoal-800 focus:outline-none focus:ring-4 focus:ring-eco-500/15"
+                >
+                  <option value="default">Sắp xếp mặc định</option>
+                  <option value="price-asc">Giá: Thấp đến cao</option>
+                  <option value="price-desc">Giá: Cao đến thấp</option>
+                  <option value="views">Lượt xem nhiều nhất</option>
+                </select>
+              </div>
             </div>
           </div>
 
-          {/* Product Grid */}
+          {/* Product Grid or Empty State */}
           {filteredProducts.length === 0 ? (
-            <div className="p-12 text-center bg-white rounded-3xl border border-slate-200 space-y-4">
-              <div className="w-16 h-16 rounded-full bg-slate-100 text-sand-400 flex items-center justify-center mx-auto">
-                <Search className="w-8 h-8" />
+            <div className="space-y-8">
+              {/* MSG 10_1 Empty state */}
+              <div className="p-10 sm:p-14 text-center bg-white rounded-3xl border border-slate-200/90 shadow-soft space-y-4">
+                <div className="w-16 h-16 rounded-2xl bg-slate-100 text-sand-400 flex items-center justify-center mx-auto shadow-subtle">
+                  <Search className="w-8 h-8" />
+                </div>
+                <h3 className="text-lg font-bold text-charcoal-900">
+                  Không tìm thấy sản phẩm phù hợp. Hãy thử thay đổi từ khóa hoặc bộ lọc!
+                </h3>
+                <p className="text-xs sm:text-sm text-sand-500 max-w-md mx-auto">
+                  Hãy thử nới lỏng các tiêu chí lọc giá, xóa tìm kiếm từ khóa hoặc khôi phục lại bộ lọc mặc định.
+                </p>
+                <div className="pt-2">
+                  <button
+                    onClick={handleClearFilters}
+                    className="px-6 py-2.5 bg-gradient-to-r from-eco-600 via-eco-700 to-teal-600 text-white rounded-xl text-xs sm:text-sm font-bold hover:shadow-md transition-all"
+                  >
+                    Xóa toàn bộ bộ lọc
+                  </button>
+                </div>
               </div>
-              <h3 className="text-lg font-bold text-charcoal-900">
-                Không tìm thấy món đồ phù hợp
-              </h3>
-              <p className="text-xs sm:text-sm text-sand-500 max-w-md mx-auto">
-                Hãy thử nới lỏng các tiêu chí lọc, tìm từ khóa ngắn hơn hoặc khôi phục lại bộ lọc mặc định.
-              </p>
-              <button
-                onClick={handleClearFilters}
-                className="mt-2 px-6 py-2.5 bg-gradient-to-r from-eco-600 to-teal-600 text-white rounded-full text-xs sm:text-sm font-bold hover:shadow-md transition-all"
-              >
-                Xóa toàn bộ bộ lọc
-              </button>
+
+              {/* 6 Newest recommendations */}
+              <div className="space-y-4 pt-4 border-t border-slate-200">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <Sparkles className="w-4 h-4 text-eco-600" />
+                    <h3 className="text-base sm:text-lg font-black text-charcoal-900">
+                      Gợi ý cho bạn: 6 sản phẩm mới nhất trên ReLoop
+                    </h3>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
+                  {recommendedNewest.map((prod) => (
+                    <ProductCard key={prod.id} product={prod} variant="standard" />
+                  ))}
+                </div>
+              </div>
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
-              {filteredProducts.map((prod) => (
-                <ProductCard key={prod.id} product={prod} variant="standard" />
-              ))}
-            </div>
+            <>
+              {/* Product Grid (max 12 per page) */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
+                {paginatedProducts.map((prod) => (
+                  <ProductCard key={prod.id} product={prod} variant="standard" />
+                ))}
+              </div>
+
+              {/* 4. PAGINATION CONTROLS */}
+              {totalPages > 1 && (
+                <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-6 border-t border-slate-200 text-xs">
+                  <span className="text-sand-500">
+                    Hiển thị trang <span className="font-bold text-charcoal-900">{currentPage}</span> / <span className="font-bold text-charcoal-900">{totalPages}</span> ({filteredProducts.length} sản phẩm)
+                  </span>
+
+                  <div className="flex items-center gap-1.5">
+                    {/* Previous Button */}
+                    <button
+                      onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+                      disabled={currentPage === 1}
+                      className="px-3.5 py-2 rounded-xl bg-white border border-slate-200 text-charcoal-800 font-bold hover:bg-slate-50 disabled:opacity-40 disabled:cursor-not-allowed transition-all flex items-center gap-1 shadow-subtle"
+                    >
+                      <ChevronLeft className="w-4 h-4" />
+                      <span>Trước</span>
+                    </button>
+
+                    {/* Page Numbers */}
+                    {Array.from({ length: totalPages }, (_, idx) => idx + 1).map((pageNum) => (
+                      <button
+                        key={pageNum}
+                        onClick={() => setCurrentPage(pageNum)}
+                        className={`w-9 h-9 rounded-xl font-bold transition-all text-xs ${
+                          currentPage === pageNum
+                            ? 'bg-gradient-to-r from-eco-700 to-teal-600 text-white shadow-glow-emerald'
+                            : 'bg-white border border-slate-200 text-charcoal-700 hover:bg-slate-50'
+                        }`}
+                      >
+                        {pageNum}
+                      </button>
+                    ))}
+
+                    {/* Next Button */}
+                    <button
+                      onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+                      disabled={currentPage === totalPages}
+                      className="px-3.5 py-2 rounded-xl bg-white border border-slate-200 text-charcoal-800 font-bold hover:bg-slate-50 disabled:opacity-40 disabled:cursor-not-allowed transition-all flex items-center gap-1 shadow-subtle"
+                    >
+                      <span>Sau</span>
+                      <ChevronRight className="w-4 h-4" />
+                    </button>
+                  </div>
+                </div>
+              )}
+            </>
           )}
         </div>
       </div>
 
-      {/* MOBILE FILTER MODAL DRAWER */}
+      {/* 5. MOBILE FILTER DRAWER */}
       {isMobileFilterOpen && (
-        <div className="fixed inset-0 z-50 overflow-y-auto bg-charcoal-900/60 backdrop-blur-sm lg:hidden flex justify-end">
-          <div className="bg-white w-full max-w-[280px] sm:max-w-xs h-full p-5 sm:p-6 overflow-y-auto space-y-6 animate-slide-up">
+        <div className="fixed inset-0 z-50 overflow-y-auto bg-charcoal-900/60 backdrop-blur-sm lg:hidden flex justify-end animate-fade-in">
+          <div className="bg-white w-full max-w-[320px] sm:max-w-xs h-full p-5 sm:p-6 overflow-y-auto space-y-6 animate-slide-up">
             <div className="flex items-center justify-between pb-4 border-b border-sand-100">
               <h3 className="font-bold text-sm text-charcoal-900">Bộ lọc tìm kiếm</h3>
               <button
                 onClick={() => setIsMobileFilterOpen(false)}
-                className="text-sand-400 hover:text-charcoal-700"
+                className="text-sand-400 hover:text-charcoal-700 p-1"
+                aria-label="Đóng bộ lọc"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -478,7 +857,7 @@ export const ExplorePage: React.FC = () => {
               <select
                 value={selectedCategory}
                 onChange={(e) => setSelectedCategory(e.target.value)}
-                className="w-full text-xs bg-sand-50 border border-sand-200 rounded-xl p-2.5"
+                className="w-full text-xs bg-slate-50 border border-slate-200 rounded-xl p-2.5"
               >
                 <option value="all">Tất cả ngành hàng</option>
                 {categories.map((c) => (
@@ -489,13 +868,13 @@ export const ExplorePage: React.FC = () => {
               </select>
             </div>
 
-            {/* Mobile Location */}
+            {/* Mobile Province */}
             <div>
-              <label className="block text-xs font-bold text-charcoal-800 mb-2">Khu vực</label>
+              <label className="block text-xs font-bold text-charcoal-800 mb-2">Tỉnh / Thành phố</label>
               <select
                 value={selectedProvince}
-                onChange={(e) => setSelectedProvince(e.target.value)}
-                className="w-full text-xs bg-sand-50 border border-sand-200 rounded-xl p-2.5"
+                onChange={(e) => handleProvinceChange(e.target.value)}
+                className="w-full text-xs bg-slate-50 border border-slate-200 rounded-xl p-2.5"
               >
                 <option value="all">Toàn quốc</option>
                 {provinces.map((prov) => (
@@ -506,17 +885,95 @@ export const ExplorePage: React.FC = () => {
               </select>
             </div>
 
+            {/* Mobile Dependent District */}
+            <div>
+              <label className="block text-xs font-bold text-charcoal-800 mb-2">Quận / Huyện</label>
+              <select
+                value={selectedDistrict}
+                disabled={selectedProvince === 'all'}
+                onChange={(e) => setSelectedDistrict(e.target.value)}
+                className="w-full text-xs bg-slate-50 border border-slate-200 rounded-xl p-2.5 disabled:opacity-50"
+              >
+                <option value="all">Tất cả quận/huyện</option>
+                {availableDistricts.map((dist) => (
+                  <option key={dist} value={dist}>
+                    {dist}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* Mobile Transaction Type */}
+            <div>
+              <label className="block text-xs font-bold text-charcoal-800 mb-2">Hình thức</label>
+              <select
+                value={selectedType}
+                onChange={(e) => setSelectedType(e.target.value)}
+                className="w-full text-xs bg-slate-50 border border-slate-200 rounded-xl p-2.5"
+              >
+                <option value="all">Tất cả hình thức</option>
+                <option value="EXCHANGE">Đổi đồ</option>
+                <option value="SELL">Bán</option>
+                <option value="BOTH">Cả hai</option>
+              </select>
+            </div>
+
+            {/* Mobile Condition */}
+            <div>
+              <label className="block text-xs font-bold text-charcoal-800 mb-2">Tình trạng</label>
+              <select
+                value={selectedCondition}
+                onChange={(e) => setSelectedCondition(e.target.value)}
+                className="w-full text-xs bg-slate-50 border border-slate-200 rounded-xl p-2.5"
+              >
+                <option value="all">Mọi tình trạng</option>
+                {['Mới 99%', 'Còn tốt', 'Đã sử dụng nhiều', 'Cần sửa chữa'].map((cond) => (
+                  <option key={cond} value={cond}>
+                    {cond}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* Mobile Price Inputs */}
+            <div>
+              <label className="block text-xs font-bold text-charcoal-800 mb-2">Khoảng giá (VNĐ)</label>
+              <div className="grid grid-cols-2 gap-2 text-xs">
+                <input
+                  type="number"
+                  min={0}
+                  step={50000}
+                  value={priceMin}
+                  onChange={(e) => handlePriceMinChange(e.target.value)}
+                  placeholder="Từ..."
+                  className="p-2 bg-slate-50 border border-slate-200 rounded-xl text-xs"
+                />
+                <input
+                  type="number"
+                  min={0}
+                  step={50000}
+                  value={priceMax}
+                  onChange={(e) => handlePriceMaxChange(e.target.value)}
+                  placeholder="Đến..."
+                  className="p-2 bg-slate-50 border border-slate-200 rounded-xl text-xs"
+                />
+              </div>
+              {priceError && (
+                <p className="text-[11px] text-rose-600 mt-1 font-medium">{priceError}</p>
+              )}
+            </div>
+
             {/* Mobile Form actions */}
             <div className="pt-6 border-t border-sand-100 flex items-center gap-3">
               <button
                 onClick={handleClearFilters}
-                className="flex-1 py-2.5 border border-sand-200 text-xs font-semibold text-charcoal-700 rounded-xl"
+                className="flex-1 py-2.5 border border-slate-200 text-xs font-semibold text-charcoal-700 rounded-xl hover:bg-slate-50"
               >
                 Đặt lại
               </button>
               <button
                 onClick={() => setIsMobileFilterOpen(false)}
-                className="flex-1 py-2.5 bg-eco-800 text-white text-xs font-semibold rounded-xl"
+                className="flex-1 py-2.5 bg-gradient-to-r from-eco-700 to-teal-600 text-white text-xs font-bold rounded-xl shadow-glow-emerald"
               >
                 Áp dụng
               </button>

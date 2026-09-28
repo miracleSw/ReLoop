@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useApp } from '../../context/AppContext';
 import { StatusBadge } from '../../components/common/StatusBadge';
@@ -21,8 +21,12 @@ import {
   Sparkles,
   Info,
   ChevronRight,
+  ChevronLeft,
   ShieldAlert,
-  ArrowRight
+  ArrowRight,
+  Edit,
+  X,
+  Maximize2
 } from 'lucide-react';
 
 export const ProductDetailPage: React.FC = () => {
@@ -37,6 +41,9 @@ export const ProductDetailPage: React.FC = () => {
     createBarterRequest,
     createBuyRequest,
     reviews,
+    showToast,
+    incrementProductViews,
+    openLoginPrompt,
   } = useApp();
 
   const product = products.find((p) => p.id === id);
@@ -44,6 +51,8 @@ export const ProductDetailPage: React.FC = () => {
   const isFavorite = product ? favorites.includes(product.id) : false;
 
   const [activeImageIndex, setActiveImageIndex] = useState(0);
+  const [isLightboxOpen, setIsLightboxOpen] = useState(false);
+  const [lightboxIndex, setLightboxIndex] = useState(0);
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
   const [isBarterModalOpen, setIsBarterModalOpen] = useState(false);
   const [isBuyModalOpen, setIsBuyModalOpen] = useState(false);
@@ -61,24 +70,57 @@ export const ProductDetailPage: React.FC = () => {
   const [buyLocationPref, setBuyLocationPref] = useState<string>('');
   const [buyError, setBuyError] = useState<string>('');
 
-  if (!product || !seller) {
+  const [touchStartX, setTouchStartX] = useState<number | null>(null);
+
+  const isOwner = Boolean(currentUser && seller && currentUser.id === seller.id);
+
+  // Status validation: Locked, Removed, Nonexistent or unauthorized Hidden product behavior (MSG 11_1)
+  const isInvalid =
+    !product ||
+    !seller ||
+    product.status === 'LOCKED' ||
+    product.status === 'REMOVED' ||
+    (product.status === 'HIDDEN' && !isOwner && currentUser?.role !== 'ADMIN');
+
+  // Increment product views on mount (simulated view tracking, only for valid listings)
+  useEffect(() => {
+    if (product && product.id && !isInvalid) {
+      incrementProductViews(product.id);
+    }
+  }, [product?.id, isInvalid]);
+
+  useEffect(() => {
+    if (isInvalid) {
+      showToast('Bài đăng không tồn tại hoặc đã bị gỡ bỏ!', 'error');
+      navigate('/', { replace: true });
+    }
+  }, [isInvalid, navigate, showToast]);
+
+  // Lightbox keyboard navigation
+  useEffect(() => {
+    if (!isLightboxOpen || !product) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setIsLightboxOpen(false);
+      if (e.key === 'ArrowRight') setLightboxIndex((prev) => (prev + 1) % product.images.length);
+      if (e.key === 'ArrowLeft') setLightboxIndex((prev) => (prev - 1 + product.images.length) % product.images.length);
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isLightboxOpen, product]);
+
+  if (isInvalid || !product || !seller) {
     return (
-      <div className="max-w-4xl mx-auto px-4 py-20 text-center">
-        <h2 className="text-2xl font-bold text-charcoal-900">Sản phẩm không tồn tại hoặc đã bị gỡ</h2>
-        <p className="text-sand-600 mt-2 text-sm">
-          Bài đăng có thể đã hết hạn hoặc được chủ bài đăng đóng lại.
+      <div className="max-w-4xl mx-auto px-4 py-20 text-center space-y-4">
+        <div className="w-16 h-16 rounded-2xl bg-rose-50 text-rose-500 border border-rose-200 flex items-center justify-center mx-auto">
+          <ShieldAlert className="w-8 h-8" />
+        </div>
+        <h2 className="text-2xl font-bold text-charcoal-900">Bài đăng không tồn tại hoặc đã bị gỡ bỏ!</h2>
+        <p className="text-sand-600 text-sm max-w-md mx-auto">
+          Sản phẩm có thể đã được gỡ hoặc bị tạm khóa do vi phạm tiêu chuẩn cộng đồng. Đang đưa bạn về trang chủ...
         </p>
-        <Link
-          to="/explore"
-          className="mt-6 inline-block px-6 py-2.5 bg-eco-800 text-white rounded-xl text-sm font-semibold"
-        >
-          Khám phá sản phẩm khác
-        </Link>
       </div>
     );
   }
-
-  const isOwner = currentUser?.id === seller.id;
 
   // My available products for exchange
   const myAvailableProducts = products.filter(
@@ -93,10 +135,15 @@ export const ProductDetailPage: React.FC = () => {
     .filter((p) => p.categoryId === product.categoryId && p.id !== product.id && p.status === 'AVAILABLE')
     .slice(0, 4);
 
+  // Mask seller phone number for public privacy (BR 12_1)
+  const maskedPhone = seller.phone
+    ? `${seller.phone.slice(0, 3)}****${seller.phone.slice(-3)}`
+    : '090****589';
+
   const handleBarterSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!currentUser) {
-      navigate('/login');
+      openLoginPrompt('Vui lòng đăng nhập để gửi đề nghị trao đổi đồ!');
       return;
     }
     if (!selectedMyProductId) {
@@ -124,7 +171,7 @@ export const ProductDetailPage: React.FC = () => {
   const handleBuySubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!currentUser) {
-      navigate('/login');
+      openLoginPrompt('Vui lòng đăng nhập để gửi đề xuất mua sản phẩm!');
       return;
     }
     if (!buyOfferedPrice || buyOfferedPrice <= 0) {
@@ -145,8 +192,13 @@ export const ProductDetailPage: React.FC = () => {
     }
   };
 
+  const openLightboxWithIndex = (idx: number) => {
+    setLightboxIndex(idx);
+    setIsLightboxOpen(true);
+  };
+
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-12">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-10">
       {/* 1. BREADCRUMBS */}
       <nav className="flex flex-wrap items-center gap-2 text-xs text-sand-500 font-medium">
         <Link to="/" className="hover:text-eco-700 transition-colors">
@@ -160,36 +212,86 @@ export const ProductDetailPage: React.FC = () => {
         <span className="text-charcoal-800 font-bold truncate max-w-[140px] sm:max-w-xs">{product.title}</span>
       </nav>
 
-      {/* 2. PRODUCT MAIN SHOWCASE */}
+      {/* 2. STATUS WARNING / SUCCESS BANNERS */}
+      {product.status === 'RESERVED' && (
+        <div className="p-4 sm:p-5 rounded-2xl bg-amber-50 border border-amber-200/90 text-amber-900 flex items-start gap-3.5 shadow-subtle animate-slide-up">
+          <div className="w-9 h-9 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center flex-shrink-0 mt-0.5">
+            <AlertTriangle className="w-5 h-5 text-amber-600" />
+          </div>
+          <div>
+            <span className="font-bold text-sm sm:text-base text-amber-950 block">
+              Đang có hẹn giao dịch (RESERVED)
+            </span>
+            <p className="text-xs sm:text-sm text-amber-800 mt-0.5 leading-relaxed">
+              Món đồ này đang trong quá trình hẹn gặp trực tiếp với một đối tác khác. Các chức năng gửi đề xuất mua hoặc đổi đồ đang tạm đóng.
+            </p>
+          </div>
+        </div>
+      )}
+
+      {product.status === 'COMPLETED' && (
+        <div className="p-4 sm:p-5 rounded-2xl bg-emerald-50 border border-emerald-200/90 text-emerald-900 flex items-start gap-3.5 shadow-subtle animate-slide-up">
+          <div className="w-9 h-9 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center flex-shrink-0 mt-0.5">
+            <CheckCircle2 className="w-5 h-5 text-emerald-600" />
+          </div>
+          <div>
+            <span className="font-bold text-sm sm:text-base text-emerald-950 block">
+              Đã giao dịch thành công (COMPLETED)
+            </span>
+            <p className="text-xs sm:text-sm text-emerald-800 mt-0.5 leading-relaxed">
+              Món đồ này đã hoàn tất giao dịch gặp mặt trực tiếp và được các bên xác nhận thành công trên ReLoop.
+            </p>
+          </div>
+        </div>
+      )}
+
+      {/* 3. PRODUCT MAIN SHOWCASE */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
         {/* LEFT COLUMN: IMAGE GALLERY (7 COLS) */}
         <div className="lg:col-span-7 space-y-4">
-          {/* Main Large Image */}
-          <div className="relative aspect-[4/3] rounded-3xl overflow-hidden bg-white border border-slate-200/90 shadow-card">
+          {/* Main Large Image (clickable for Lightbox) */}
+          <div
+            onClick={() => openLightboxWithIndex(activeImageIndex)}
+            className="group relative aspect-[4/3] rounded-3xl overflow-hidden bg-white border border-slate-200/90 shadow-card cursor-zoom-in"
+            title="Bấm để mở xem ảnh phóng to"
+          >
             <img
               src={product.images[activeImageIndex]}
               alt={product.title}
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover group-hover:scale-102 transition-transform duration-300"
             />
+
             {/* Badges on image */}
-            <div className="absolute top-4 left-4 flex flex-col gap-2">
+            <div className="absolute top-4 left-4 flex flex-col gap-2 pointer-events-none">
               <span className="text-xs font-bold bg-white/95 backdrop-blur-md text-charcoal-900 px-3.5 py-1.5 rounded-full shadow-subtle border border-slate-100">
                 {product.condition}
               </span>
               <StatusBadge status={product.status} size="md" />
             </div>
 
-            <button
-              onClick={() => toggleFavorite(product.id)}
-              className={`absolute top-4 right-4 w-11 h-11 rounded-full flex items-center justify-center backdrop-blur-md transition-all shadow-subtle ${
-                isFavorite
-                  ? 'bg-rose-500 text-white shadow-glow-rose'
-                  : 'bg-white/90 text-charcoal-700 hover:bg-white hover:text-rose-500 hover:scale-105'
-              }`}
-              aria-label="Lưu tin yêu thích"
-            >
-              <Heart className={`w-5 h-5 ${isFavorite ? 'fill-current' : ''}`} />
-            </button>
+            {/* Expand indicator overlay */}
+            <div className="absolute bottom-4 right-4 bg-charcoal-900/60 backdrop-blur-md text-white px-3 py-1.5 rounded-full text-xs font-semibold flex items-center gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity">
+              <Maximize2 className="w-3.5 h-3.5" />
+              <span>Phóng to</span>
+            </div>
+
+            {/* Wishlist Heart Button (Hidden for post owner) */}
+            {!isOwner && (
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  toggleFavorite(product.id);
+                }}
+                className={`absolute top-4 right-4 w-11 h-11 rounded-full flex items-center justify-center backdrop-blur-md transition-all shadow-subtle ${
+                  isFavorite
+                    ? 'bg-rose-500 text-white shadow-glow-rose'
+                    : 'bg-white/90 text-charcoal-700 hover:bg-white hover:text-rose-500 hover:scale-105'
+                }`}
+                aria-label="Lưu tin yêu thích"
+              >
+                <Heart className={`w-5 h-5 ${isFavorite ? 'fill-current' : ''}`} />
+              </button>
+            )}
           </div>
 
           {/* Thumbnail Rail */}
@@ -204,6 +306,7 @@ export const ProductDetailPage: React.FC = () => {
                       ? 'border-eco-600 ring-4 ring-eco-500/20 shadow-glow-emerald scale-105'
                       : 'border-slate-200 opacity-70 hover:opacity-100 hover:border-slate-300'
                   }`}
+                  aria-label={`Ảnh ${idx + 1}`}
                 >
                   <img src={img} alt={`Thumb ${idx}`} className="w-full h-full object-cover" />
                 </button>
@@ -211,17 +314,29 @@ export const ProductDetailPage: React.FC = () => {
             </div>
           )}
 
-          {/* Safety & Location Guarantee Callout */}
-          <div className="p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-eco-50/80 via-teal-50/50 to-emerald-50/80 border border-eco-200/80 flex items-start gap-3.5 text-xs shadow-subtle">
-            <div className="w-8 h-8 rounded-xl bg-eco-100 text-eco-700 flex items-center justify-center flex-shrink-0 mt-0.5">
-              <ShieldCheck className="w-4 h-4 text-eco-700" />
+          {/* Location & Public Meetup Callout */}
+          <div className="p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-eco-50/80 via-teal-50/50 to-emerald-50/80 border border-eco-200/80 space-y-2.5 text-xs shadow-subtle">
+            <div className="flex items-start gap-3">
+              <div className="w-8 h-8 rounded-xl bg-eco-100 text-eco-700 flex items-center justify-center flex-shrink-0 mt-0.5">
+                <ShieldCheck className="w-4 h-4 text-eco-700" />
+              </div>
+              <div>
+                <span className="font-bold text-eco-950 text-sm">Cam kết giao dịch trực tiếp an toàn:</span>
+                <p className="text-eco-800 mt-0.5 leading-relaxed">
+                  Địa chỉ nhà riêng được bảo mật hoàn toàn. Người dùng chỉ hẹn gặp tại địa điểm công cộng đông người ban ngày (quán cafe, sảnh TTTM).
+                </p>
+              </div>
             </div>
-            <div>
-              <span className="font-bold text-eco-950 text-sm">Cam kết giao dịch trực tiếp an toàn:</span>
-              <p className="text-eco-800 mt-1 leading-relaxed">
-                Địa chỉ nhà riêng được bảo mật hoàn toàn. Người dùng chỉ hẹn gặp tại địa điểm công cộng đông người (quán cafe, sảnh TTTM ban ngày).
-              </p>
-            </div>
+
+            {/* Proposed Meetup Location */}
+            {product.proposedMeetupLocation && (
+              <div className="pt-2 border-t border-eco-200/60 flex items-start gap-2 text-eco-900 font-medium">
+                <MapPin className="w-4 h-4 text-eco-600 flex-shrink-0 mt-0.5" />
+                <span>
+                  <strong>Địa điểm công cộng đề xuất gặp mặt:</strong> {product.proposedMeetupLocation}
+                </span>
+              </div>
+            )}
           </div>
         </div>
 
@@ -312,76 +427,109 @@ export const ProductDetailPage: React.FC = () => {
               </div>
             </div>
 
-            {/* ACTION BUTTONS (The Core Differentiators) */}
+            {/* ACTION BUTTONS */}
             <div className="space-y-3 pt-2">
               {!isOwner ? (
                 <>
-                  {/* BARTER BUTTON (Primary CTA if exchangeable) */}
+                  {/* BARTER BUTTON */}
                   {(product.type === 'EXCHANGE' || product.type === 'BOTH') && (
                     <button
                       onClick={() => {
-                        if (!currentUser) navigate('/login');
-                        else setIsBarterModalOpen(true);
+                        if (!currentUser) {
+                          openLoginPrompt('Vui lòng đăng nhập để gửi đề nghị trao đổi đồ!');
+                        } else {
+                          setIsBarterModalOpen(true);
+                        }
                       }}
                       disabled={product.status !== 'AVAILABLE'}
-                      className="w-full py-4 px-6 rounded-2xl bg-gradient-to-r from-eco-700 via-eco-600 to-teal-600 hover:from-eco-600 hover:to-teal-500 active:scale-[0.98] disabled:opacity-50 text-white font-bold text-base shadow-glow-emerald hover:shadow-lg transition-all flex items-center justify-center gap-2.5"
+                      className="w-full py-4 px-6 rounded-2xl bg-gradient-to-r from-eco-700 via-eco-600 to-teal-600 hover:from-eco-600 hover:to-teal-500 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold text-base shadow-glow-emerald hover:shadow-lg transition-all flex items-center justify-center gap-2.5"
                     >
                       <ArrowRightLeft className="w-5 h-5 text-emerald-300" />
-                      <span>Đề nghị đổi đồ (Chọn đồ kho của bạn)</span>
+                      <span>
+                        {product.status === 'RESERVED'
+                          ? 'Đang có hẹn giao dịch'
+                          : product.status === 'COMPLETED'
+                          ? 'Đã giao dịch thành công'
+                          : 'Đề nghị đổi đồ (Chọn đồ kho của bạn)'}
+                      </span>
                     </button>
                   )}
 
-                  {/* BUY PROPOSAL BUTTON (if sellable) */}
+                  {/* BUY PROPOSAL BUTTON */}
                   {product.type !== 'EXCHANGE' && (
                     <button
                       onClick={() => {
-                        if (!currentUser) navigate('/login');
-                        else setIsBuyModalOpen(true);
+                        if (!currentUser) {
+                          openLoginPrompt('Vui lòng đăng nhập để gửi đề xuất mua sản phẩm!');
+                        } else {
+                          setIsBuyModalOpen(true);
+                        }
                       }}
                       disabled={product.status !== 'AVAILABLE'}
-                      className="w-full py-3.5 px-6 rounded-2xl bg-gradient-to-r from-clay-500 to-clay-600 hover:from-clay-400 hover:to-clay-500 active:scale-[0.98] disabled:opacity-50 text-white font-bold text-sm shadow-glow-clay transition-all flex items-center justify-center gap-2"
+                      className="w-full py-3.5 px-6 rounded-2xl bg-gradient-to-r from-clay-500 to-clay-600 hover:from-clay-400 hover:to-clay-500 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold text-sm shadow-glow-clay transition-all flex items-center justify-center gap-2"
                     >
-                      <span>Gửi đề xuất Mua trực tiếp</span>
+                      <span>
+                        {product.status === 'RESERVED'
+                          ? 'Đang có hẹn giao dịch'
+                          : product.status === 'COMPLETED'
+                          ? 'Đã giao dịch thành công'
+                          : 'Gửi đề xuất Mua trực tiếp'}
+                      </span>
                     </button>
                   )}
 
-                  {/* CONTACT SELLER (Phone & Zalo modal with safety guide) */}
+                  {/* CONTACT SELLER (Phone & Zalo modal with privacy mask) */}
                   <button
                     onClick={() => setIsContactModalOpen(true)}
                     className="w-full py-3.5 px-6 rounded-2xl bg-white hover:bg-slate-50 border border-slate-200 text-charcoal-800 font-bold text-sm shadow-subtle transition-all flex items-center justify-center gap-2"
                   >
                     <PhoneCall className="w-4 h-4 text-eco-700" />
-                    <span>Liên hệ người bán (Gọi điện / Zalo)</span>
+                    <span>Liên hệ người bán (Bảo mật quyền riêng tư)</span>
                   </button>
                 </>
               ) : (
-                <div className="p-4 bg-slate-100 rounded-2xl text-center text-xs text-sand-700 font-medium border border-slate-200">
-                  Đây là bài đăng thuộc sở hữu của bạn.
-                  <Link
-                    to={`/user/products`}
-                    className="block mt-1 font-bold text-eco-700 hover:underline"
-                  >
-                    Quản lý bài đăng trong Kho đồ cá nhân →
-                  </Link>
+                /* OWNER VIEW: Edit Post and Manage */
+                <div className="p-5 bg-gradient-to-br from-eco-50/70 via-white to-teal-50/60 rounded-3xl border border-eco-200 text-center space-y-3 shadow-soft">
+                  <div className="text-xs font-bold text-eco-900 flex items-center justify-center gap-1.5">
+                    <CheckCircle2 className="w-4 h-4 text-eco-600" />
+                    <span>Bài đăng này thuộc quyền sở hữu của bạn</span>
+                  </div>
+                  <div className="flex flex-col sm:flex-row items-center justify-center gap-2.5">
+                    <Link
+                      to={`/user/edit-listing/${product.id}`}
+                      className="w-full sm:w-auto px-5 py-2.5 bg-gradient-to-r from-eco-700 via-eco-600 to-teal-600 text-white rounded-xl text-xs font-bold shadow-glow-emerald hover:shadow-lg transition-all flex items-center justify-center gap-1.5"
+                    >
+                      <Edit className="w-3.5 h-3.5" />
+                      <span>Chỉnh sửa bài đăng</span>
+                    </Link>
+                    <Link
+                      to="/user/products"
+                      className="w-full sm:w-auto px-5 py-2.5 bg-white border border-slate-200 text-charcoal-800 rounded-xl text-xs font-bold hover:bg-slate-50 shadow-subtle transition-all"
+                    >
+                      Quản lý trong Kho đồ cá nhân →
+                    </Link>
+                  </div>
                 </div>
               )}
 
-              {/* Report button */}
-              <div className="flex items-center justify-end pt-1">
-                <button
-                  onClick={() => setIsReportModalOpen(true)}
-                  className="text-xs text-sand-400 hover:text-rose-600 flex items-center gap-1 transition-colors"
-                >
-                  <ShieldAlert className="w-3.5 h-3.5" />
-                  <span>Báo cáo bài đăng vi phạm</span>
-                </button>
-              </div>
+              {/* Report button (Visitors only) */}
+              {!isOwner && (
+                <div className="flex items-center justify-end pt-1">
+                  <button
+                    onClick={() => setIsReportModalOpen(true)}
+                    className="text-xs text-sand-400 hover:text-rose-600 flex items-center gap-1 transition-colors"
+                  >
+                    <ShieldAlert className="w-3.5 h-3.5" />
+                    <span>Báo cáo bài đăng vi phạm</span>
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         </div>
       </div>
 
-      {/* 3. PRODUCT SPECIFICATIONS & DESCRIPTION */}
+      {/* 4. PRODUCT SPECIFICATIONS & DESCRIPTION */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 pt-8 border-t border-slate-200">
         <div className="lg:col-span-2 space-y-6">
           <div className="p-6 sm:p-8 rounded-3xl bg-white border border-slate-200/90 shadow-soft space-y-4">
@@ -462,7 +610,7 @@ export const ProductDetailPage: React.FC = () => {
         </div>
       </div>
 
-      {/* 4. RELATED PRODUCTS */}
+      {/* 5. RELATED PRODUCTS */}
       {relatedProducts.length > 0 && (
         <section className="pt-8 border-t border-slate-200">
           <div className="flex items-center justify-between mb-6">
@@ -479,7 +627,109 @@ export const ProductDetailPage: React.FC = () => {
         </section>
       )}
 
-      {/* MODAL 1: CONTACT SELLER POPUP (UC12) */}
+      {/* LIGHTBOX MODAL */}
+      {isLightboxOpen && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          onClick={() => setIsLightboxOpen(false)}
+          className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex flex-col items-center justify-center p-4 select-none animate-fade-in"
+        >
+          {/* Top Bar */}
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="absolute top-4 left-4 right-4 flex items-center justify-between text-white z-10"
+          >
+            <span className="text-sm font-semibold bg-white/10 px-3 py-1.5 rounded-full backdrop-blur-md">
+              {lightboxIndex + 1} / {product.images.length}
+            </span>
+            <button
+              onClick={() => setIsLightboxOpen(false)}
+              className="p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors"
+              aria-label="Đóng ảnh phóng to"
+            >
+              <X className="w-6 h-6 text-white" />
+            </button>
+          </div>
+
+          {/* Main Image in Lightbox with touch gesture support */}
+          <div
+            onClick={(e) => e.stopPropagation()}
+            onTouchStart={(e) => setTouchStartX(e.touches[0].clientX)}
+            onTouchEnd={(e) => {
+              if (touchStartX === null || !product) return;
+              const touchEndX = e.changedTouches[0].clientX;
+              const diff = touchStartX - touchEndX;
+              if (Math.abs(diff) > 40) {
+                if (diff > 0) {
+                  // Swipe left -> next image
+                  setLightboxIndex((idx) => (idx + 1) % product.images.length);
+                } else {
+                  // Swipe right -> prev image
+                  setLightboxIndex((idx) => (idx - 1 + product.images.length) % product.images.length);
+                }
+              }
+              setTouchStartX(null);
+            }}
+            className="relative max-w-5xl max-h-[80vh] flex items-center justify-center overflow-hidden"
+          >
+            <img
+              src={product.images[lightboxIndex]}
+              alt={product.title}
+              className="max-w-full max-h-[80vh] object-contain rounded-2xl shadow-elevated"
+            />
+          </div>
+
+          {/* Navigation Controls */}
+          {product.images.length > 1 && (
+            <>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setLightboxIndex((idx) => (idx - 1 + product.images.length) % product.images.length);
+                }}
+                className="absolute left-4 top-1/2 -translate-y-1/2 p-3 rounded-full bg-white/10 hover:bg-white/25 text-white transition-colors"
+                aria-label="Ảnh trước"
+              >
+                <ChevronLeft className="w-6 h-6" />
+              </button>
+
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setLightboxIndex((idx) => (idx + 1) % product.images.length);
+                }}
+                className="absolute right-4 top-1/2 -translate-y-1/2 p-3 rounded-full bg-white/10 hover:bg-white/25 text-white transition-colors"
+                aria-label="Ảnh sau"
+              >
+                <ChevronRight className="w-6 h-6" />
+              </button>
+            </>
+          )}
+
+          {/* Bottom Thumbnails in Lightbox */}
+          {product.images.length > 1 && (
+            <div
+              onClick={(e) => e.stopPropagation()}
+              className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-2 overflow-x-auto max-w-md px-2 py-1 bg-black/40 backdrop-blur-md rounded-2xl"
+            >
+              {product.images.map((img, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => setLightboxIndex(idx)}
+                  className={`w-12 h-12 rounded-xl overflow-hidden border-2 transition-all flex-shrink-0 ${
+                    lightboxIndex === idx ? 'border-eco-500 scale-105' : 'border-transparent opacity-60'
+                  }`}
+                >
+                  <img src={img} alt={`Thumb ${idx}`} className="w-full h-full object-cover" />
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* MODAL 1: CONTACT SELLER POPUP (UC12 / Privacy compliant) */}
       {isContactModalOpen && (
         <div className="fixed inset-0 z-50 overflow-y-auto bg-charcoal-900/60 backdrop-blur-md flex items-center justify-center p-4">
           <div className="bg-white rounded-3xl max-w-md w-full max-h-[90vh] overflow-y-auto p-6 sm:p-8 shadow-elevated border border-slate-200 animate-slide-up relative">
@@ -495,45 +745,33 @@ export const ProductDetailPage: React.FC = () => {
               </p>
             </div>
 
-            {/* Mandatory Safety Notice (BR 12_1) */}
-            <div className="mt-5 p-3.5 bg-amber-50/80 rounded-2xl border border-amber-200/80 text-xs text-amber-900 leading-relaxed flex items-start gap-2.5">
+            {/* Privacy & Anti-Scam Notice (BR 12_1) */}
+            <div className="mt-5 p-3.5 bg-amber-50/90 rounded-2xl border border-amber-200 text-xs text-amber-900 leading-relaxed flex items-start gap-2.5">
               <AlertTriangle className="w-4 h-4 text-amber-600 flex-shrink-0 mt-0.5" />
               <div>
-                <strong>Cẩm nang an toàn:</strong> Ưu tiên hẹn gặp ban ngày, tại nơi công cộng đông người, kiểm tra kỹ hàng trước khi thanh toán.
+                <strong>Chính sách bảo mật quyền riêng tư:</strong> Để ngăn chặn lừa đảo chuyển cọc và bảo vệ thông tin cá nhân, số điện thoại đầy đủ chỉ được kích hoạt trong chi tiết Lịch hẹn sau khi hai bên xác nhận giao dịch gặp mặt trực tiếp.
               </div>
             </div>
 
-            {/* Contact Actions */}
+            {/* Masked Contact Info */}
             <div className="mt-6 space-y-3">
-              <a
-                href={`tel:${seller.phone}`}
-                className="w-full py-3.5 px-4 rounded-xl bg-gradient-to-r from-eco-700 via-eco-600 to-teal-600 hover:from-eco-600 hover:to-teal-500 text-white font-bold text-sm flex items-center justify-center gap-2 shadow-glow-emerald transition-all"
-              >
-                <PhoneCall className="w-4 h-4" />
-                <span>Gọi điện thoại: {seller.phone}</span>
-              </a>
+              <div className="p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-center">
+                <span className="text-xs text-sand-500 block mb-1">Số điện thoại bảo mật:</span>
+                <span className="text-base font-bold text-charcoal-900 font-mono tracking-wider">{maskedPhone}</span>
+              </div>
 
-              {seller.zaloPhone ? (
-                <a
-                  href={`https://zalo.me/${seller.zaloPhone}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full py-3.5 px-4 rounded-xl bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-400 hover:to-blue-500 text-white font-bold text-sm flex items-center justify-center gap-2 shadow-soft transition-all"
-                >
-                  <MessageSquare className="w-4 h-4" />
-                  <span>Mở chat Zalo ({seller.zaloPhone})</span>
-                </a>
-              ) : (
-                <div className="text-xs text-sand-400 text-center py-1">
-                  Người bán chưa kích hoạt liên kết Zalo.
-                </div>
-              )}
+              <div className="p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-center">
+                <span className="text-xs text-sand-500 block mb-1">Kênh nhắn tin Zalo:</span>
+                <span className="text-xs font-semibold text-charcoal-800">
+                  {seller.zaloPhone ? `Liên kết bảo mật theo SĐT (${maskedPhone})` : 'Chưa kích hoạt'}
+                </span>
+              </div>
             </div>
 
             <div className="mt-6 text-center">
               <button
                 onClick={() => setIsContactModalOpen(false)}
-                className="text-xs text-sand-500 hover:text-charcoal-800 font-semibold"
+                className="px-6 py-2.5 bg-slate-100 text-charcoal-800 rounded-xl text-xs font-bold hover:bg-slate-200 transition-colors"
               >
                 Đóng cửa sổ
               </button>

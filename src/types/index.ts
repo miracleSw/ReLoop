@@ -68,6 +68,13 @@ export interface Product {
   updatedAt: string;
   flagProhibited?: boolean;
   prohibitedKeywordFound?: string;
+  proposedMeetupLocation?: string;
+}
+
+export interface WishlistItem {
+  userId: string;
+  productId: string;
+  savedAt: string;
 }
 
 export type OfferStatus = 'PENDING' | 'ACCEPTED' | 'REJECTED' | 'CANCELLED' | 'ON_HOLD';

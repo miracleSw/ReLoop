@@ -41,8 +41,10 @@ export const Navbar: React.FC = () => {
 
   const notifRef = useRef<HTMLDivElement>(null);
   const userMenuRef = useRef<HTMLDivElement>(null);
-
-  const unreadNotifs = notifications.filter((n) => !n.isRead);
+  const userNotifications = currentUser
+    ? notifications.filter((n) => n.userId === currentUser.id)
+    : [];
+  const unreadNotifs = userNotifications.filter((n) => !n.isRead);
 
   // Close dropdowns on route change
   useEffect(() => {
@@ -277,12 +279,12 @@ export const Navbar: React.FC = () => {
                   </div>
 
                   <div className="max-h-80 overflow-y-auto divide-y divide-sand-50">
-                    {notifications.length === 0 ? (
+                    {userNotifications.length === 0 ? (
                       <div className="p-6 text-center text-sm text-sand-500">
                         Chưa có thông báo mới nào
                       </div>
                     ) : (
-                      notifications.slice(0, 5).map((n) => (
+                      userNotifications.slice(0, 5).map((n) => (
                         <Link
                           key={n.id}
                           to={n.link}

@@ -12,7 +12,8 @@ import {
   Notification,
   SystemStats,
   ProductStatus,
-  UserStatus
+  UserStatus,
+  WishlistItem
 } from '../types';
 import {
   mockUsers,
@@ -25,7 +26,8 @@ import {
   mockReviews,
   mockReports,
   mockNotifications,
-  mockSystemStats
+  mockSystemStats,
+  mockWishlist
 } from '../data/mockData';
 
 interface ToastState {
@@ -48,6 +50,7 @@ interface AppContextType {
   reports: Report[];
   notifications: Notification[];
   favorites: string[];
+  wishlist: WishlistItem[];
   stats: SystemStats;
   toasts: ToastState[];
   showToast: (message: string, type?: 'success' | 'error' | 'info' | 'warning') => void;
@@ -60,7 +63,15 @@ interface AppContextType {
   updateProduct: (id: string, updates: Partial<Product>) => void;
   deleteProduct: (id: string) => void;
   setProductStatus: (id: string, status: ProductStatus) => void;
-  toggleFavorite: (productId: string) => void;
+  toggleFavorite: (productId: string) => boolean;
+  removeFromWishlist: (productId: string) => void;
+  incrementProductViews: (productId: string) => void;
+  
+  // Login prompt modal
+  isLoginPromptOpen: boolean;
+  loginPromptMessage: string;
+  openLoginPrompt: (message?: string) => void;
+  closeLoginPrompt: () => void;
   
   // User actions
   updateProfile: (updates: Partial<User>) => void;
@@ -136,8 +147,19 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const [reviews, setReviews] = useState<Review[]>(() => getStored('reviews', mockReviews));
   const [reports, setReports] = useState<Report[]>(() => getStored('reports', mockReports));
   const [notifications, setNotifications] = useState<Notification[]>(() => getStored('notifications', mockNotifications));
-  const [favorites, setFavorites] = useState<string[]>(() => getStored('favorites', ['prod-1', 'prod-3']));
+  const [wishlist, setWishlist] = useState<WishlistItem[]>(() => getStored('wishlist', mockWishlist));
   const [toasts, setToasts] = useState<ToastState[]>([]);
+
+  // Login prompt modal state
+  const [isLoginPromptOpen, setIsLoginPromptOpen] = useState(false);
+  const [loginPromptMessage, setLoginPromptMessage] = useState('');
+  const openLoginPrompt = (message?: string) => {
+    setLoginPromptMessage(message || 'Vui lòng đăng nhập để lưu sản phẩm vào danh sách yêu thích!');
+    setIsLoginPromptOpen(true);
+  };
+  const closeLoginPrompt = () => {
+    setIsLoginPromptOpen(false);
+  };
 
   // Dynamic reactive stats computed live from state collections
   const stats: SystemStats = {
@@ -173,10 +195,16 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   useEffect(() => setStored('reviews', reviews), [reviews]);
   useEffect(() => setStored('reports', reports), [reports]);
   useEffect(() => setStored('notifications', notifications), [notifications]);
-  useEffect(() => setStored('favorites', favorites), [favorites]);
+  useEffect(() => setStored('wishlist', wishlist), [wishlist]);
 
   const currentUser = users.find((u) => u.id === currentUserId) || null;
   const currentRole = currentUser ? currentUser.role : 'GUEST';
+
+  // Derived favorites array for current user
+  const favorites = React.useMemo(() => {
+    if (!currentUser) return [];
+    return wishlist.filter((w) => w.userId === currentUser.id).map((w) => w.productId);
+  }, [wishlist, currentUser]);
 
   const showToast = (message: string, type: 'success' | 'error' | 'info' | 'warning' = 'success') => {
     const id = Date.now().toString() + Math.random().toString(36).substring(2, 5);
@@ -215,8 +243,50 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     setReviews(mockReviews);
     setReports(mockReports);
     setNotifications(mockNotifications);
-    setFavorites(['prod-1', 'prod-3']);
+    setWishlist(mockWishlist);
     showToast('Đã khôi phục dữ liệu mẫu ban đầu!', 'info');
+  };
+
+  // Helper: notify users who saved a product in their wishlist
+  const notifyWishlistSubscribers = (
+    productId: string,
+    event: 'PRICE_DROP' | 'RESERVED' | 'COMPLETED',
+    extra?: { oldPrice?: number; newPrice?: number; excludeUserIds?: string[] }
+  ) => {
+    const prod = products.find((p) => p.id === productId);
+    if (!prod) return;
+
+    const excluded = new Set([prod.sellerId, ...(extra?.excludeUserIds || [])]);
+    const wishers = wishlist.filter((w) => w.productId === productId && !excluded.has(w.userId));
+
+    if (wishers.length === 0) return;
+
+    let title = '';
+    let message = '';
+
+    if (event === 'PRICE_DROP') {
+      title = 'Giảm giá sản phẩm trong Yêu thích!';
+      message = `Sản phẩm "${prod.title}" trong danh sách yêu thích của bạn vừa giảm giá xuống còn ${extra?.newPrice?.toLocaleString('vi-VN')}₫ (${extra?.newPrice?.toLocaleString('vi-VN')} VNĐ)! (Giá cũ: ${extra?.oldPrice?.toLocaleString('vi-VN')}₫)`;
+    } else if (event === 'RESERVED') {
+      title = 'Sản phẩm yêu thích đang tạm giữ';
+      message = `Sản phẩm "${prod.title}" bạn quan tâm đã có người hẹn gặp / đang có hẹn giao dịch (RESERVED)!`;
+    } else if (event === 'COMPLETED') {
+      title = 'Sản phẩm yêu thích đã hoàn tất';
+      message = `Sản phẩm "${prod.title}" bạn quan tâm đã giao dịch thành công (COMPLETED)!`;
+    }
+
+    const newNotifs: Notification[] = wishers.map((w, idx) => ({
+      id: `notif-wl-${event}-${Date.now()}-${idx}-${Math.random().toString(36).substring(2, 6)}`,
+      userId: w.userId,
+      type: 'SYSTEM',
+      title,
+      message,
+      link: `/products/${productId}`,
+      isRead: false,
+      createdAt: new Date().toISOString(),
+    }));
+
+    setNotifications((prev) => [...newNotifs, ...prev]);
   };
 
   // Product operations
@@ -235,6 +305,11 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   };
 
   const updateProduct = (id: string, updates: Partial<Product>) => {
+    const oldProduct = products.find((p) => p.id === id);
+    if (oldProduct && updates.price !== undefined && oldProduct.price !== undefined && updates.price < oldProduct.price) {
+      notifyWishlistSubscribers(id, 'PRICE_DROP', { oldPrice: oldProduct.price, newPrice: updates.price });
+    }
+
     setProducts((prev) =>
       prev.map((p) => (p.id === id ? { ...p, ...updates, updatedAt: new Date().toISOString() } : p))
     );
@@ -243,10 +318,16 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   const deleteProduct = (id: string) => {
     setProducts((prev) => prev.filter((p) => p.id !== id));
+    setWishlist((prev) => prev.filter((w) => w.productId !== id));
     showToast('Đã xóa bài đăng khỏi hệ thống.', 'info');
   };
 
   const setProductStatus = (id: string, status: ProductStatus) => {
+    const prod = products.find((p) => p.id === id);
+    if (prod && (status === 'RESERVED' || status === 'COMPLETED')) {
+      notifyWishlistSubscribers(id, status);
+    }
+
     setProducts((prev) =>
       prev.map((p) => (p.id === id ? { ...p, status, updatedAt: new Date().toISOString() } : p))
     );
@@ -261,21 +342,53 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     showToast(`Trạng thái bài đăng chuyển sang: ${statusLabels[status]}`, 'info');
   };
 
-  const toggleFavorite = (productId: string) => {
-    setFavorites((prev) => {
-      const isFav = prev.includes(productId);
-      const next = isFav ? prev.filter((id) => id !== productId) : [...prev, productId];
-      showToast(isFav ? 'Đã xóa khỏi danh sách yêu thích' : 'Đã lưu vào danh sách yêu thích', 'info');
-      // Update count on product
+  const toggleFavorite = (productId: string): boolean => {
+    if (!currentUser) {
+      openLoginPrompt('Vui lòng đăng nhập để lưu sản phẩm vào danh sách yêu thích!');
+      return false;
+    }
+    const isFav = wishlist.some((w) => w.userId === currentUser.id && w.productId === productId);
+    if (isFav) {
+      setWishlist((prev) => prev.filter((w) => !(w.userId === currentUser.id && w.productId === productId)));
       setProducts((prods) =>
         prods.map((p) =>
-          p.id === productId
-            ? { ...p, favoritesCount: Math.max(0, p.favoritesCount + (isFav ? -1 : 1)) }
-            : p
+          p.id === productId ? { ...p, favoritesCount: Math.max(0, p.favoritesCount - 1) } : p
         )
       );
-      return next;
-    });
+      showToast('Đã xóa khỏi danh sách yêu thích', 'info');
+      return false;
+    } else {
+      const newItem: WishlistItem = {
+        userId: currentUser.id,
+        productId,
+        savedAt: new Date().toISOString(),
+      };
+      setWishlist((prev) => [newItem, ...prev]);
+      setProducts((prods) =>
+        prods.map((p) =>
+          p.id === productId ? { ...p, favoritesCount: p.favoritesCount + 1 } : p
+        )
+      );
+      showToast('Đã thêm vào danh sách yêu thích', 'success');
+      return true;
+    }
+  };
+
+  const removeFromWishlist = (productId: string) => {
+    if (!currentUser) return;
+    setWishlist((prev) => prev.filter((w) => !(w.userId === currentUser.id && w.productId === productId)));
+    setProducts((prods) =>
+      prods.map((p) =>
+        p.id === productId ? { ...p, favoritesCount: Math.max(0, p.favoritesCount - 1) } : p
+      )
+    );
+    showToast('Đã xóa khỏi danh sách yêu thích', 'info');
+  };
+
+  const incrementProductViews = (productId: string) => {
+    setProducts((prev) =>
+      prev.map((p) => (p.id === productId ? { ...p, views: p.views + 1 } : p))
+    );
   };
 
   // User profile
@@ -440,6 +553,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         p.id === req.targetProductId ? { ...p, status: 'RESERVED', updatedAt: new Date().toISOString() } : p
       )
     );
+    notifyWishlistSubscribers(req.targetProductId, 'RESERVED', { excludeUserIds: [req.senderId, req.receiverId] });
 
     // 5. Create Meetup Transaction
     const newTx: MeetupTransaction = {
@@ -529,6 +643,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         p.id === req.targetProductId ? { ...p, status: 'RESERVED', updatedAt: new Date().toISOString() } : p
       )
     );
+    notifyWishlistSubscribers(req.targetProductId, 'RESERVED', { excludeUserIds: [req.senderId, req.receiverId] });
 
     // 5. Create Meetup Transaction
     const newTx: MeetupTransaction = {
@@ -620,6 +735,10 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
           return p;
         })
       );
+      notifyWishlistSubscribers(tx.productId, 'COMPLETED', { excludeUserIds: [tx.buyerId, tx.sellerId] });
+      if (tx.offeredProductId) {
+        notifyWishlistSubscribers(tx.offeredProductId, 'COMPLETED', { excludeUserIds: [tx.buyerId, tx.sellerId] });
+      }
 
       // Auto-close any ON_HOLD offers for these products (UC14/15)
       setBarterRequests((prev) =>
@@ -714,7 +833,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const sendMessage = (transactionId: string, receiverId: string, content: string) => {
     if (!currentUser) return;
     const newMsg: Message = {
-      id: 'msg-' + Date.now(),
+      id: `msg-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`,
       transactionId,
       senderId: currentUser.id,
       receiverId,
@@ -927,6 +1046,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         reports,
         notifications,
         favorites,
+        wishlist,
         stats,
         toasts,
         showToast,
@@ -938,6 +1058,12 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         deleteProduct,
         setProductStatus,
         toggleFavorite,
+        removeFromWishlist,
+        incrementProductViews,
+        isLoginPromptOpen,
+        loginPromptMessage,
+        openLoginPrompt,
+        closeLoginPrompt,
         updateProfile,
         lockUser,
         unlockUser,

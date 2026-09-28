@@ -150,6 +150,8 @@ test-results/
 playwright-report/
 blob-report/
 playwright/.cache/
+*-results.json
+*-metrics.json
 
 
 # =========================================================

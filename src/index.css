@@ -67,4 +67,12 @@
   .ambient-glow-coral {
     background: radial-gradient(circle at 50% 50%, rgba(249, 115, 22, 0.1), transparent 70%);
   }
+
+  /* Robust chat bubble content wrapping */
+  .chat-bubble-content {
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    white-space: pre-wrap;
+    min-width: 0;
+  }
 }

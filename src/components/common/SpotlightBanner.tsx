@@ -528,7 +528,7 @@ export const SpotlightBanner: React.FC<SpotlightBannerProps> = ({
             {current.ecoMetrics.map((metric, idx) => (
               <div
                 key={idx}
-                className="bg-white/10 hover:bg-white/15 backdrop-blur-md border border-white/15 rounded-2xl p-3 sm:p-3.5 flex-1 min-w-[85px] sm:min-w-[90px] flex flex-col justify-between transition-colors shadow-subtle"
+                className="bg-white/10 hover:bg-white/15 backdrop-blur-md border border-white/15 rounded-2xl p-2.5 sm:p-3.5 flex-1 min-w-0 flex flex-col justify-between transition-colors shadow-subtle"
               >
                 <div className="flex items-center gap-1.5 text-emerald-300 mb-1">
                   {renderEcoIcon(metric.iconName)}
@@ -545,10 +545,10 @@ export const SpotlightBanner: React.FC<SpotlightBannerProps> = ({
         </div>
 
         {/* RIGHT COLUMN: 3D Card Fan Deck (42% width on desktop) */}
-        <div className="w-full lg:w-[42%] flex items-center justify-center pt-2 lg:pt-0 overflow-hidden lg:overflow-visible">
+        <div className="w-full lg:w-[42%] flex items-center justify-center pt-2 lg:pt-0 overflow-hidden">
           <div
             key={`deck-${current.id}`}
-            className="relative w-full max-w-[280px] sm:max-w-[380px] lg:max-w-[420px] h-[300px] sm:h-[400px] lg:h-[450px] flex items-center justify-center [perspective:1200px] [transform-style:preserve-3d] group/fandeck cursor-pointer select-none animate-fade-in"
+            className="relative w-full max-w-[280px] sm:max-w-[360px] lg:max-w-[320px] xl:max-w-[420px] h-[300px] sm:h-[380px] lg:h-[380px] xl:h-[450px] flex items-center justify-center [perspective:1200px] [transform-style:preserve-3d] group/fandeck cursor-pointer select-none animate-fade-in overflow-hidden"
             onClick={() => {
               if (isSwipingRef.current) return;
               navigate(current.primaryCta.link);
@@ -565,7 +565,7 @@ export const SpotlightBanner: React.FC<SpotlightBannerProps> = ({
             }}
           >
             {/* Back Layer Card (-10deg -> -13deg on hover) */}
-            <div className="absolute w-[180px] sm:w-[260px] lg:w-[280px] h-[240px] sm:h-[340px] lg:h-[370px] rounded-2xl sm:rounded-3xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.6)] border border-white/10 z-10 transition-all duration-500 ease-out transform-gpu will-change-transform -rotate-[10deg] scale-90 -translate-x-6 sm:-translate-x-12 translate-y-3 group-hover/fandeck:-rotate-[13deg] group-hover/fandeck:scale-95 group-hover/fandeck:-translate-x-10 sm:group-hover/fandeck:-translate-x-16 group-hover/fandeck:translate-y-0">
+            <div className="absolute w-[180px] sm:w-[240px] lg:w-[200px] xl:w-[280px] h-[240px] sm:h-[320px] lg:h-[290px] xl:h-[370px] rounded-2xl sm:rounded-3xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.6)] border border-white/10 z-10 transition-all duration-500 ease-out transform-gpu will-change-transform -rotate-[10deg] scale-90 -translate-x-6 sm:-translate-x-10 lg:-translate-x-6 xl:-translate-x-12 translate-y-3 group-hover/fandeck:-rotate-[13deg] group-hover/fandeck:scale-95 group-hover/fandeck:-translate-x-8 sm:group-hover/fandeck:-translate-x-14 lg:group-hover/fandeck:-translate-x-8 xl:group-hover/fandeck:-translate-x-16 group-hover/fandeck:translate-y-0">
               <img
                 src={current.images.back}
                 alt={`${current.collection} - Không gian phong cách sống`}
@@ -579,7 +579,7 @@ export const SpotlightBanner: React.FC<SpotlightBannerProps> = ({
             </div>
 
             {/* Mid Layer Card (-3deg -> -6deg on hover) */}
-            <div className="absolute w-[180px] sm:w-[260px] lg:w-[280px] h-[240px] sm:h-[340px] lg:h-[370px] rounded-2xl sm:rounded-3xl overflow-hidden shadow-[0_25px_60px_rgba(0,0,0,0.65)] border border-white/15 z-20 transition-all duration-500 ease-out transform-gpu will-change-transform -rotate-[3deg] scale-95 -translate-x-2 translate-y-1 group-hover/fandeck:-rotate-[6deg] group-hover/fandeck:scale-100 group-hover/fandeck:-translate-x-4 group-hover/fandeck:-translate-y-2">
+            <div className="absolute w-[180px] sm:w-[240px] lg:w-[200px] xl:w-[280px] h-[240px] sm:h-[320px] lg:h-[290px] xl:h-[370px] rounded-2xl sm:rounded-3xl overflow-hidden shadow-[0_25px_60px_rgba(0,0,0,0.65)] border border-white/15 z-20 transition-all duration-500 ease-out transform-gpu will-change-transform -rotate-[3deg] scale-95 -translate-x-2 translate-y-1 group-hover/fandeck:-rotate-[6deg] group-hover/fandeck:scale-100 group-hover/fandeck:-translate-x-4 group-hover/fandeck:-translate-y-2">
               <img
                 src={current.images.mid}
                 alt={`${current.collection} - Góc chụp chi tiết kiểm định`}
@@ -593,7 +593,7 @@ export const SpotlightBanner: React.FC<SpotlightBannerProps> = ({
             </div>
 
             {/* Front Layer Card (+5deg -> +8deg on hover) */}
-            <div className="absolute w-[180px] sm:w-[260px] lg:w-[280px] h-[240px] sm:h-[340px] lg:h-[370px] rounded-2xl ring-1 ring-white/30 shadow-2xl overflow-hidden border border-white/20 z-30 transition-all duration-500 ease-out transform-gpu will-change-transform rotate-[5deg] scale-100 translate-x-4 sm:translate-x-10 translate-y-0 group-hover/fandeck:rotate-[8deg] group-hover/fandeck:scale-105 group-hover/fandeck:translate-x-8 sm:group-hover/fandeck:translate-x-14 group-hover/fandeck:-translate-y-2">
+            <div className="absolute w-[180px] sm:w-[240px] lg:w-[200px] xl:w-[280px] h-[240px] sm:h-[320px] lg:h-[290px] xl:h-[370px] rounded-2xl ring-1 ring-white/30 shadow-2xl overflow-hidden border border-white/20 z-30 transition-all duration-500 ease-out transform-gpu will-change-transform rotate-[5deg] scale-100 translate-x-4 sm:translate-x-8 lg:translate-x-5 xl:translate-x-10 translate-y-0 group-hover/fandeck:rotate-[8deg] group-hover/fandeck:scale-105 group-hover/fandeck:translate-x-6 sm:group-hover/fandeck:translate-x-12 lg:group-hover/fandeck:translate-x-7 xl:group-hover/fandeck:translate-x-14 group-hover/fandeck:-translate-y-2">
               <img
                 src={current.images.front}
                 alt={`${current.collection} - Ảnh sắc nét`}

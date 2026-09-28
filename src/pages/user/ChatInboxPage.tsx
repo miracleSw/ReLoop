@@ -104,7 +104,7 @@ export const ChatInboxPage: React.FC = () => {
         </p>
       </div>
 
-      <div className="bg-white rounded-3xl border border-slate-200/90 shadow-[0_10px_35px_-8px_rgba(16,185,129,0.08)] overflow-hidden grid grid-cols-1 md:grid-cols-12 min-h-[620px]">
+      <div className="bg-white rounded-3xl border border-slate-200/90 shadow-[0_10px_35px_-8px_rgba(16,185,129,0.08)] overflow-hidden grid grid-cols-1 md:grid-cols-12 h-[calc(100vh-14rem)] min-h-[500px] max-h-[780px]">
         {/* LEFT COLUMN: CONVERSATION LIST (4 COLS) */}
         <div className={`md:col-span-4 border-r border-slate-200 flex flex-col bg-slate-50/40 ${mobileTab === 'thread' ? 'hidden md:flex' : 'flex'}`}>
           <div className="p-4 border-b border-slate-200/80 bg-white flex items-center justify-between">
@@ -141,7 +141,7 @@ export const ChatInboxPage: React.FC = () => {
                       alt={other?.fullName}
                       className="w-11 h-11 rounded-2xl object-cover ring-2 ring-slate-200/80 flex-shrink-0 shadow-xs"
                     />
-                    <span className="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full bg-emerald-500 border-2 border-white" />
+                    <span className="absolute bottom-0 right-0 w-3 h-3 rounded-full bg-emerald-500 border-2 border-white" />
                   </div>
                   <div className="min-w-0 flex-1">
                     <div className="flex items-center justify-between">
@@ -186,7 +186,7 @@ export const ChatInboxPage: React.FC = () => {
                     alt={partner.fullName}
                     className="w-9 h-9 sm:w-11 sm:h-11 rounded-2xl object-cover ring-2 ring-eco-500/80 shadow-xs"
                   />
-                  <span className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-emerald-500 border-2 border-white" />
+                  <span className="absolute bottom-0 right-0 w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-emerald-500 border-2 border-white" />
                 </div>
                 <div className="min-w-0 flex-1">
                   <div className="flex items-center gap-1.5">
@@ -235,7 +235,7 @@ export const ChatInboxPage: React.FC = () => {
           </div>
 
           {/* Messages Stream */}
-          <div className="flex-1 p-3.5 sm:p-6 overflow-y-auto space-y-4 max-h-[420px]">
+          <div className="flex-1 p-3.5 sm:p-6 overflow-y-auto space-y-4">
             {threadMessages.length === 0 ? (
               <div className="text-center py-16 space-y-2">
                 <div className="w-12 h-12 mx-auto rounded-2xl bg-slate-100 flex items-center justify-center text-slate-400">

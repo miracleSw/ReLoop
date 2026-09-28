@@ -231,14 +231,14 @@ export const ExchangeManagementPage: React.FC = () => {
               return (
                 <div
                   key={req.id}
-                  className="bg-white rounded-3xl border border-slate-200/90 shadow-[0_8px_30px_-6px_rgba(0,0,0,0.06)] hover:shadow-[0_12px_40px_-6px_rgba(16,185,129,0.12)] transition-all p-6 sm:p-8 space-y-6 relative overflow-hidden"
+                  className="bg-white rounded-3xl border border-slate-200/90 shadow-[0_8px_30px_-6px_rgba(0,0,0,0.06)] hover:shadow-[0_12px_40px_-6px_rgba(16,185,129,0.12)] transition-all p-4 sm:p-6 lg:p-8 space-y-5 sm:space-y-6 relative overflow-hidden w-full max-w-full"
                 >
                   {/* Header info */}
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-100">
-                    <div className="flex items-center gap-3">
+                    <div className="flex flex-wrap items-center gap-2 sm:gap-3">
                       <StatusBadge status={req.status} size="sm" />
                       <span className="text-xs font-semibold text-slate-500">Mã: #{req.id}</span>
-                      <span className="text-slate-300">•</span>
+                      <span className="text-slate-300 hidden sm:inline">•</span>
                       <span className="text-xs text-slate-500 flex items-center gap-1">
                         <Clock className="w-3.5 h-3.5 text-slate-400" />
                         {new Date(req.createdAt).toLocaleString('vi-VN')}
@@ -246,7 +246,7 @@ export const ExchangeManagementPage: React.FC = () => {
                     </div>
 
                     {otherUser && (
-                      <div className="flex items-center gap-2">
+                      <div className="flex flex-wrap items-center gap-2">
                         <span className="text-xs text-slate-500">
                           {activeMainTab === 'RECEIVED' ? 'Người gửi đề nghị:' : 'Người nhận đề nghị:'}
                         </span>
@@ -271,15 +271,15 @@ export const ExchangeManagementPage: React.FC = () => {
                   </div>
 
                   {/* VISUAL COMPARISON: ITEM A <-> ITEM B + CASH */}
-                  <div className="grid grid-cols-1 md:grid-cols-11 gap-4 items-center bg-gradient-to-br from-slate-50 via-slate-50/60 to-emerald-50/20 p-5 rounded-2xl border border-slate-200/80">
+                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-3 sm:gap-4 items-center bg-gradient-to-br from-slate-50 via-slate-50/60 to-emerald-50/20 p-3.5 sm:p-5 rounded-2xl border border-slate-200/80 w-full max-w-full">
                     {/* Item 1: Offered Item */}
-                    <div className="md:col-span-5 bg-white p-4 rounded-2xl border border-slate-200/90 shadow-sm flex items-center gap-4">
+                    <div className="lg:col-span-5 bg-white p-3 sm:p-4 rounded-2xl border border-slate-200/90 shadow-sm flex items-center gap-3 sm:gap-4 min-w-0 w-full">
                       {offeredProd ? (
                         <>
                           <img
                             src={offeredProd.images[0]}
                             alt={offeredProd.title}
-                            className="w-16 h-16 sm:w-18 sm:h-18 rounded-xl object-cover border border-slate-200 flex-shrink-0"
+                            className="w-14 h-14 sm:w-18 sm:h-18 rounded-xl object-cover border border-slate-200 flex-shrink-0"
                           />
                           <div className="min-w-0 flex-1">
                             <span className="text-[10px] uppercase font-bold text-eco-700 tracking-wider flex items-center gap-1">
@@ -300,13 +300,13 @@ export const ExchangeManagementPage: React.FC = () => {
                     </div>
 
                     {/* Center Swap Arrow + Compensation badge */}
-                    <div className="md:col-span-1 flex flex-col items-center justify-center py-2 md:py-0">
-                      <div className="w-11 h-11 rounded-full bg-gradient-to-tr from-eco-700 to-teal-500 text-white flex items-center justify-center shadow-glow-emerald">
-                        <ArrowRightLeft className="w-5 h-5" />
+                    <div className="lg:col-span-2 flex flex-col items-center justify-center py-2 lg:py-0 min-w-0">
+                      <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-gradient-to-tr from-eco-700 to-teal-500 text-white flex items-center justify-center shadow-glow-emerald flex-shrink-0">
+                        <ArrowRightLeft className="w-4 h-4 sm:w-5 sm:h-5" />
                       </div>
                       {req.compensationAmount > 0 && (
-                        <div className="mt-2 text-center">
-                          <span className="text-[10px] font-black text-clay-700 bg-clay-50 border border-clay-200 px-2.5 py-0.5 rounded-full whitespace-nowrap shadow-xs">
+                        <div className="mt-2 text-center max-w-full">
+                          <span className="text-[10px] font-black text-clay-700 bg-clay-50 border border-clay-200 px-2.5 py-0.5 rounded-full whitespace-nowrap shadow-xs inline-block truncate max-w-full">
                             + {req.compensationAmount.toLocaleString('vi-VN')}₫
                           </span>
                         </div>
@@ -314,13 +314,13 @@ export const ExchangeManagementPage: React.FC = () => {
                     </div>
 
                     {/* Item 2: Target Item */}
-                    <div className="md:col-span-5 bg-white p-4 rounded-2xl border border-slate-200/90 shadow-sm flex items-center gap-4">
+                    <div className="lg:col-span-5 bg-white p-3 sm:p-4 rounded-2xl border border-slate-200/90 shadow-sm flex items-center gap-3 sm:gap-4 min-w-0 w-full">
                       {targetProd ? (
                         <>
                           <img
                             src={targetProd.images[0]}
                             alt={targetProd.title}
-                            className="w-16 h-16 sm:w-18 sm:h-18 rounded-xl object-cover border border-slate-200 flex-shrink-0"
+                            className="w-14 h-14 sm:w-18 sm:h-18 rounded-xl object-cover border border-slate-200 flex-shrink-0"
                           />
                           <div className="min-w-0 flex-1">
                             <span className="text-[10px] uppercase font-bold text-slate-500 tracking-wider">
@@ -342,7 +342,7 @@ export const ExchangeManagementPage: React.FC = () => {
 
                   {/* Note message */}
                   {req.note && (
-                    <div className="p-4 bg-slate-50/70 rounded-2xl border border-slate-200/80 text-xs">
+                    <div className="p-3.5 sm:p-4 bg-slate-50/70 rounded-2xl border border-slate-200/80 text-xs">
                       <span className="font-bold text-slate-800 flex items-center gap-1.5 mb-1">
                         <MessageSquare className="w-3.5 h-3.5 text-eco-600" />
                         Lời nhắn thương lượng:
@@ -355,7 +355,7 @@ export const ExchangeManagementPage: React.FC = () => {
 
                   {/* Action buttons */}
                   {activeMainTab === 'RECEIVED' && req.status === 'PENDING' && (
-                    <div className="pt-2 flex items-center justify-end gap-3">
+                    <div className="pt-2 flex flex-wrap items-center justify-end gap-2 sm:gap-3">
                       <button
                         onClick={() => rejectBarterRequest(req.id, 'Đã tìm được đề nghị phù hợp hơn')}
                         className="px-4 py-2.5 text-xs font-bold text-rose-700 hover:bg-rose-50 border border-rose-200 rounded-xl transition-colors"
@@ -365,7 +365,7 @@ export const ExchangeManagementPage: React.FC = () => {
 
                       <button
                         onClick={() => setConfirmAcceptBarter(req)}
-                        className="px-6 py-2.5 bg-gradient-to-r from-eco-700 via-eco-600 to-teal-600 hover:from-eco-600 hover:to-teal-500 text-white font-bold text-xs rounded-xl shadow-glow-emerald hover:shadow-lg transition-all flex items-center gap-1.5"
+                        className="px-5 sm:px-6 py-2.5 bg-gradient-to-r from-eco-700 via-eco-600 to-teal-600 hover:from-eco-600 hover:to-teal-500 text-white font-bold text-xs rounded-xl shadow-glow-emerald hover:shadow-lg transition-all flex items-center gap-1.5"
                       >
                         <CheckCircle2 className="w-4 h-4" />
                         <span>Chấp nhận trao đổi</span>
@@ -430,14 +430,14 @@ export const ExchangeManagementPage: React.FC = () => {
               return (
                 <div
                   key={req.id}
-                  className="bg-white rounded-3xl border border-slate-200/90 shadow-[0_8px_30px_-6px_rgba(0,0,0,0.06)] hover:shadow-[0_12px_40px_-6px_rgba(16,185,129,0.12)] transition-all p-6 sm:p-8 space-y-6 relative overflow-hidden"
+                  className="bg-white rounded-3xl border border-slate-200/90 shadow-[0_8px_30px_-6px_rgba(0,0,0,0.06)] hover:shadow-[0_12px_40px_-6px_rgba(16,185,129,0.12)] transition-all p-4 sm:p-6 lg:p-8 space-y-5 sm:space-y-6 relative overflow-hidden w-full max-w-full"
                 >
                   {/* Header info */}
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-100">
-                    <div className="flex items-center gap-3">
+                    <div className="flex flex-wrap items-center gap-2 sm:gap-3">
                       <StatusBadge status={req.status} size="sm" />
                       <span className="text-xs font-semibold text-slate-500">Mã đề xuất: #{req.id}</span>
-                      <span className="text-slate-300">•</span>
+                      <span className="text-slate-300 hidden sm:inline">•</span>
                       <span className="text-xs text-slate-500 flex items-center gap-1">
                         <Clock className="w-3.5 h-3.5 text-slate-400" />
                         {new Date(req.createdAt).toLocaleString('vi-VN')}
@@ -445,7 +445,7 @@ export const ExchangeManagementPage: React.FC = () => {
                     </div>
 
                     {otherUser && (
-                      <div className="flex items-center gap-2">
+                      <div className="flex flex-wrap items-center gap-2">
                         <span className="text-xs text-slate-500">
                           {activeMainTab === 'RECEIVED' ? 'Người gửi đề xuất:' : 'Người bán:'}
                         </span>
@@ -470,15 +470,15 @@ export const ExchangeManagementPage: React.FC = () => {
                   </div>
 
                   {/* BUY PROPOSAL DETAILS: TARGET PRODUCT + PROPOSED PRICE */}
-                  <div className="grid grid-cols-1 md:grid-cols-12 gap-5 items-center bg-gradient-to-br from-slate-50 via-slate-50/60 to-amber-50/20 p-5 rounded-2xl border border-slate-200/80">
+                  <div className="grid grid-cols-1 md:grid-cols-12 gap-3 sm:gap-5 items-center bg-gradient-to-br from-slate-50 via-slate-50/60 to-amber-50/20 p-3.5 sm:p-5 rounded-2xl border border-slate-200/80 w-full max-w-full">
                     {/* Target Product */}
-                    <div className="md:col-span-6 bg-white p-4 rounded-2xl border border-slate-200/90 shadow-sm flex items-center gap-4">
+                    <div className="md:col-span-6 bg-white p-3 sm:p-4 rounded-2xl border border-slate-200/90 shadow-sm flex items-center gap-3 sm:gap-4 min-w-0 w-full">
                       {targetProd ? (
                         <>
                           <img
                             src={targetProd.images[0]}
                             alt={targetProd.title}
-                            className="w-16 h-16 sm:w-18 sm:h-18 rounded-xl object-cover border border-slate-200 flex-shrink-0"
+                            className="w-14 h-14 sm:w-18 sm:h-18 rounded-xl object-cover border border-slate-200 flex-shrink-0"
                           />
                           <div className="min-w-0 flex-1">
                             <span className="text-[10px] uppercase font-bold text-slate-500 tracking-wider">
@@ -487,9 +487,9 @@ export const ExchangeManagementPage: React.FC = () => {
                             <h4 className="text-xs font-bold text-slate-900 truncate mt-0.5">
                               {targetProd.title}
                             </h4>
-                            <div className="text-[11px] text-slate-600 mt-1 flex items-center gap-2">
+                            <div className="text-[11px] text-slate-600 mt-1 flex flex-wrap items-center gap-2">
                               <span>Giá niêm yết:</span>
-                              <strong className="text-slate-800 font-bold">
+                              <strong className="text-slate-800 font-bold whitespace-nowrap">
                                 {targetProd.price?.toLocaleString('vi-VN')}₫
                               </strong>
                             </div>
@@ -501,31 +501,31 @@ export const ExchangeManagementPage: React.FC = () => {
                     </div>
 
                     {/* Proposed Price Highlight */}
-                    <div className="md:col-span-6 bg-gradient-to-br from-clay-50 to-amber-50/40 p-4 rounded-2xl border border-clay-200/80 shadow-sm space-y-1.5">
+                    <div className="md:col-span-6 bg-gradient-to-br from-clay-50 to-amber-50/40 p-3 sm:p-4 rounded-2xl border border-clay-200/80 shadow-sm space-y-1.5 w-full">
                       <span className="text-[10px] uppercase font-bold text-clay-800 tracking-wider flex items-center gap-1">
-                        <DollarSign className="w-3.5 h-3.5 text-clay-600" />
+                        <DollarSign className="w-3.5 h-3.5 text-clay-600 flex-shrink-0" />
                         Mức giá đề xuất mua:
                       </span>
-                      <div className="flex items-baseline gap-2.5">
-                        <span className="text-xl sm:text-2xl font-black text-clay-700 tracking-tight">
+                      <div className="flex flex-wrap items-baseline gap-2 sm:gap-2.5">
+                        <span className="text-xl sm:text-2xl font-black text-clay-700 tracking-tight whitespace-nowrap">
                           {req.offeredPrice.toLocaleString('vi-VN')}₫
                         </span>
                         {priceDiff !== 0 && (
                           <span
-                            className={`text-[11px] font-extrabold px-2.5 py-0.5 rounded-full ${
+                            className={`text-[10px] sm:text-[11px] font-extrabold px-2 sm:px-2.5 py-0.5 rounded-full whitespace-nowrap ${
                               priceDiff > 0
                                 ? 'bg-emerald-100 text-emerald-800'
                                 : 'bg-amber-100 text-amber-800'
                             }`}
                           >
-                            {priceDiff > 0 ? `+${priceDiff.toLocaleString('vi-VN')}₫` : `${priceDiff.toLocaleString('vi-VN')}₫`} so với giá niêm yết
+                            {priceDiff > 0 ? `+${priceDiff.toLocaleString('vi-VN')}₫` : `${priceDiff.toLocaleString('vi-VN')}₫`} so với giá gốc
                           </span>
                         )}
                       </div>
                       {req.meetupLocationPreference && (
                         <div className="text-xs text-slate-700 flex items-center gap-1.5 pt-1">
                           <MapPin className="w-3.5 h-3.5 text-eco-700 flex-shrink-0" />
-                          <span>Điểm hẹn mong muốn: <strong className="font-semibold text-slate-900">{req.meetupLocationPreference}</strong></span>
+                          <span className="truncate">Điểm hẹn: <strong className="font-semibold text-slate-900">{req.meetupLocationPreference}</strong></span>
                         </div>
                       )}
                     </div>
@@ -533,7 +533,7 @@ export const ExchangeManagementPage: React.FC = () => {
 
                   {/* Note message */}
                   {req.note && (
-                    <div className="p-4 bg-slate-50/70 rounded-2xl border border-slate-200/80 text-xs">
+                    <div className="p-3.5 sm:p-4 bg-slate-50/70 rounded-2xl border border-slate-200/80 text-xs">
                       <span className="font-bold text-slate-800 flex items-center gap-1.5 mb-1">
                         <MessageSquare className="w-3.5 h-3.5 text-eco-600" />
                         Lời nhắn từ người mua:
@@ -546,7 +546,7 @@ export const ExchangeManagementPage: React.FC = () => {
 
                   {/* Action buttons */}
                   {activeMainTab === 'RECEIVED' && req.status === 'PENDING' && (
-                    <div className="pt-2 flex items-center justify-end gap-3">
+                    <div className="pt-2 flex flex-wrap items-center justify-end gap-2 sm:gap-3">
                       <button
                         onClick={() => rejectBuyRequest(req.id, 'Mức giá chưa phù hợp')}
                         className="px-4 py-2.5 text-xs font-bold text-rose-700 hover:bg-rose-50 border border-rose-200 rounded-xl transition-colors"
@@ -556,7 +556,7 @@ export const ExchangeManagementPage: React.FC = () => {
 
                       <button
                         onClick={() => setConfirmAcceptBuy(req)}
-                        className="px-6 py-2.5 bg-gradient-to-r from-clay-600 to-clay-700 hover:from-clay-500 hover:to-clay-600 text-white font-bold text-xs rounded-xl shadow-md transition-all flex items-center gap-1.5"
+                        className="px-5 sm:px-6 py-2.5 bg-gradient-to-r from-clay-600 to-clay-700 hover:from-clay-500 hover:to-clay-600 text-white font-bold text-xs rounded-xl shadow-md transition-all flex items-center gap-1.5"
                       >
                         <CheckCircle2 className="w-4 h-4" />
                         <span>Chấp nhận đề xuất mua</span>

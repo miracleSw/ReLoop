@@ -313,7 +313,7 @@ export const mockProducts: Product[] = [
     originalPrice: 4200000,
     wantedExchangeItems: 'Đổi màn hình phụ di động 15.6 inch hoặc bàn nâng hạ chân kim loại.',
     images: [
-      'https://images.unsplash.com/photo-1580481077191-c3be7662c114?auto=format&fit=crop&w=1000&q=80',
+      'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=1000&q=80',
       'https://images.unsplash.com/photo-1505797149-43b0069ec26b?auto=format&fit=crop&w=1000&q=80'
     ],
     location: {

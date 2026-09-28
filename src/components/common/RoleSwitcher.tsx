@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 export const RoleSwitcher: React.FC = () => {
   const { currentUser, currentRole, users, loginAs, resetData } = useApp();
   const [isOpen, setIsOpen] = useState(false);
-  const [isCollapsed, setIsCollapsed] = useState(false);
+  const [isCollapsed, setIsCollapsed] = useState(() => typeof window !== 'undefined' && window.innerWidth < 640);
 
   if (isCollapsed) {
     return (

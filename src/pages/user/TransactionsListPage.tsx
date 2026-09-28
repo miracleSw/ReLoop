@@ -106,9 +106,9 @@ export const TransactionsListPage: React.FC = () => {
             return (
               <div
                 key={tx.id}
-                className="bg-white rounded-3xl border border-slate-200/90 p-5 sm:p-6 shadow-[0_8px_30px_-6px_rgba(0,0,0,0.06)] hover:shadow-[0_12px_40px_-6px_rgba(16,185,129,0.1)] transition-all flex flex-col md:flex-row items-start md:items-center justify-between gap-5 group"
+                className="bg-white rounded-3xl border border-slate-200/90 p-4 sm:p-6 shadow-[0_8px_30px_-6px_rgba(0,0,0,0.06)] hover:shadow-[0_12px_40px_-6px_rgba(16,185,129,0.1)] transition-all flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4 sm:gap-5 group w-full max-w-full overflow-hidden"
               >
-                <div className="flex items-center gap-4 min-w-0 flex-1">
+                <div className="flex items-center gap-3 sm:gap-4 min-w-0 flex-1 w-full max-w-full">
                   {targetProd && (
                     <div className="relative w-16 h-16 sm:w-20 sm:h-20 overflow-hidden rounded-2xl border border-slate-200 flex-shrink-0 bg-slate-50">
                       <img
@@ -119,7 +119,7 @@ export const TransactionsListPage: React.FC = () => {
                     </div>
                   )}
                   <div className="space-y-1.5 min-w-0 flex-1">
-                    <div className="flex items-center gap-2">
+                    <div className="flex flex-wrap items-center gap-2">
                       <StatusBadge status={tx.status} size="sm" />
                       <span className="text-[11px] font-semibold text-slate-400">Mã: #{tx.id}</span>
                     </div>
@@ -128,23 +128,23 @@ export const TransactionsListPage: React.FC = () => {
                       {targetProd?.title}
                     </h3>
 
-                    <div className="flex flex-wrap items-center gap-3 text-xs text-slate-500 font-medium">
+                    <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-xs text-slate-500 font-medium">
                       <span>Đối tác: <strong className="text-slate-800 font-bold">{partner?.fullName}</strong></span>
-                      <span className="text-slate-300">•</span>
-                      <span className="flex items-center gap-1">
-                        <Compass className="w-3.5 h-3.5 text-slate-400" />
-                        <span>Địa điểm: <strong className="text-slate-800 font-bold">{tx.appointmentLocation}</strong></span>
+                      <span className="text-slate-300 hidden sm:inline">•</span>
+                      <span className="flex items-center gap-1 min-w-0 max-w-full">
+                        <Compass className="w-3.5 h-3.5 text-slate-400 flex-shrink-0" />
+                        <span className="truncate">Địa điểm: <strong className="text-slate-800 font-bold">{tx.appointmentLocation}</strong></span>
                       </span>
-                      <span className="text-slate-300">•</span>
-                      <span>Hẹn: <strong className="text-slate-800 font-bold">{new Date(tx.appointmentTime).toLocaleDateString('vi-VN')}</strong></span>
+                      <span className="text-slate-300 hidden sm:inline">•</span>
+                      <span className="whitespace-nowrap">Hẹn: <strong className="text-slate-800 font-bold">{new Date(tx.appointmentTime).toLocaleDateString('vi-VN')}</strong></span>
                     </div>
                   </div>
                 </div>
 
-                <div className="flex items-center gap-3 w-full md:w-auto justify-end pt-3 md:pt-0 border-t md:border-t-0 border-slate-100">
+                <div className="flex items-center gap-3 w-full md:w-auto justify-end pt-3 md:pt-0 border-t md:border-t-0 border-slate-100 flex-shrink-0">
                   <Link
                     to={`/user/transactions/${tx.id}`}
-                    className="px-5 py-2.5 bg-gradient-to-r from-eco-700 via-eco-600 to-teal-600 hover:from-eco-600 hover:to-teal-500 text-white rounded-xl text-xs font-bold shadow-glow-emerald hover:shadow-lg flex items-center gap-2 transition-all"
+                    className="w-full md:w-auto justify-center px-5 py-2.5 bg-gradient-to-r from-eco-700 via-eco-600 to-teal-600 hover:from-eco-600 hover:to-teal-500 text-white rounded-xl text-xs font-bold shadow-glow-emerald hover:shadow-lg flex items-center gap-2 transition-all"
                   >
                     <span>Xem hành trình chi tiết</span>
                     <ArrowRight className="w-3.5 h-3.5" />

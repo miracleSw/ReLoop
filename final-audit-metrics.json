@@ -1,0 +1,1275 @@
+{
+  "report": {
+    "home": {
+      "320px": {
+        "bodyScrollWidth": 320,
+        "bodyClientWidth": 320,
+        "hasHorizontalOverflow": false,
+        "headerMetrics": {
+          "width": 320,
+          "height": 65,
+          "visibleNavLinksCount": 0,
+          "wrappedLinks": []
+        },
+        "featuredMetrics": {
+          "cardWidth": 288,
+          "cardHeight": 779,
+          "imgWidth": 286,
+          "imgHeight": 200
+        }
+      },
+      "360px": {
+        "bodyScrollWidth": 360,
+        "bodyClientWidth": 360,
+        "hasHorizontalOverflow": false,
+        "headerMetrics": {
+          "width": 360,
+          "height": 65,
+          "visibleNavLinksCount": 0,
+          "wrappedLinks": []
+        },
+        "featuredMetrics": {
+          "cardWidth": 328,
+          "cardHeight": 740,
+          "imgWidth": 326,
+          "imgHeight": 204
+        }
+      },
+      "375px": {
+        "bodyScrollWidth": 375,
+        "bodyClientWidth": 375,
+        "hasHorizontalOverflow": false,
+        "headerMetrics": {
+          "width": 375,
+          "height": 65,
+          "visibleNavLinksCount": 0,
+          "wrappedLinks": []
+        },
+        "featuredMetrics": {
+          "cardWidth": 343,
+          "cardHeight": 749,
+          "imgWidth": 341,
+          "imgHeight": 213
+        }
+      },
+      "390px": {
+        "bodyScrollWidth": 390,
+        "bodyClientWidth": 390,
+        "hasHorizontalOverflow": false,
+        "headerMetrics": {
+          "width": 390,
+          "height": 65,
+          "visibleNavLinksCount": 0,
+          "wrappedLinks": []
+        },
+        "featuredMetrics": {
+          "cardWidth": 358,
+          "cardHeight": 734,
+          "imgWidth": 356,
+          "imgHeight": 223
+        }
+      },
+      "430px": {
+        "bodyScrollWidth": 430,
+        "bodyClientWidth": 430,
+        "hasHorizontalOverflow": false,
+        "headerMetrics": {
+          "width": 430,
+          "height": 65,
+          "visibleNavLinksCount": 0,
+          "wrappedLinks": []
+        },
+        "featuredMetrics": {
+          "cardWidth": 398,
+          "cardHeight": 759,
+          "imgWidth": 396,
+          "imgHeight": 248
+        }
+      },
+      "768px": {
+        "bodyScrollWidth": 768,
+        "bodyClientWidth": 768,
+        "hasHorizontalOverflow": false,
+        "headerMetrics": {
+          "width": 768,
+          "height": 81,
+          "visibleNavLinksCount": 0,
+          "wrappedLinks": []
+        },
+        "featuredMetrics": {
+          "cardWidth": 720,
+          "cardHeight": 675,
+          "imgWidth": 299,
+          "imgHeight": 673
+        }
+      },
+      "1024px": {
+        "bodyScrollWidth": 1024,
+        "bodyClientWidth": 1024,
+        "hasHorizontalOverflow": false,
+        "headerMetrics": {
+          "width": 1024,
+          "height": 81,
+          "visibleNavLinksCount": 4,
+          "wrappedLinks": []
+        },
+        "featuredMetrics": {
+          "cardWidth": 960,
+          "cardHeight": 659,
+          "imgWidth": 399,
+          "imgHeight": 657
+        }
+      },
+      "1280px": {
+        "bodyScrollWidth": 1280,
+        "bodyClientWidth": 1280,
+        "hasHorizontalOverflow": false,
+        "headerMetrics": {
+          "width": 1280,
+          "height": 81,
+          "visibleNavLinksCount": 4,
+          "wrappedLinks": []
+        },
+        "featuredMetrics": {
+          "cardWidth": 1216,
+          "cardHeight": 634,
+          "imgWidth": 506,
+          "imgHeight": 632
+        }
+      },
+      "1440px": {
+        "bodyScrollWidth": 1440,
+        "bodyClientWidth": 1440,
+        "hasHorizontalOverflow": false,
+        "headerMetrics": {
+          "width": 1440,
+          "height": 81,
+          "visibleNavLinksCount": 4,
+          "wrappedLinks": []
+        },
+        "featuredMetrics": {
+          "cardWidth": 1216,
+          "cardHeight": 634,
+          "imgWidth": 506,
+          "imgHeight": 632
+        }
+      },
+      "1920px": {
+        "bodyScrollWidth": 1920,
+        "bodyClientWidth": 1920,
+        "hasHorizontalOverflow": false,
+        "headerMetrics": {
+          "width": 1920,
+          "height": 81,
+          "visibleNavLinksCount": 4,
+          "wrappedLinks": []
+        },
+        "featuredMetrics": {
+          "cardWidth": 1216,
+          "cardHeight": 634,
+          "imgWidth": 506,
+          "imgHeight": 632
+        }
+      }
+    },
+    "explore": {
+      "320px": {
+        "bodyScrollWidth": 320,
+        "bodyClientWidth": 320,
+        "hasHorizontalOverflow": false,
+        "headerMetrics": {
+          "width": 320,
+          "height": 65,
+          "visibleNavLinksCount": 0,
+          "wrappedLinks": []
+        },
+        "featuredMetrics": null
+      },
+      "360px": {
+        "bodyScrollWidth": 360,
+        "bodyClientWidth": 360,
+        "hasHorizontalOverflow": false,
+        "headerMetrics": {
+          "width": 360,
+          "height": 65,
+          "visibleNavLinksCount": 0,
+          "wrappedLinks": []
+        },
+        "featuredMetrics": null
+      },
+      "375px": {
+        "bodyScrollWidth": 375,
+        "bodyClientWidth": 375,
+        "hasHorizontalOverflow": false,
+        "headerMetrics": {
+          "width": 375,
+          "height": 65,
+          "visibleNavLinksCount": 0,
+          "wrappedLinks": []
+        },
+        "featuredMetrics": null
+      },
+      "390px": {
+        "bodyScrollWidth": 390,
+        "bodyClientWidth": 390,
+        "hasHorizontalOverflow": false,
+        "headerMetrics": {
+          "width": 390,
+          "height": 65,
+          "visibleNavLinksCount": 0,
+          "wrappedLinks": []
+        },
+        "featuredMetrics": null
+      },
+      "430px": {
+        "bodyScrollWidth": 430,
+        "bodyClientWidth": 430,
+        "hasHorizontalOverflow": false,
+        "headerMetrics": {
+          "width": 430,
+          "height": 65,
+          "visibleNavLinksCount": 0,
+          "wrappedLinks": []
+        },
+        "featuredMetrics": null
+      },
+      "768px": {
+        "bodyScrollWidth": 768,
+        "bodyClientWidth": 768,
+        "hasHorizontalOverflow": false,
+        "headerMetrics": {
+          "width": 768,
+          "height": 81,
+          "visibleNavLinksCount": 0,
+          "wrappedLinks": []
+        },
+        "featuredMetrics": null
+      },
+      "1024px": {
+        "bodyScrollWidth": 1024,
+        "bodyClientWidth": 1024,
+        "hasHorizontalOverflow": false,
+        "headerMetrics": {
+          "width": 1024,
+          "height": 81,
+          "visibleNavLinksCount": 4,
+          "wrappedLinks": []
+        },
+        "featuredMetrics": null
+      },
+      "1280px": {
+        "bodyScrollWidth": 1280,
+        "bodyClientWidth": 1280,
+        "hasHorizontalOverflow": false,
+        "headerMetrics": {
+          "width": 1280,
+          "height": 81,
+          "visibleNavLinksCount": 4,
+          "wrappedLinks": []
+        },
+        "featuredMetrics": null
+      },
+      "1440px": {
+        "bodyScrollWidth": 1440,
+        "bodyClientWidth": 1440,
+        "hasHorizontalOverflow": false,
+        "headerMetrics": {
+          "width": 1440,
+          "height": 81,
+          "visibleNavLinksCount": 4,
+          "wrappedLinks": []
+        },
+        "featuredMetrics": null
+      },
+      "1920px": {
+        "bodyScrollWidth": 1920,
+        "bodyClientWidth": 1920,
+        "hasHorizontalOverflow": false,
+        "headerMetrics": {
+          "width": 1920,
+          "height": 81,
+          "visibleNavLinksCount": 4,
+          "wrappedLinks": []
+        },
+        "featuredMetrics": null
+      }
+    },
+    "product-detail": {
+      "320px": {
+        "bodyScrollWidth": 320,
+        "bodyClientWidth": 320,
+        "hasHorizontalOverflow": false,
+        "headerMetrics": {
+          "width": 320,
+          "height": 65,
+          "visibleNavLinksCount": 0,
+          "wrappedLinks": []
+        },
+        "featuredMetrics": null
+      },
+      "360px": {
+        "bodyScrollWidth": 360,
+        "bodyClientWidth": 360,
+        "hasHorizontalOverflow": false,
+        "headerMetrics": {
+          "width": 360,
+          "height": 65,
+          "visibleNavLinksCount": 0,
+          "wrappedLinks": []
+        },
+        "featuredMetrics": null
+      },
+      "375px": {
+        "bodyScrollWidth": 375,
+        "bodyClientWidth": 375,
+        "hasHorizontalOverflow": false,
+        "headerMetrics": {
+          "width": 375,
+          "height": 65,
+          "visibleNavLinksCount": 0,
+          "wrappedLinks": []
+        },
+        "featuredMetrics": null
+      },
+      "390px": {
+        "bodyScrollWidth": 390,
+        "bodyClientWidth": 390,
+        "hasHorizontalOverflow": false,
+        "headerMetrics": {
+          "width": 390,
+          "height": 65,
+          "visibleNavLinksCount": 0,
+          "wrappedLinks": []
+        },
+        "featuredMetrics": null
+      },
+      "430px": {
+        "bodyScrollWidth": 430,
+        "bodyClientWidth": 430,
+        "hasHorizontalOverflow": false,
+        "headerMetrics": {
+          "width": 430,
+          "height": 65,
+          "visibleNavLinksCount": 0,
+          "wrappedLinks": []
+        },
+        "featuredMetrics": null
+      },
+      "768px": {
+        "bodyScrollWidth": 768,
+        "bodyClientWidth": 768,
+        "hasHorizontalOverflow": false,
+        "headerMetrics": {
+          "width": 768,
+          "height": 81,
+          "visibleNavLinksCount": 0,
+          "wrappedLinks": []
+        },
+        "featuredMetrics": null
+      },
+      "1024px": {
+        "bodyScrollWidth": 1024,
+        "bodyClientWidth": 1024,
+        "hasHorizontalOverflow": false,
+        "headerMetrics": {
+          "width": 1024,
+          "height": 81,
+          "visibleNavLinksCount": 4,
+          "wrappedLinks": []
+        },
+        "featuredMetrics": null
+      },
+      "1280px": {
+        "bodyScrollWidth": 1280,
+        "bodyClientWidth": 1280,
+        "hasHorizontalOverflow": false,
+        "headerMetrics": {
+          "width": 1280,
+          "height": 81,
+          "visibleNavLinksCount": 4,
+          "wrappedLinks": []
+        },
+        "featuredMetrics": null
+      },
+      "1440px": {
+        "bodyScrollWidth": 1440,
+        "bodyClientWidth": 1440,
+        "hasHorizontalOverflow": false,
+        "headerMetrics": {
+          "width": 1440,
+          "height": 81,
+          "visibleNavLinksCount": 4,
+          "wrappedLinks": []
+        },
+        "featuredMetrics": null
+      },
+      "1920px": {
+        "bodyScrollWidth": 1920,
+        "bodyClientWidth": 1920,
+        "hasHorizontalOverflow": false,
+        "headerMetrics": {
+          "width": 1920,
+          "height": 81,
+          "visibleNavLinksCount": 4,
+          "wrappedLinks": []
+        },
+        "featuredMetrics": null
+      }
+    },
+    "categories": {
+      "320px": {
+        "bodyScrollWidth": 320,
+        "bodyClientWidth": 320,
+        "hasHorizontalOverflow": false,
+        "headerMetrics": {
+          "width": 320,
+          "height": 65,
+          "visibleNavLinksCount": 0,
+          "wrappedLinks": []
+        },
+        "featuredMetrics": null
+      },
+      "360px": {
+        "bodyScrollWidth": 360,
+        "bodyClientWidth": 360,
+        "hasHorizontalOverflow": false,
+        "headerMetrics": {
+          "width": 360,
+          "height": 65,
+          "visibleNavLinksCount": 0,
+          "wrappedLinks": []
+        },
+        "featuredMetrics": null
+      },
+      "375px": {
+        "bodyScrollWidth": 375,
+        "bodyClientWidth": 375,
+        "hasHorizontalOverflow": false,
+        "headerMetrics": {
+          "width": 375,
+          "height": 65,
+          "visibleNavLinksCount": 0,
+          "wrappedLinks": []
+        },
+        "featuredMetrics": null
+      },
+      "390px": {
+        "bodyScrollWidth": 390,
+        "bodyClientWidth": 390,
+        "hasHorizontalOverflow": false,
+        "headerMetrics": {
+          "width": 390,
+          "height": 65,
+          "visibleNavLinksCount": 0,
+          "wrappedLinks": []
+        },
+        "featuredMetrics": null
+      },
+      "430px": {
+        "bodyScrollWidth": 430,
+        "bodyClientWidth": 430,
+        "hasHorizontalOverflow": false,
+        "headerMetrics": {
+          "width": 430,
+          "height": 65,
+          "visibleNavLinksCount": 0,
+          "wrappedLinks": []
+        },
+        "featuredMetrics": null
+      },
+      "768px": {
+        "bodyScrollWidth": 768,
+        "bodyClientWidth": 768,
+        "hasHorizontalOverflow": false,
+        "headerMetrics": {
+          "width": 768,
+          "height": 81,
+          "visibleNavLinksCount": 0,
+          "wrappedLinks": []
+        },
+        "featuredMetrics": null
+      },
+      "1024px": {
+        "bodyScrollWidth": 1024,
+        "bodyClientWidth": 1024,
+        "hasHorizontalOverflow": false,
+        "headerMetrics": {
+          "width": 1024,
+          "height": 81,
+          "visibleNavLinksCount": 4,
+          "wrappedLinks": []
+        },
+        "featuredMetrics": null
+      },
+      "1280px": {
+        "bodyScrollWidth": 1280,
+        "bodyClientWidth": 1280,
+        "hasHorizontalOverflow": false,
+        "headerMetrics": {
+          "width": 1280,
+          "height": 81,
+          "visibleNavLinksCount": 4,
+          "wrappedLinks": []
+        },
+        "featuredMetrics": null
+      },
+      "1440px": {
+        "bodyScrollWidth": 1440,
+        "bodyClientWidth": 1440,
+        "hasHorizontalOverflow": false,
+        "headerMetrics": {
+          "width": 1440,
+          "height": 81,
+          "visibleNavLinksCount": 4,
+          "wrappedLinks": []
+        },
+        "featuredMetrics": null
+      },
+      "1920px": {
+        "bodyScrollWidth": 1920,
+        "bodyClientWidth": 1920,
+        "hasHorizontalOverflow": false,
+        "headerMetrics": {
+          "width": 1920,
+          "height": 81,
+          "visibleNavLinksCount": 4,
+          "wrappedLinks": []
+        },
+        "featuredMetrics": null
+      }
+    },
+    "safety": {
+      "320px": {
+        "bodyScrollWidth": 320,
+        "bodyClientWidth": 320,
+        "hasHorizontalOverflow": false,
+        "headerMetrics": {
+          "width": 320,
+          "height": 65,
+          "visibleNavLinksCount": 0,
+          "wrappedLinks": []
+        },
+        "featuredMetrics": null
+      },
+      "360px": {
+        "bodyScrollWidth": 360,
+        "bodyClientWidth": 360,
+        "hasHorizontalOverflow": false,
+        "headerMetrics": {
+          "width": 360,
+          "height": 65,
+          "visibleNavLinksCount": 0,
+          "wrappedLinks": []
+        },
+        "featuredMetrics": null
+      },
+      "375px": {
+        "bodyScrollWidth": 375,
+        "bodyClientWidth": 375,
+        "hasHorizontalOverflow": false,
+        "headerMetrics": {
+          "width": 375,
+          "height": 65,
+          "visibleNavLinksCount": 0,
+          "wrappedLinks": []
+        },
+        "featuredMetrics": null
+      },
+      "390px": {
+        "bodyScrollWidth": 390,
+        "bodyClientWidth": 390,
+        "hasHorizontalOverflow": false,
+        "headerMetrics": {
+          "width": 390,
+          "height": 65,
+          "visibleNavLinksCount": 0,
+          "wrappedLinks": []
+        },
+        "featuredMetrics": null
+      },
+      "430px": {
+        "bodyScrollWidth": 430,
+        "bodyClientWidth": 430,
+        "hasHorizontalOverflow": false,
+        "headerMetrics": {
+          "width": 430,
+          "height": 65,
+          "visibleNavLinksCount": 0,
+          "wrappedLinks": []
+        },
+        "featuredMetrics": null
+      },
+      "768px": {
+        "bodyScrollWidth": 768,
+        "bodyClientWidth": 768,
+        "hasHorizontalOverflow": false,
+        "headerMetrics": {
+          "width": 768,
+          "height": 81,
+          "visibleNavLinksCount": 0,
+          "wrappedLinks": []
+        },
+        "featuredMetrics": null
+      },
+      "1024px": {
+        "bodyScrollWidth": 1024,
+        "bodyClientWidth": 1024,
+        "hasHorizontalOverflow": false,
+        "headerMetrics": {
+          "width": 1024,
+          "height": 81,
+          "visibleNavLinksCount": 4,
+          "wrappedLinks": []
+        },
+        "featuredMetrics": null
+      },
+      "1280px": {
+        "bodyScrollWidth": 1280,
+        "bodyClientWidth": 1280,
+        "hasHorizontalOverflow": false,
+        "headerMetrics": {
+          "width": 1280,
+          "height": 81,
+          "visibleNavLinksCount": 4,
+          "wrappedLinks": []
+        },
+        "featuredMetrics": null
+      },
+      "1440px": {
+        "bodyScrollWidth": 1440,
+        "bodyClientWidth": 1440,
+        "hasHorizontalOverflow": false,
+        "headerMetrics": {
+          "width": 1440,
+          "height": 81,
+          "visibleNavLinksCount": 4,
+          "wrappedLinks": []
+        },
+        "featuredMetrics": null
+      },
+      "1920px": {
+        "bodyScrollWidth": 1920,
+        "bodyClientWidth": 1920,
+        "hasHorizontalOverflow": false,
+        "headerMetrics": {
+          "width": 1920,
+          "height": 81,
+          "visibleNavLinksCount": 4,
+          "wrappedLinks": []
+        },
+        "featuredMetrics": null
+      }
+    },
+    "user-dashboard": {
+      "320px": {
+        "bodyScrollWidth": 320,
+        "bodyClientWidth": 320,
+        "hasHorizontalOverflow": false,
+        "headerMetrics": {
+          "width": 320,
+          "height": 65,
+          "visibleNavLinksCount": 0,
+          "wrappedLinks": []
+        },
+        "featuredMetrics": null
+      },
+      "360px": {
+        "bodyScrollWidth": 360,
+        "bodyClientWidth": 360,
+        "hasHorizontalOverflow": false,
+        "headerMetrics": {
+          "width": 360,
+          "height": 65,
+          "visibleNavLinksCount": 0,
+          "wrappedLinks": []
+        },
+        "featuredMetrics": null
+      },
+      "375px": {
+        "bodyScrollWidth": 375,
+        "bodyClientWidth": 375,
+        "hasHorizontalOverflow": false,
+        "headerMetrics": {
+          "width": 375,
+          "height": 65,
+          "visibleNavLinksCount": 0,
+          "wrappedLinks": []
+        },
+        "featuredMetrics": null
+      },
+      "390px": {
+        "bodyScrollWidth": 390,
+        "bodyClientWidth": 390,
+        "hasHorizontalOverflow": false,
+        "headerMetrics": {
+          "width": 390,
+          "height": 65,
+          "visibleNavLinksCount": 0,
+          "wrappedLinks": []
+        },
+        "featuredMetrics": null
+      },
+      "430px": {
+        "bodyScrollWidth": 430,
+        "bodyClientWidth": 430,
+        "hasHorizontalOverflow": false,
+        "headerMetrics": {
+          "width": 430,
+          "height": 65,
+          "visibleNavLinksCount": 0,
+          "wrappedLinks": []
+        },
+        "featuredMetrics": null
+      },
+      "768px": {
+        "bodyScrollWidth": 768,
+        "bodyClientWidth": 768,
+        "hasHorizontalOverflow": false,
+        "headerMetrics": {
+          "width": 768,
+          "height": 81,
+          "visibleNavLinksCount": 0,
+          "wrappedLinks": []
+        },
+        "featuredMetrics": null
+      },
+      "1024px": {
+        "bodyScrollWidth": 1024,
+        "bodyClientWidth": 1024,
+        "hasHorizontalOverflow": false,
+        "headerMetrics": {
+          "width": 1024,
+          "height": 81,
+          "visibleNavLinksCount": 4,
+          "wrappedLinks": []
+        },
+        "featuredMetrics": null
+      },
+      "1280px": {
+        "bodyScrollWidth": 1280,
+        "bodyClientWidth": 1280,
+        "hasHorizontalOverflow": false,
+        "headerMetrics": {
+          "width": 1280,
+          "height": 81,
+          "visibleNavLinksCount": 4,
+          "wrappedLinks": []
+        },
+        "featuredMetrics": null
+      },
+      "1440px": {
+        "bodyScrollWidth": 1440,
+        "bodyClientWidth": 1440,
+        "hasHorizontalOverflow": false,
+        "headerMetrics": {
+          "width": 1440,
+          "height": 81,
+          "visibleNavLinksCount": 4,
+          "wrappedLinks": []
+        },
+        "featuredMetrics": null
+      },
+      "1920px": {
+        "bodyScrollWidth": 1920,
+        "bodyClientWidth": 1920,
+        "hasHorizontalOverflow": false,
+        "headerMetrics": {
+          "width": 1920,
+          "height": 81,
+          "visibleNavLinksCount": 4,
+          "wrappedLinks": []
+        },
+        "featuredMetrics": null
+      }
+    },
+    "user-create-listing": {
+      "320px": {
+        "bodyScrollWidth": 320,
+        "bodyClientWidth": 320,
+        "hasHorizontalOverflow": false,
+        "headerMetrics": {
+          "width": 320,
+          "height": 65,
+          "visibleNavLinksCount": 0,
+          "wrappedLinks": []
+        },
+        "featuredMetrics": null
+      },
+      "360px": {
+        "bodyScrollWidth": 360,
+        "bodyClientWidth": 360,
+        "hasHorizontalOverflow": false,
+        "headerMetrics": {
+          "width": 360,
+          "height": 65,
+          "visibleNavLinksCount": 0,
+          "wrappedLinks": []
+        },
+        "featuredMetrics": null
+      },
+      "375px": {
+        "bodyScrollWidth": 375,
+        "bodyClientWidth": 375,
+        "hasHorizontalOverflow": false,
+        "headerMetrics": {
+          "width": 375,
+          "height": 65,
+          "visibleNavLinksCount": 0,
+          "wrappedLinks": []
+        },
+        "featuredMetrics": null
+      },
+      "390px": {
+        "bodyScrollWidth": 390,
+        "bodyClientWidth": 390,
+        "hasHorizontalOverflow": false,
+        "headerMetrics": {
+          "width": 390,
+          "height": 65,
+          "visibleNavLinksCount": 0,
+          "wrappedLinks": []
+        },
+        "featuredMetrics": null
+      },
+      "430px": {
+        "bodyScrollWidth": 430,
+        "bodyClientWidth": 430,
+        "hasHorizontalOverflow": false,
+        "headerMetrics": {
+          "width": 430,
+          "height": 65,
+          "visibleNavLinksCount": 0,
+          "wrappedLinks": []
+        },
+        "featuredMetrics": null
+      },
+      "768px": {
+        "bodyScrollWidth": 768,
+        "bodyClientWidth": 768,
+        "hasHorizontalOverflow": false,
+        "headerMetrics": {
+          "width": 768,
+          "height": 81,
+          "visibleNavLinksCount": 0,
+          "wrappedLinks": []
+        },
+        "featuredMetrics": null
+      },
+      "1024px": {
+        "bodyScrollWidth": 1024,
+        "bodyClientWidth": 1024,
+        "hasHorizontalOverflow": false,
+        "headerMetrics": {
+          "width": 1024,
+          "height": 81,
+          "visibleNavLinksCount": 4,
+          "wrappedLinks": []
+        },
+        "featuredMetrics": null
+      },
+      "1280px": {
+        "bodyScrollWidth": 1280,
+        "bodyClientWidth": 1280,
+        "hasHorizontalOverflow": false,
+        "headerMetrics": {
+          "width": 1280,
+          "height": 81,
+          "visibleNavLinksCount": 4,
+          "wrappedLinks": []
+        },
+        "featuredMetrics": null
+      },
+      "1440px": {
+        "bodyScrollWidth": 1440,
+        "bodyClientWidth": 1440,
+        "hasHorizontalOverflow": false,
+        "headerMetrics": {
+          "width": 1440,
+          "height": 81,
+          "visibleNavLinksCount": 4,
+          "wrappedLinks": []
+        },
+        "featuredMetrics": null
+      },
+      "1920px": {
+        "bodyScrollWidth": 1920,
+        "bodyClientWidth": 1920,
+        "hasHorizontalOverflow": false,
+        "headerMetrics": {
+          "width": 1920,
+          "height": 81,
+          "visibleNavLinksCount": 4,
+          "wrappedLinks": []
+        },
+        "featuredMetrics": null
+      }
+    },
+    "user-messages": {
+      "320px": {
+        "bodyScrollWidth": 320,
+        "bodyClientWidth": 320,
+        "hasHorizontalOverflow": false,
+        "headerMetrics": {
+          "width": 320,
+          "height": 65,
+          "visibleNavLinksCount": 0,
+          "wrappedLinks": []
+        },
+        "featuredMetrics": null
+      },
+      "360px": {
+        "bodyScrollWidth": 360,
+        "bodyClientWidth": 360,
+        "hasHorizontalOverflow": false,
+        "headerMetrics": {
+          "width": 360,
+          "height": 65,
+          "visibleNavLinksCount": 0,
+          "wrappedLinks": []
+        },
+        "featuredMetrics": null
+      },
+      "375px": {
+        "bodyScrollWidth": 375,
+        "bodyClientWidth": 375,
+        "hasHorizontalOverflow": false,
+        "headerMetrics": {
+          "width": 375,
+          "height": 65,
+          "visibleNavLinksCount": 0,
+          "wrappedLinks": []
+        },
+        "featuredMetrics": null
+      },
+      "390px": {
+        "bodyScrollWidth": 390,
+        "bodyClientWidth": 390,
+        "hasHorizontalOverflow": false,
+        "headerMetrics": {
+          "width": 390,
+          "height": 65,
+          "visibleNavLinksCount": 0,
+          "wrappedLinks": []
+        },
+        "featuredMetrics": null
+      },
+      "430px": {
+        "bodyScrollWidth": 430,
+        "bodyClientWidth": 430,
+        "hasHorizontalOverflow": false,
+        "headerMetrics": {
+          "width": 430,
+          "height": 65,
+          "visibleNavLinksCount": 0,
+          "wrappedLinks": []
+        },
+        "featuredMetrics": null
+      },
+      "768px": {
+        "bodyScrollWidth": 768,
+        "bodyClientWidth": 768,
+        "hasHorizontalOverflow": false,
+        "headerMetrics": {
+          "width": 768,
+          "height": 81,
+          "visibleNavLinksCount": 0,
+          "wrappedLinks": []
+        },
+        "featuredMetrics": null
+      },
+      "1024px": {
+        "bodyScrollWidth": 1024,
+        "bodyClientWidth": 1024,
+        "hasHorizontalOverflow": false,
+        "headerMetrics": {
+          "width": 1024,
+          "height": 81,
+          "visibleNavLinksCount": 4,
+          "wrappedLinks": []
+        },
+        "featuredMetrics": null
+      },
+      "1280px": {
+        "bodyScrollWidth": 1280,
+        "bodyClientWidth": 1280,
+        "hasHorizontalOverflow": false,
+        "headerMetrics": {
+          "width": 1280,
+          "height": 81,
+          "visibleNavLinksCount": 4,
+          "wrappedLinks": []
+        },
+        "featuredMetrics": null
+      },
+      "1440px": {
+        "bodyScrollWidth": 1440,
+        "bodyClientWidth": 1440,
+        "hasHorizontalOverflow": false,
+        "headerMetrics": {
+          "width": 1440,
+          "height": 81,
+          "visibleNavLinksCount": 4,
+          "wrappedLinks": []
+        },
+        "featuredMetrics": null
+      },
+      "1920px": {
+        "bodyScrollWidth": 1920,
+        "bodyClientWidth": 1920,
+        "hasHorizontalOverflow": false,
+        "headerMetrics": {
+          "width": 1920,
+          "height": 81,
+          "visibleNavLinksCount": 4,
+          "wrappedLinks": []
+        },
+        "featuredMetrics": null
+      }
+    },
+    "user-wishlist": {
+      "320px": {
+        "bodyScrollWidth": 320,
+        "bodyClientWidth": 320,
+        "hasHorizontalOverflow": false,
+        "headerMetrics": {
+          "width": 320,
+          "height": 65,
+          "visibleNavLinksCount": 0,
+          "wrappedLinks": []
+        },
+        "featuredMetrics": null
+      },
+      "360px": {
+        "bodyScrollWidth": 360,
+        "bodyClientWidth": 360,
+        "hasHorizontalOverflow": false,
+        "headerMetrics": {
+          "width": 360,
+          "height": 65,
+          "visibleNavLinksCount": 0,
+          "wrappedLinks": []
+        },
+        "featuredMetrics": null
+      },
+      "375px": {
+        "bodyScrollWidth": 375,
+        "bodyClientWidth": 375,
+        "hasHorizontalOverflow": false,
+        "headerMetrics": {
+          "width": 375,
+          "height": 65,
+          "visibleNavLinksCount": 0,
+          "wrappedLinks": []
+        },
+        "featuredMetrics": null
+      },
+      "390px": {
+        "bodyScrollWidth": 390,
+        "bodyClientWidth": 390,
+        "hasHorizontalOverflow": false,
+        "headerMetrics": {
+          "width": 390,
+          "height": 65,
+          "visibleNavLinksCount": 0,
+          "wrappedLinks": []
+        },
+        "featuredMetrics": null
+      },
+      "430px": {
+        "bodyScrollWidth": 430,
+        "bodyClientWidth": 430,
+        "hasHorizontalOverflow": false,
+        "headerMetrics": {
+          "width": 430,
+          "height": 65,
+          "visibleNavLinksCount": 0,
+          "wrappedLinks": []
+        },
+        "featuredMetrics": null
+      },
+      "768px": {
+        "bodyScrollWidth": 768,
+        "bodyClientWidth": 768,
+        "hasHorizontalOverflow": false,
+        "headerMetrics": {
+          "width": 768,
+          "height": 81,
+          "visibleNavLinksCount": 0,
+          "wrappedLinks": []
+        },
+        "featuredMetrics": null
+      },
+      "1024px": {
+        "bodyScrollWidth": 1024,
+        "bodyClientWidth": 1024,
+        "hasHorizontalOverflow": false,
+        "headerMetrics": {
+          "width": 1024,
+          "height": 81,
+          "visibleNavLinksCount": 4,
+          "wrappedLinks": []
+        },
+        "featuredMetrics": null
+      },
+      "1280px": {
+        "bodyScrollWidth": 1280,
+        "bodyClientWidth": 1280,
+        "hasHorizontalOverflow": false,
+        "headerMetrics": {
+          "width": 1280,
+          "height": 81,
+          "visibleNavLinksCount": 4,
+          "wrappedLinks": []
+        },
+        "featuredMetrics": null
+      },
+      "1440px": {
+        "bodyScrollWidth": 1440,
+        "bodyClientWidth": 1440,
+        "hasHorizontalOverflow": false,
+        "headerMetrics": {
+          "width": 1440,
+          "height": 81,
+          "visibleNavLinksCount": 4,
+          "wrappedLinks": []
+        },
+        "featuredMetrics": null
+      },
+      "1920px": {
+        "bodyScrollWidth": 1920,
+        "bodyClientWidth": 1920,
+        "hasHorizontalOverflow": false,
+        "headerMetrics": {
+          "width": 1920,
+          "height": 81,
+          "visibleNavLinksCount": 4,
+          "wrappedLinks": []
+        },
+        "featuredMetrics": null
+      }
+    },
+    "admin-dashboard": {
+      "320px": {
+        "bodyScrollWidth": 320,
+        "bodyClientWidth": 320,
+        "hasHorizontalOverflow": false,
+        "headerMetrics": {
+          "width": 320,
+          "height": 64,
+          "visibleNavLinksCount": 0,
+          "wrappedLinks": []
+        },
+        "featuredMetrics": null
+      },
+      "360px": {
+        "bodyScrollWidth": 360,
+        "bodyClientWidth": 360,
+        "hasHorizontalOverflow": false,
+        "headerMetrics": {
+          "width": 360,
+          "height": 64,
+          "visibleNavLinksCount": 0,
+          "wrappedLinks": []
+        },
+        "featuredMetrics": null
+      },
+      "375px": {
+        "bodyScrollWidth": 375,
+        "bodyClientWidth": 375,
+        "hasHorizontalOverflow": false,
+        "headerMetrics": {
+          "width": 375,
+          "height": 64,
+          "visibleNavLinksCount": 0,
+          "wrappedLinks": []
+        },
+        "featuredMetrics": null
+      },
+      "390px": {
+        "bodyScrollWidth": 390,
+        "bodyClientWidth": 390,
+        "hasHorizontalOverflow": false,
+        "headerMetrics": {
+          "width": 390,
+          "height": 64,
+          "visibleNavLinksCount": 0,
+          "wrappedLinks": []
+        },
+        "featuredMetrics": null
+      },
+      "430px": {
+        "bodyScrollWidth": 430,
+        "bodyClientWidth": 430,
+        "hasHorizontalOverflow": false,
+        "headerMetrics": {
+          "width": 430,
+          "height": 64,
+          "visibleNavLinksCount": 0,
+          "wrappedLinks": []
+        },
+        "featuredMetrics": null
+      },
+      "768px": {
+        "bodyScrollWidth": 768,
+        "bodyClientWidth": 768,
+        "hasHorizontalOverflow": false,
+        "headerMetrics": {
+          "width": 768,
+          "height": 64,
+          "visibleNavLinksCount": 0,
+          "wrappedLinks": []
+        },
+        "featuredMetrics": null
+      },
+      "1024px": {
+        "bodyScrollWidth": 1024,
+        "bodyClientWidth": 1024,
+        "hasHorizontalOverflow": false,
+        "headerMetrics": {
+          "width": 1024,
+          "height": 64,
+          "visibleNavLinksCount": 0,
+          "wrappedLinks": []
+        },
+        "featuredMetrics": null
+      },
+      "1280px": {
+        "bodyScrollWidth": 1280,
+        "bodyClientWidth": 1280,
+        "hasHorizontalOverflow": false,
+        "headerMetrics": {
+          "width": 1280,
+          "height": 64,
+          "visibleNavLinksCount": 0,
+          "wrappedLinks": []
+        },
+        "featuredMetrics": null
+      },
+      "1440px": {
+        "bodyScrollWidth": 1440,
+        "bodyClientWidth": 1440,
+        "hasHorizontalOverflow": false,
+        "headerMetrics": {
+          "width": 1440,
+          "height": 64,
+          "visibleNavLinksCount": 0,
+          "wrappedLinks": []
+        },
+        "featuredMetrics": null
+      },
+      "1920px": {
+        "bodyScrollWidth": 1920,
+        "bodyClientWidth": 1920,
+        "hasHorizontalOverflow": false,
+        "headerMetrics": {
+          "width": 1920,
+          "height": 64,
+          "visibleNavLinksCount": 0,
+          "wrappedLinks": []
+        },
+        "featuredMetrics": null
+      }
+    }
+  },
+  "issues": []
+}

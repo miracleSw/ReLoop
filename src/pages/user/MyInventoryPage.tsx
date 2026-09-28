@@ -149,10 +149,10 @@ export const MyInventoryPage: React.FC = () => {
             return (
               <div
                 key={prod.id}
-                className="bg-white rounded-3xl border border-slate-200/90 p-5 sm:p-6 shadow-[0_8px_30px_-6px_rgba(0,0,0,0.05)] hover:shadow-[0_12px_40px_-6px_rgba(16,185,129,0.1)] transition-all flex flex-col md:flex-row items-start md:items-center justify-between gap-5 group"
+                className="bg-white rounded-3xl border border-slate-200/90 p-4 sm:p-6 shadow-[0_8px_30px_-6px_rgba(0,0,0,0.05)] hover:shadow-[0_12px_40px_-6px_rgba(16,185,129,0.1)] transition-all flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-4 sm:gap-5 group w-full max-w-full overflow-hidden"
               >
                 {/* Product details */}
-                <div className="flex items-center gap-4 min-w-0 flex-1">
+                <div className="flex items-center gap-3 sm:gap-4 min-w-0 flex-1 w-full max-w-full">
                   <div className="relative w-16 h-16 sm:w-20 sm:h-20 overflow-hidden rounded-2xl border border-slate-200 flex-shrink-0 bg-slate-50">
                     <img
                       src={prod.images[0]}
@@ -161,37 +161,37 @@ export const MyInventoryPage: React.FC = () => {
                     />
                   </div>
                   <div className="min-w-0 flex-1 space-y-1.5">
-                    <div className="flex flex-wrap items-center gap-2">
+                    <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
                       <StatusBadge status={prod.status} size="sm" />
                       <span className="text-[11px] font-bold bg-slate-100 text-slate-700 px-2 py-0.5 rounded-full border border-slate-200">
                         {prod.condition}
                       </span>
-                      <span className="text-[11px] text-slate-500 font-medium">
+                      <span className="text-[11px] text-slate-500 font-medium truncate max-w-[120px] sm:max-w-[150px]">
                         {prod.location.district}, {prod.location.province}
                       </span>
                     </div>
 
                     <Link to={`/products/${prod.id}`}>
                       <h3 className="text-sm sm:text-base font-black text-slate-900 hover:text-eco-700 truncate transition-colors flex items-center gap-1.5">
-                        <span>{prod.title}</span>
-                        <ExternalLink className="w-3.5 h-3.5 text-slate-400 group-hover:text-eco-600 transition-colors" />
+                        <span className="truncate">{prod.title}</span>
+                        <ExternalLink className="w-3.5 h-3.5 text-slate-400 group-hover:text-eco-600 transition-colors flex-shrink-0" />
                       </h3>
                     </Link>
 
-                    <div className="flex items-center gap-3 text-xs">
+                    <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-xs">
                       {prod.price ? (
-                        <span className="font-black text-clay-600 text-sm">
+                        <span className="font-black text-clay-600 text-sm whitespace-nowrap">
                           {prod.price.toLocaleString('vi-VN')}₫
                         </span>
                       ) : (
-                        <span className="font-bold text-eco-700 flex items-center gap-1">
+                        <span className="font-bold text-eco-700 flex items-center gap-1 whitespace-nowrap">
                           <ArrowRightLeft className="w-3 h-3" /> Trao đổi đồ
                         </span>
                       )}
-                      <span className="text-slate-300">•</span>
-                      <span className="text-slate-500">{prod.views} lượt xem</span>
-                      <span className="text-slate-300">•</span>
-                      <span className="text-slate-500">{prod.favoritesCount} quan tâm</span>
+                      <span className="text-slate-300 hidden sm:inline">•</span>
+                      <span className="text-slate-500 whitespace-nowrap">{prod.views} lượt xem</span>
+                      <span className="text-slate-300 hidden sm:inline">•</span>
+                      <span className="text-slate-500 whitespace-nowrap">{prod.favoritesCount} quan tâm</span>
                     </div>
                   </div>
                 </div>
@@ -200,15 +200,15 @@ export const MyInventoryPage: React.FC = () => {
                 {pendingOffersCount > 0 && (
                   <Link
                     to="/user/exchanges"
-                    className="px-3.5 py-2 rounded-xl bg-emerald-50 text-emerald-800 border border-emerald-200/90 text-xs font-bold flex items-center gap-2 shadow-xs hover:bg-emerald-100 transition-colors animate-pulse"
+                    className="px-3.5 py-2 rounded-xl bg-emerald-50 text-emerald-800 border border-emerald-200/90 text-xs font-bold flex items-center gap-2 shadow-xs hover:bg-emerald-100 transition-colors animate-pulse w-full lg:w-auto justify-center"
                   >
-                    <ArrowRightLeft className="w-4 h-4 text-emerald-600" />
-                    <span>{pendingOffersCount} đề nghị mới đang chờ duyệt!</span>
+                    <ArrowRightLeft className="w-4 h-4 text-emerald-600 flex-shrink-0" />
+                    <span className="truncate">{pendingOffersCount} đề nghị mới đang chờ duyệt!</span>
                   </Link>
                 )}
 
                 {/* Actions dropdown/buttons */}
-                <div className="flex flex-wrap items-center gap-2 w-full md:w-auto justify-end pt-3 md:pt-0 border-t md:border-t-0 border-slate-100">
+                <div className="flex flex-wrap items-center gap-2 w-full lg:w-auto justify-start sm:justify-end pt-3 lg:pt-0 border-t lg:border-t-0 border-slate-100">
                   {/* Status Toggle Button (UC08: Ẩn/Hiện tin) */}
                   {prod.status === 'AVAILABLE' && (
                     <button

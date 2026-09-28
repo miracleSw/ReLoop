@@ -6,12 +6,12 @@ export const Footer: React.FC = () => {
   return (
     <footer className="bg-gradient-to-b from-[#F0FDF4]/70 via-[#F8FAF9] to-white text-slate-600 pt-16 pb-12 border-t border-emerald-100/90 relative overflow-hidden">
       {/* Ambient background glow */}
-      <div className="w-[500px] h-[500px] bg-emerald-400/10 rounded-full blur-3xl absolute -top-40 right-0 pointer-events-none" />
-      <div className="w-[400px] h-[400px] bg-teal-400/10 rounded-full blur-3xl absolute bottom-0 left-0 pointer-events-none" />
+      <div className="w-[500px] h-[500px] max-w-full bg-emerald-400/10 rounded-full blur-3xl absolute -top-40 right-0 pointer-events-none" />
+      <div className="w-[400px] h-[400px] max-w-full bg-teal-400/10 rounded-full blur-3xl absolute bottom-0 left-0 pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* IMPACT BANNER */}
-        <div className="bg-white/90 backdrop-blur-xl rounded-3xl p-6 sm:p-8 mb-16 border border-emerald-100/90 shadow-card flex flex-col md:flex-row items-center justify-between gap-6">
+        <div className="bg-white/90 backdrop-blur-xl rounded-3xl p-5 sm:p-6 lg:p-8 mb-16 border border-emerald-100/90 shadow-card flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
           <div className="flex items-center gap-4">
             <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-eco-600 to-teal-500 text-white flex items-center justify-center flex-shrink-0 shadow-md shadow-eco-600/30">
               <Recycle className="w-6 h-6 animate-pulse" />
@@ -26,7 +26,7 @@ export const Footer: React.FC = () => {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 sm:gap-10 border-t md:border-t-0 md:border-l border-slate-200/80 pt-6 md:pt-0 md:pl-8 text-center md:text-left w-full md:w-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 border-t lg:border-t-0 lg:border-l border-slate-200/80 pt-6 lg:pt-0 lg:pl-8 text-center sm:text-left w-full lg:w-auto flex-shrink-0">
             <div>
               <div className="text-2xl sm:text-3xl font-black text-charcoal-900">3,820+</div>
               <div className="text-xs text-slate-500 font-medium">Món đồ tuần hoàn</div>

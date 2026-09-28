@@ -166,30 +166,30 @@ export const AdminDashboardPage: React.FC = () => {
           </div>
 
           {/* Bar Chart Simulation */}
-          <div className="pt-4 space-y-4">
-            <div className="grid grid-cols-6 gap-3 items-end h-48 border-b border-slate-200 pb-2">
+          <div className="pt-4 space-y-4 w-full max-w-full overflow-hidden">
+            <div className="grid grid-cols-6 gap-1 sm:gap-2 md:gap-3 items-end h-48 border-b border-slate-200 pb-2 w-full">
               {stats.monthlyTrend.map((m, idx) => {
                 const maxVal = 1600;
                 const postHeight = Math.round((m.posts / maxVal) * 100);
                 const txHeight = Math.round((m.transactions / maxVal) * 100);
 
                 return (
-                  <div key={idx} className="flex flex-col items-center gap-1.5 h-full justify-end group">
-                    <div className="w-full flex items-end justify-center gap-1.5 h-full">
+                  <div key={idx} className="flex flex-col items-center gap-1 sm:gap-1.5 h-full justify-end group min-w-0">
+                    <div className="w-full flex items-end justify-center gap-0.5 xs:gap-1 sm:gap-1.5 h-full">
                       {/* Posts bar */}
                       <div
                         style={{ height: `${postHeight}%` }}
-                        className="w-3 sm:w-4 bg-gradient-to-t from-eco-800 to-teal-500 rounded-t-md group-hover:brightness-110 transition-all relative shadow-subtle"
+                        className="w-2 xs:w-3 sm:w-4 bg-gradient-to-t from-eco-800 to-teal-500 rounded-t-md group-hover:brightness-110 transition-all relative shadow-subtle flex-shrink-0"
                         title={`${m.month}: ${m.posts} bài đăng`}
                       />
                       {/* Transactions bar */}
                       <div
                         style={{ height: `${txHeight}%` }}
-                        className="w-3 sm:w-4 bg-gradient-to-t from-clay-600 to-amber-500 rounded-t-md group-hover:brightness-110 transition-all relative shadow-subtle"
+                        className="w-2 xs:w-3 sm:w-4 bg-gradient-to-t from-clay-600 to-amber-500 rounded-t-md group-hover:brightness-110 transition-all relative shadow-subtle flex-shrink-0"
                         title={`${m.month}: ${m.transactions} giao dịch`}
                       />
                     </div>
-                    <span className="text-[10px] text-sand-600 font-bold">{m.month}</span>
+                    <span className="text-[9px] xs:text-[10px] text-sand-600 font-bold truncate max-w-full">{m.month}</span>
                   </div>
                 );
               })}

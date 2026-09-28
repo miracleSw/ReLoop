@@ -289,7 +289,7 @@ export const TransactionDetailPage: React.FC = () => {
           )}
 
           {/* Unlocked Contact Actions (UC15: SĐT & Zalo Deep link) */}
-          <div className="pt-2 grid grid-cols-2 gap-3">
+          <div className="pt-2 grid grid-cols-1 sm:grid-cols-2 gap-3">
             <a
               href={`tel:${partner?.phone}`}
               className="py-2.5 px-3 bg-emerald-50 hover:bg-emerald-100 text-emerald-900 border border-emerald-200/90 rounded-xl text-xs font-bold flex items-center justify-center gap-2 transition-colors shadow-xs"
@@ -532,8 +532,8 @@ export const TransactionDetailPage: React.FC = () => {
 
       {/* RESCHEDULE MODAL */}
       {isRescheduleOpen && (
-        <div className="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-md flex items-center justify-center p-4">
-          <div className="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 space-y-4 shadow-2xl border border-slate-200 animate-slide-up">
+        <div className="fixed inset-0 z-50 overflow-y-auto bg-slate-900/50 backdrop-blur-md flex items-center justify-center p-4">
+          <div className="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 space-y-4 shadow-2xl border border-slate-200 animate-slide-up max-h-[90vh] overflow-y-auto">
             <h3 className="text-lg font-black text-slate-900">Dời lịch hẹn gặp mặt</h3>
             <p className="text-xs text-slate-500">
               Chỉ dời lịch trước giờ hẹn tối thiểu 2 tiếng khi có sự đồng thuận 2 bên.
@@ -585,8 +585,8 @@ export const TransactionDetailPage: React.FC = () => {
 
       {/* CANCEL MODAL (BR 17_4) */}
       {isCancelOpen && (
-        <div className="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-md flex items-center justify-center p-4">
-          <div className="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 space-y-4 shadow-2xl border border-slate-200 animate-slide-up">
+        <div className="fixed inset-0 z-50 overflow-y-auto bg-slate-900/50 backdrop-blur-md flex items-center justify-center p-4">
+          <div className="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 space-y-4 shadow-2xl border border-slate-200 animate-slide-up max-h-[90vh] overflow-y-auto">
             <h3 className="text-lg font-black text-slate-900">Hủy lịch hẹn gặp mặt</h3>
             <p className="text-xs text-slate-500">
               Bài đăng sẽ được tự động phục hồi về trạng thái Còn hàng (AVAILABLE) để tiếp nhận đề nghị khác.
@@ -629,8 +629,8 @@ export const TransactionDetailPage: React.FC = () => {
 
       {/* 2-WAY REVIEW MODAL (UC20) */}
       {isReviewOpen && partner && (
-        <div className="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-md flex items-center justify-center p-4">
-          <div className="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 space-y-5 shadow-2xl border border-slate-200 animate-slide-up">
+        <div className="fixed inset-0 z-50 overflow-y-auto bg-slate-900/50 backdrop-blur-md flex items-center justify-center p-4">
+          <div className="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 space-y-5 shadow-2xl border border-slate-200 animate-slide-up max-h-[90vh] overflow-y-auto">
             <div className="text-center space-y-1">
               <h3 className="text-xl font-black text-slate-900">
                 Đánh giá uy tín đối tác: {partner.fullName}
@@ -666,7 +666,7 @@ export const TransactionDetailPage: React.FC = () => {
 
               {/* 3 Standardized Criteria */}
               <div className="space-y-3 bg-slate-50 p-4 rounded-2xl border border-slate-200 text-xs">
-                <div className="flex items-center justify-between">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5">
                   <span className="font-bold text-slate-800">1. Đúng giờ khi hẹn gặp:</span>
                   <div className="flex items-center gap-1">
                     {[1, 2, 3, 4, 5].map((s) => (
@@ -684,7 +684,7 @@ export const TransactionDetailPage: React.FC = () => {
                   </div>
                 </div>
 
-                <div className="flex items-center justify-between">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5">
                   <span className="font-bold text-slate-800">2. Lịch sự, tôn trọng đối tác:</span>
                   <div className="flex items-center gap-1">
                     {[1, 2, 3, 4, 5].map((s) => (
@@ -702,7 +702,7 @@ export const TransactionDetailPage: React.FC = () => {
                   </div>
                 </div>
 
-                <div className="flex items-center justify-between">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5">
                   <span className="font-bold text-slate-800">3. Sản phẩm đúng mô tả thực tế:</span>
                   <div className="flex items-center gap-1">
                     {[1, 2, 3, 4, 5].map((s) => (

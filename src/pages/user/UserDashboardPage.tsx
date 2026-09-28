@@ -101,14 +101,14 @@ export const UserDashboardPage: React.FC = () => {
         <div className="flex flex-wrap items-center gap-3 w-full md:w-auto relative z-10">
           <Link
             to="/user/create-listing"
-            className="flex-1 sm:flex-none px-5 py-3 rounded-xl bg-gradient-to-r from-eco-700 via-eco-600 to-teal-600 hover:from-eco-600 hover:to-teal-500 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-glow-emerald transition-all"
+            className="flex-1 sm:flex-none px-5 py-3 rounded-xl bg-gradient-to-r from-eco-700 via-eco-600 to-teal-600 hover:from-eco-600 hover:to-teal-500 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-glow-emerald transition-all whitespace-nowrap"
           >
-            <PlusCircle className="w-4 h-4" />
+            <PlusCircle className="w-4 h-4 flex-shrink-0" />
             <span>+ Đăng tin mới</span>
           </Link>
           <Link
             to="/explore"
-            className="flex-1 sm:flex-none px-5 py-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-charcoal-800 font-bold text-xs flex items-center justify-center gap-1.5 transition-colors border border-slate-200/60"
+            className="flex-1 sm:flex-none px-5 py-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-charcoal-800 font-bold text-xs flex items-center justify-center gap-1.5 transition-colors border border-slate-200/60 whitespace-nowrap"
           >
             <span>Khám phá sàn</span>
           </Link>
@@ -116,10 +116,10 @@ export const UserDashboardPage: React.FC = () => {
       </div>
 
       {/* 2. OVERVIEW METRICS GRID */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
         <Link
           to="/user/products"
-          className="p-5 sm:p-6 rounded-3xl bg-white border border-slate-200/90 hover:border-eco-500 hover:shadow-card shadow-soft transition-all group"
+          className="p-4 sm:p-6 rounded-3xl bg-white border border-slate-200/90 hover:border-eco-500 hover:shadow-card shadow-soft transition-all group"
         >
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold text-sand-500 uppercase tracking-wider">Kho đồ cá nhân</span>
@@ -135,7 +135,7 @@ export const UserDashboardPage: React.FC = () => {
 
         <Link
           to="/user/exchanges"
-          className="p-5 sm:p-6 rounded-3xl bg-white border border-slate-200/90 hover:border-sky-500 hover:shadow-card shadow-soft transition-all group"
+          className="p-4 sm:p-6 rounded-3xl bg-white border border-slate-200/90 hover:border-sky-500 hover:shadow-card shadow-soft transition-all group"
         >
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold text-sand-500 uppercase tracking-wider">Đề nghị nhận được</span>
@@ -153,7 +153,7 @@ export const UserDashboardPage: React.FC = () => {
 
         <Link
           to="/user/transactions"
-          className="p-5 sm:p-6 rounded-3xl bg-white border border-slate-200/90 hover:border-amber-500 hover:shadow-card shadow-soft transition-all group"
+          className="p-4 sm:p-6 rounded-3xl bg-white border border-slate-200/90 hover:border-amber-500 hover:shadow-card shadow-soft transition-all group"
         >
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold text-sand-500 uppercase tracking-wider">Lịch hẹn gặp mặt</span>

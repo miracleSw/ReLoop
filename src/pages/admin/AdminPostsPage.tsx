@@ -47,8 +47,8 @@ export const AdminPostsPage: React.FC = () => {
       </div>
 
       {/* FILTER CONTROLS */}
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 bg-white p-4 rounded-2xl border border-slate-200/90 shadow-soft">
-        <div className="relative w-full sm:w-80">
+      <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-4 bg-white p-4 rounded-2xl border border-slate-200/90 shadow-soft min-w-0 max-w-full">
+        <div className="relative w-full lg:w-80 flex-shrink-0">
           <input
             type="text"
             value={searchTerm}
@@ -59,12 +59,12 @@ export const AdminPostsPage: React.FC = () => {
           <Search className="w-4 h-4 text-sand-400 absolute left-3 top-3 pointer-events-none" />
         </div>
 
-        <div className="flex items-center gap-2 text-xs overflow-x-auto pb-1 sm:pb-0 w-full sm:w-auto">
+        <div className="flex items-center gap-2 text-xs overflow-x-auto pb-1 sm:pb-0 w-full lg:w-auto scrollbar-none min-w-0 max-w-full">
           {['ALL', 'AVAILABLE', 'RESERVED', 'LOCKED', 'REMOVED'].map((st) => (
             <button
               key={st}
               onClick={() => setStatusFilter(st)}
-              className={`px-3.5 py-1.5 rounded-xl font-bold whitespace-nowrap transition-all ${
+              className={`px-3.5 py-1.5 rounded-xl font-bold whitespace-nowrap transition-all flex-shrink-0 ${
                 statusFilter === st
                   ? 'bg-gradient-to-r from-eco-700 to-eco-600 text-white shadow-glow-emerald'
                   : 'bg-slate-100 text-charcoal-700 hover:bg-slate-200/70'

@@ -233,7 +233,7 @@ export const CreateListingPage: React.FC = () => {
               <label className="block text-xs font-bold text-charcoal-800 mb-2">
                 Hình thức giao dịch <span className="text-rose-500">*</span>
               </label>
-              <div className="grid grid-cols-3 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 {[
                   { id: 'BOTH', label: 'Cả hai hình thức', sub: 'Ưu tiên linh hoạt' },
                   { id: 'EXCHANGE', label: 'Chỉ Đổi đồ', sub: 'Không nhận tiền mặt' },

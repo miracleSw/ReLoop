@@ -49,7 +49,7 @@ export const TransactionsListPage: React.FC = () => {
       </div>
 
       {/* Tabs */}
-      <div className="flex items-center gap-2 overflow-x-auto pb-1 border-b border-slate-200/80 text-xs scrollbar-none">
+      <div className="flex items-center gap-2 overflow-x-auto pb-1 border-b border-slate-200/80 text-xs scrollbar-none min-w-0 max-w-full">
         {[
           { id: 'ALL', label: 'Tất cả cuộc hẹn', count: myTransactions.length },
           {
@@ -71,7 +71,7 @@ export const TransactionsListPage: React.FC = () => {
           <button
             key={tab.id}
             onClick={() => setFilterTab(tab.id)}
-            className={`px-4 py-2 rounded-full font-bold whitespace-nowrap transition-all flex items-center gap-2 ${
+            className={`px-4 py-2 rounded-full font-bold whitespace-nowrap transition-all flex items-center gap-2 flex-shrink-0 ${
               filterTab === tab.id
                 ? 'bg-gradient-to-r from-eco-700 via-eco-600 to-teal-600 text-white shadow-glow-emerald'
                 : 'bg-white text-slate-700 hover:bg-slate-50 border border-slate-200/90 shadow-xs'
@@ -110,11 +110,11 @@ export const TransactionsListPage: React.FC = () => {
               >
                 <div className="flex items-center gap-4 min-w-0 flex-1">
                   {targetProd && (
-                    <div className="relative overflow-hidden rounded-2xl border border-slate-200 flex-shrink-0 bg-slate-50">
+                    <div className="relative w-16 h-16 sm:w-20 sm:h-20 overflow-hidden rounded-2xl border border-slate-200 flex-shrink-0 bg-slate-50">
                       <img
                         src={targetProd.images[0]}
                         alt={targetProd.title}
-                        className="w-18 h-18 sm:w-20 sm:h-20 object-cover transition-transform duration-300 group-hover:scale-105"
+                        className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                       />
                     </div>
                   )}

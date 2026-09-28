@@ -148,7 +148,7 @@ export const ProductDetailPage: React.FC = () => {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-12">
       {/* 1. BREADCRUMBS */}
-      <nav className="flex items-center gap-2 text-xs text-sand-500 font-medium">
+      <nav className="flex flex-wrap items-center gap-2 text-xs text-sand-500 font-medium">
         <Link to="/" className="hover:text-eco-700 transition-colors">
           Trang chủ
         </Link>
@@ -157,7 +157,7 @@ export const ProductDetailPage: React.FC = () => {
           Khám phá
         </Link>
         <ChevronRight className="w-3.5 h-3.5 text-sand-400" />
-        <span className="text-charcoal-800 font-bold truncate max-w-xs">{product.title}</span>
+        <span className="text-charcoal-800 font-bold truncate max-w-[140px] sm:max-w-xs">{product.title}</span>
       </nav>
 
       {/* 2. PRODUCT MAIN SHOWCASE */}
@@ -250,7 +250,7 @@ export const ProductDetailPage: React.FC = () => {
               {product.price ? (
                 <div>
                   <div className="text-xs text-sand-500 font-bold uppercase tracking-wider">Mức giá đề xuất</div>
-                  <div className="flex items-baseline gap-3 mt-1.5">
+                  <div className="flex items-baseline flex-wrap gap-x-3 gap-y-1 mt-1.5">
                     <span className="text-3xl sm:text-4xl font-black text-clay-600 font-sans tracking-tight">
                       {product.price.toLocaleString('vi-VN')}₫
                     </span>
@@ -283,30 +283,30 @@ export const ProductDetailPage: React.FC = () => {
             </div>
 
             {/* SELLER TRUST PROFILE CARD */}
-            <div className="p-4 sm:p-5 rounded-3xl bg-white border border-slate-200/90 shadow-soft flex items-center justify-between hover:shadow-card transition-all">
-              <Link to={`/sellers/${seller.id}`} className="flex items-center gap-3.5 group">
+            <div className="p-4 sm:p-5 rounded-3xl bg-white border border-slate-200/90 shadow-soft flex flex-wrap sm:flex-nowrap items-center justify-between gap-3 hover:shadow-card transition-all">
+              <Link to={`/sellers/${seller.id}`} className="flex items-center gap-3.5 group min-w-0 flex-1">
                 <img
                   src={seller.avatar}
                   alt={seller.fullName}
-                  className="w-13 h-13 rounded-2xl object-cover ring-2 ring-eco-500/80 shadow-subtle"
+                  className="w-12 h-12 rounded-2xl object-cover ring-2 ring-eco-500/80 shadow-subtle flex-shrink-0"
                 />
-                <div>
+                <div className="min-w-0 flex-1">
                   <div className="flex items-center gap-1.5">
-                    <span className="text-sm font-bold text-charcoal-900 group-hover:text-eco-700 transition-colors">
+                    <span className="text-sm font-bold text-charcoal-900 group-hover:text-eco-700 transition-colors truncate">
                       {seller.fullName}
                     </span>
-                    <CheckCircle2 className="w-4 h-4 text-eco-600 fill-eco-100" />
+                    <CheckCircle2 className="w-4 h-4 text-eco-600 fill-eco-100 flex-shrink-0" />
                   </div>
-                  <div className="flex items-center gap-2 text-xs mt-1">
+                  <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 text-xs mt-1">
                     <RatingStars rating={seller.rating} size="sm" />
                     <span className="text-slate-300">•</span>
-                    <span className="text-sand-600 font-medium">{seller.totalTransactions} giao dịch</span>
+                    <span className="text-sand-600 font-medium truncate">{seller.totalTransactions} giao dịch</span>
                   </div>
                 </div>
               </Link>
 
-              <div className="text-right">
-                <span className="inline-block text-xs font-bold text-eco-800 bg-emerald-50 border border-eco-200/80 px-3 py-1 rounded-full shadow-subtle">
+              <div className="text-right flex-shrink-0">
+                <span className="inline-block text-xs font-bold text-eco-800 bg-emerald-50 border border-eco-200/80 px-2.5 sm:px-3 py-1 rounded-full shadow-subtle">
                   ★ {seller.trustScore}/100 Uy tín
                 </span>
               </div>
@@ -482,7 +482,7 @@ export const ProductDetailPage: React.FC = () => {
       {/* MODAL 1: CONTACT SELLER POPUP (UC12) */}
       {isContactModalOpen && (
         <div className="fixed inset-0 z-50 overflow-y-auto bg-charcoal-900/60 backdrop-blur-md flex items-center justify-center p-4">
-          <div className="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-elevated border border-slate-200 animate-slide-up relative">
+          <div className="bg-white rounded-3xl max-w-md w-full max-h-[90vh] overflow-y-auto p-6 sm:p-8 shadow-elevated border border-slate-200 animate-slide-up relative">
             <div className="text-center space-y-3">
               <div className="w-14 h-14 bg-gradient-to-br from-eco-100 to-teal-100 text-eco-700 rounded-2xl flex items-center justify-center mx-auto shadow-subtle">
                 <PhoneCall className="w-7 h-7 text-eco-600" />
@@ -545,7 +545,7 @@ export const ProductDetailPage: React.FC = () => {
       {/* MODAL 2: SEND BARTER REQUEST (UC13) */}
       {isBarterModalOpen && (
         <div className="fixed inset-0 z-50 overflow-y-auto bg-charcoal-900/60 backdrop-blur-md flex items-center justify-center p-4">
-          <div className="bg-white rounded-3xl max-w-xl w-full p-6 sm:p-8 shadow-elevated border border-slate-200 animate-slide-up relative">
+          <div className="bg-white rounded-3xl max-w-xl w-full max-h-[90vh] overflow-y-auto p-6 sm:p-8 shadow-elevated border border-slate-200 animate-slide-up relative">
             <h3 className="text-xl font-bold text-charcoal-900 mb-1">
               Gửi đề nghị Trao đổi đồ
             </h3>
@@ -652,14 +652,16 @@ export const ProductDetailPage: React.FC = () => {
 
                 {/* Visual Comparison Preview */}
                 {selectedMyProductId && (
-                  <div className="p-3.5 bg-slate-100 rounded-2xl flex items-center justify-between text-xs text-charcoal-800 border border-slate-200">
-                    <span className="font-semibold truncate max-w-[140px]">
-                      {products.find((p) => p.id === selectedMyProductId)?.title}
-                    </span>
-                    <ArrowRightLeft className="w-4 h-4 text-eco-600 flex-shrink-0 mx-2" />
-                    <span className="font-semibold truncate max-w-[140px]">{product.title}</span>
+                  <div className="p-3 bg-slate-100 rounded-2xl flex flex-wrap sm:flex-nowrap items-center justify-between gap-2 text-xs text-charcoal-800 border border-slate-200">
+                    <div className="flex items-center gap-1.5 min-w-0 flex-1">
+                      <span className="font-semibold truncate">
+                        {products.find((p) => p.id === selectedMyProductId)?.title}
+                      </span>
+                      <ArrowRightLeft className="w-3.5 h-3.5 text-eco-600 flex-shrink-0" />
+                      <span className="font-semibold truncate">{product.title}</span>
+                    </div>
                     {compensationAmount > 0 && (
-                      <span className="text-[11px] font-bold text-clay-600 ml-2">
+                      <span className="text-[11px] font-bold text-clay-600 flex-shrink-0">
                         + {compensationAmount.toLocaleString('vi-VN')}₫
                       </span>
                     )}
@@ -690,7 +692,7 @@ export const ProductDetailPage: React.FC = () => {
       {/* MODAL 3: BUY PROPOSAL MODAL */}
       {isBuyModalOpen && (
         <div className="fixed inset-0 z-50 overflow-y-auto bg-charcoal-900/60 backdrop-blur-md flex items-center justify-center p-4">
-          <div className="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-elevated border border-slate-200 animate-slide-up relative">
+          <div className="bg-white rounded-3xl max-w-md w-full max-h-[90vh] overflow-y-auto p-6 sm:p-8 shadow-elevated border border-slate-200 animate-slide-up relative">
             <h3 className="text-xl font-bold text-charcoal-900 mb-1">Đề xuất mua sản phẩm</h3>
             <p className="text-xs text-sand-500 mb-5">
               Thương lượng mức giá mong muốn gặp mặt trực tiếp với chủ bài đăng.

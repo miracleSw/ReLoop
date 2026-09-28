@@ -78,7 +78,7 @@ export const MyInventoryPage: React.FC = () => {
       </div>
 
       {/* 2. STATUS TABS (UC07) */}
-      <div className="flex items-center gap-2 overflow-x-auto pb-1 border-b border-slate-200/80 scrollbar-none">
+      <div className="flex items-center gap-2 overflow-x-auto pb-1 border-b border-slate-200/80 scrollbar-none min-w-0 max-w-full">
         {[
           { id: 'ALL', label: 'Tất cả bài đăng', count: myListings.length },
           {
@@ -110,7 +110,7 @@ export const MyInventoryPage: React.FC = () => {
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
-            className={`px-4 py-2.5 rounded-full text-xs font-bold whitespace-nowrap transition-all flex items-center gap-2 ${
+            className={`px-4 py-2.5 rounded-full text-xs font-bold whitespace-nowrap transition-all flex items-center gap-2 flex-shrink-0 ${
               activeTab === tab.id
                 ? 'bg-gradient-to-r from-eco-700 via-eco-600 to-teal-600 text-white shadow-glow-emerald'
                 : 'bg-white text-slate-700 hover:bg-slate-50 border border-slate-200/90 shadow-xs'
@@ -153,11 +153,11 @@ export const MyInventoryPage: React.FC = () => {
               >
                 {/* Product details */}
                 <div className="flex items-center gap-4 min-w-0 flex-1">
-                  <div className="relative overflow-hidden rounded-2xl border border-slate-200 flex-shrink-0 bg-slate-50">
+                  <div className="relative w-16 h-16 sm:w-20 sm:h-20 overflow-hidden rounded-2xl border border-slate-200 flex-shrink-0 bg-slate-50">
                     <img
                       src={prod.images[0]}
                       alt={prod.title}
-                      className="w-18 h-18 sm:w-20 sm:h-20 object-cover transition-transform duration-300 group-hover:scale-105"
+                      className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                     />
                   </div>
                   <div className="min-w-0 flex-1 space-y-1.5">

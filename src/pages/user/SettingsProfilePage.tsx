@@ -122,7 +122,7 @@ export const SettingsProfilePage: React.FC = () => {
           <img
             src={avatar}
             alt={fullName}
-            className="w-18 h-18 sm:w-20 sm:h-20 rounded-2xl object-cover ring-2 ring-eco-500/80 shadow-sm flex-shrink-0"
+            className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl object-cover ring-2 ring-eco-500/80 shadow-sm flex-shrink-0"
           />
           <div className="flex-1 space-y-1.5 min-w-0">
             <label className="block text-xs font-bold text-slate-800 uppercase tracking-wider">Ảnh đại diện (URL)</label>
@@ -341,19 +341,19 @@ export const SettingsProfilePage: React.FC = () => {
             {blockedUsers.map((bu) => (
               <div
                 key={bu.id}
-                className="p-4 rounded-2xl bg-slate-50 border border-slate-200/80 flex items-center justify-between shadow-xs"
+                className="p-4 rounded-2xl bg-slate-50 border border-slate-200/80 flex items-center justify-between gap-3 shadow-xs"
               >
-                <div className="flex items-center gap-3">
-                  <img src={bu.avatar} alt={bu.fullName} className="w-10 h-10 rounded-xl object-cover ring-1 ring-slate-200" />
-                  <div>
-                    <h5 className="text-xs font-bold text-slate-900">{bu.fullName}</h5>
-                    <span className="text-[10px] text-slate-500">{bu.province}</span>
+                <div className="flex items-center gap-3 min-w-0">
+                  <img src={bu.avatar} alt={bu.fullName} className="w-10 h-10 rounded-xl object-cover ring-1 ring-slate-200 flex-shrink-0" />
+                  <div className="min-w-0">
+                    <h5 className="text-xs font-bold text-slate-900 truncate">{bu.fullName}</h5>
+                    <span className="text-[10px] text-slate-500 truncate block">{bu.province}</span>
                   </div>
                 </div>
 
                 <button
                   onClick={() => toggleBlockUser(bu.id)}
-                  className="px-3.5 py-2 bg-white border border-slate-200 text-xs font-bold text-slate-700 hover:bg-slate-100 rounded-xl shadow-xs transition-colors"
+                  className="px-3.5 py-2 bg-white border border-slate-200 text-xs font-bold text-slate-700 hover:bg-slate-100 rounded-xl shadow-xs transition-colors flex-shrink-0"
                 >
                   Bỏ chặn
                 </button>

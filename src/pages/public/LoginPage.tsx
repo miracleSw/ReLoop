@@ -70,7 +70,7 @@ export const LoginPage: React.FC = () => {
       </div>
 
       {/* RIGHT: CLEAR AUTH FORM */}
-      <div className="lg:w-1/2 p-8 sm:p-14 lg:p-20 flex items-center justify-center bg-[#F8FAF9]">
+      <div className="lg:w-1/2 p-5 sm:p-12 lg:p-20 flex items-center justify-center bg-[#F8FAF9]">
         <div className="max-w-md w-full space-y-6">
           <div>
             <h1 className="text-2xl sm:text-3xl font-extrabold text-charcoal-900 tracking-tight">

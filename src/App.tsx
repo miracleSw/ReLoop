@@ -41,9 +41,9 @@ import { AdminReviewsPage } from './pages/admin/AdminReviewsPage';
 // Public layout wrapper
 const PublicLayout: React.FC = () => {
   return (
-    <div className="min-h-screen flex flex-col justify-between">
+    <div className="min-h-screen flex flex-col justify-between overflow-x-hidden w-full max-w-full relative">
       <Navbar />
-      <main className="flex-1">
+      <main className="flex-1 w-full max-w-full">
         <Outlet />
       </main>
       <Footer />

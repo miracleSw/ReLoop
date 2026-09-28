@@ -52,7 +52,7 @@ export const HomePage: React.FC = () => {
   );
 
   return (
-    <div className="relative space-y-20 pb-20">
+    <div className="relative space-y-20 pb-20 overflow-x-hidden">
       {/* Ambient background glow */}
       <div className="absolute top-0 inset-x-0 h-[650px] bg-[radial-gradient(ellipse_80%_60%_at_50%_-10%,rgba(16,185,129,0.12),transparent_70%)] pointer-events-none" />
 

@@ -26,7 +26,7 @@ export const Footer: React.FC = () => {
             </div>
           </div>
 
-          <div className="grid grid-cols-3 gap-6 sm:gap-10 border-t md:border-t-0 md:border-l border-slate-200/80 pt-4 md:pt-0 md:pl-8 text-center md:text-left">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 sm:gap-10 border-t md:border-t-0 md:border-l border-slate-200/80 pt-6 md:pt-0 md:pl-8 text-center md:text-left w-full md:w-auto">
             <div>
               <div className="text-2xl sm:text-3xl font-black text-charcoal-900">3,820+</div>
               <div className="text-xs text-slate-500 font-medium">Món đồ tuần hoàn</div>
@@ -43,7 +43,7 @@ export const Footer: React.FC = () => {
         </div>
 
         {/* MAIN COLUMNS */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-12 border-b border-slate-200/80">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 sm:gap-10 pb-12 border-b border-slate-200/80">
           {/* Brand Story */}
           <div className="lg:col-span-2 space-y-4">
             <div className="flex items-center gap-3">
@@ -152,9 +152,9 @@ export const Footer: React.FC = () => {
         </div>
 
         {/* BOTTOM COPYRIGHT */}
-        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-4">
+        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-4 text-center sm:text-left">
           <p>© 2026 ReLoop Marketplace — HUSC-33 Software Engineering Capstone Project.</p>
-          <div className="flex items-center gap-6">
+          <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-6">
             <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-eco-800 border border-emerald-200/80 font-medium">
               <Leaf className="w-3.5 h-3.5 text-eco-600" /> Chuẩn Nature Eco Living
             </span>

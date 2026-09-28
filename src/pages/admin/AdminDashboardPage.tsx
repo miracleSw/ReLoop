@@ -98,25 +98,25 @@ export const AdminDashboardPage: React.FC = () => {
 
       {/* 2. URGENT MODERATION ALERTS */}
       {(flaggedProducts.length > 0 || pendingReports.length > 0) && (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 sm:gap-5">
           {flaggedProducts.length > 0 && (
-            <div className="p-5 sm:p-6 rounded-3xl bg-gradient-to-br from-amber-50 to-orange-50/70 border border-amber-200/90 flex items-center justify-between gap-4 shadow-subtle">
-              <div className="flex items-center gap-3.5">
+            <div className="p-5 sm:p-6 rounded-3xl bg-gradient-to-br from-amber-50 to-orange-50/70 border border-amber-200/90 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-subtle">
+              <div className="flex items-center gap-3.5 min-w-0">
                 <div className="w-10 h-10 rounded-2xl bg-amber-100 text-amber-800 flex items-center justify-center flex-shrink-0">
                   <ShieldAlert className="w-5 h-5 text-amber-700" />
                 </div>
-                <div>
-                  <h4 className="text-xs sm:text-sm font-bold text-amber-950">
+                <div className="min-w-0">
+                  <h4 className="text-xs sm:text-sm font-bold text-amber-950 truncate">
                     Có {flaggedProducts.length} bài đăng nghi vấn hàng cấm
                   </h4>
-                  <p className="text-[11px] text-amber-800 mt-0.5">
+                  <p className="text-[11px] text-amber-800 mt-0.5 line-clamp-1 sm:line-clamp-none">
                     Phát hiện từ khóa nhạy cảm trong chính sách kiểm duyệt tự động.
                   </p>
                 </div>
               </div>
               <Link
                 to="/admin/posts"
-                className="px-4 py-2.5 bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-500 hover:to-amber-600 text-white rounded-xl text-xs font-bold whitespace-nowrap shadow-soft transition-all"
+                className="w-full sm:w-auto text-center px-4 py-2.5 bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-500 hover:to-amber-600 text-white rounded-xl text-xs font-bold whitespace-nowrap shadow-soft transition-all flex-shrink-0"
               >
                 Kiểm duyệt →
               </Link>
@@ -124,23 +124,23 @@ export const AdminDashboardPage: React.FC = () => {
           )}
 
           {pendingReports.length > 0 && (
-            <div className="p-5 sm:p-6 rounded-3xl bg-gradient-to-br from-rose-50 to-red-50/70 border border-rose-200/90 flex items-center justify-between gap-4 shadow-subtle">
-              <div className="flex items-center gap-3.5">
+            <div className="p-5 sm:p-6 rounded-3xl bg-gradient-to-br from-rose-50 to-red-50/70 border border-rose-200/90 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-subtle">
+              <div className="flex items-center gap-3.5 min-w-0">
                 <div className="w-10 h-10 rounded-2xl bg-rose-100 text-rose-800 flex items-center justify-center flex-shrink-0">
                   <AlertTriangle className="w-5 h-5 text-rose-700" />
                 </div>
-                <div>
-                  <h4 className="text-xs sm:text-sm font-bold text-rose-950">
+                <div className="min-w-0">
+                  <h4 className="text-xs sm:text-sm font-bold text-rose-950 truncate">
                     Có {pendingReports.length} báo cáo vi phạm cần đối soát
                   </h4>
-                  <p className="text-[11px] text-rose-800 mt-0.5">
+                  <p className="text-[11px] text-rose-800 mt-0.5 line-clamp-1 sm:line-clamp-none">
                     Báo cáo thành viên bùng hẹn hoặc lừa đảo kèm hình ảnh bằng chứng.
                   </p>
                 </div>
               </div>
               <Link
                 to="/admin/reports"
-                className="px-4 py-2.5 bg-gradient-to-r from-rose-600 to-rose-700 hover:from-rose-500 hover:to-rose-600 text-white rounded-xl text-xs font-bold whitespace-nowrap shadow-soft transition-all"
+                className="w-full sm:w-auto text-center px-4 py-2.5 bg-gradient-to-r from-rose-600 to-rose-700 hover:from-rose-500 hover:to-rose-600 text-white rounded-xl text-xs font-bold whitespace-nowrap shadow-soft transition-all flex-shrink-0"
               >
                 Xử lý báo cáo →
               </Link>

@@ -41,10 +41,10 @@ export const AdminReviewsPage: React.FC = () => {
         </div>
 
         {/* Filter Tabs */}
-        <div className="flex items-center gap-2 bg-slate-100 p-1.5 rounded-2xl w-fit">
+        <div className="flex flex-wrap items-center gap-2 bg-slate-100 p-1.5 rounded-2xl w-full sm:w-fit">
           <button
             onClick={() => setFilterMode('ALL')}
-            className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all ${
+            className={`flex-1 sm:flex-none px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all text-center ${
               filterMode === 'ALL'
                 ? 'bg-white text-charcoal-900 shadow-soft'
                 : 'text-slate-600 hover:text-charcoal-800'
@@ -54,7 +54,7 @@ export const AdminReviewsPage: React.FC = () => {
           </button>
           <button
             onClick={() => setFilterMode('APPEALED')}
-            className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
+            className={`flex-1 sm:flex-none px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5 ${
               filterMode === 'APPEALED'
                 ? 'bg-gradient-to-r from-amber-600 to-amber-700 text-white shadow-soft'
                 : 'text-amber-800 hover:bg-amber-100/50'
@@ -79,7 +79,7 @@ export const AdminReviewsPage: React.FC = () => {
             return (
               <div key={rev.id} className="p-6 sm:p-7 space-y-3.5 hover:bg-slate-50/60 transition-colors">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                  <div className="flex items-center gap-3">
+                  <div className="flex flex-wrap items-center gap-2 sm:gap-3 min-w-0">
                     <span className="text-xs font-bold text-charcoal-900">
                       {reviewer?.fullName} → {targetUser?.fullName}
                     </span>

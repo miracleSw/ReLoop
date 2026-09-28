@@ -368,7 +368,7 @@ export const SpotlightBanner: React.FC<SpotlightBannerProps> = ({
   return (
     <div
       className={clsx(
-        'relative rounded-3xl lg:rounded-4xl bg-gradient-to-br from-[#064E3B] via-[#043E30] to-[#022C22] text-white p-6 sm:p-10 lg:p-14 overflow-hidden shadow-elevated border border-emerald-500/25 select-none group/banner touch-pan-y',
+        'relative rounded-3xl lg:rounded-4xl bg-gradient-to-br from-[#064E3B] via-[#043E30] to-[#022C22] text-white p-4 sm:p-8 lg:p-14 overflow-hidden shadow-elevated border border-emerald-500/25 select-none group/banner touch-pan-y',
         className
       )}
       onMouseEnter={() => setIsPaused(true)}
@@ -440,13 +440,13 @@ export const SpotlightBanner: React.FC<SpotlightBannerProps> = ({
         {/* LEFT COLUMN: Storytelling & Action Hub (58% width on desktop) */}
         <div
           key={`left-${current.id}`}
-          className="w-full lg:w-[58%] flex flex-col justify-between space-y-6 animate-fade-in"
+          className="w-full lg:w-[58%] flex flex-col justify-between space-y-6 animate-fade-in min-w-0"
         >
           {/* Top Pill Badge */}
-          <div>
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/15 backdrop-blur-md border border-white/25 text-xs font-bold text-emerald-200 shadow-sm">
+          <div className="max-w-full min-w-0">
+            <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-1 sm:py-1.5 rounded-full bg-white/15 backdrop-blur-md border border-white/25 text-[11px] sm:text-xs font-bold text-emerald-200 shadow-sm max-w-full">
               <Sparkles className="w-3.5 h-3.5 text-emerald-300 animate-pulse flex-shrink-0" />
-              <span className="truncate">{current.pillBadge}</span>
+              <span className="truncate min-w-0">{current.pillBadge}</span>
             </div>
           </div>
 
@@ -509,14 +509,14 @@ export const SpotlightBanner: React.FC<SpotlightBannerProps> = ({
           <div className="flex flex-wrap items-center gap-3 sm:gap-4 pt-1">
             <Link
               to={current.primaryCta.link}
-              className="bg-gradient-to-r from-emerald-400 via-teal-300 to-emerald-400 text-eco-950 hover:shadow-lg hover:shadow-emerald-400/35 hover:-translate-y-0.5 font-bold px-7 py-3 rounded-full flex items-center gap-2 transition-all duration-300 group"
+              className="w-full sm:w-auto justify-center bg-gradient-to-r from-emerald-400 via-teal-300 to-emerald-400 text-eco-950 hover:shadow-lg hover:shadow-emerald-400/35 hover:-translate-y-0.5 font-bold px-6 sm:px-7 py-3 rounded-full flex items-center gap-2 transition-all duration-300 group"
             >
               <span>{current.primaryCta.label}</span>
               <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
             </Link>
             <Link
               to={current.secondaryCta.link}
-              className="border border-white/30 bg-white/10 hover:bg-white/20 text-white backdrop-blur-md px-6 py-3 rounded-full flex items-center gap-2 transition-all group font-semibold shadow-subtle hover:-translate-y-0.5"
+              className="w-full sm:w-auto justify-center border border-white/30 bg-white/10 hover:bg-white/20 text-white backdrop-blur-md px-5 sm:px-6 py-3 rounded-full flex items-center gap-2 transition-all group font-semibold shadow-subtle hover:-translate-y-0.5"
             >
               <ArrowRightLeft className="w-4 h-4 text-emerald-300 transition-transform group-hover:rotate-180" />
               <span>{current.secondaryCta.label}</span>
@@ -545,10 +545,10 @@ export const SpotlightBanner: React.FC<SpotlightBannerProps> = ({
         </div>
 
         {/* RIGHT COLUMN: 3D Card Fan Deck (42% width on desktop) */}
-        <div className="w-full lg:w-[42%] flex items-center justify-center pt-2 lg:pt-0">
+        <div className="w-full lg:w-[42%] flex items-center justify-center pt-2 lg:pt-0 overflow-hidden lg:overflow-visible">
           <div
             key={`deck-${current.id}`}
-            className="relative w-full max-w-[320px] sm:max-w-[380px] lg:max-w-[420px] h-[340px] sm:h-[400px] lg:h-[450px] flex items-center justify-center [perspective:1200px] [transform-style:preserve-3d] group/fandeck cursor-pointer select-none animate-fade-in"
+            className="relative w-full max-w-[280px] sm:max-w-[380px] lg:max-w-[420px] h-[300px] sm:h-[400px] lg:h-[450px] flex items-center justify-center [perspective:1200px] [transform-style:preserve-3d] group/fandeck cursor-pointer select-none animate-fade-in"
             onClick={() => {
               if (isSwipingRef.current) return;
               navigate(current.primaryCta.link);
@@ -565,7 +565,7 @@ export const SpotlightBanner: React.FC<SpotlightBannerProps> = ({
             }}
           >
             {/* Back Layer Card (-10deg -> -13deg on hover) */}
-            <div className="absolute w-[210px] sm:w-[260px] lg:w-[280px] h-[270px] sm:h-[340px] lg:h-[370px] rounded-2xl sm:rounded-3xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.6)] border border-white/10 z-10 transition-all duration-500 ease-out transform-gpu will-change-transform -rotate-[10deg] scale-90 -translate-x-8 sm:-translate-x-12 translate-y-3 group-hover/fandeck:-rotate-[13deg] group-hover/fandeck:scale-95 group-hover/fandeck:-translate-x-12 sm:group-hover/fandeck:-translate-x-16 group-hover/fandeck:translate-y-0">
+            <div className="absolute w-[180px] sm:w-[260px] lg:w-[280px] h-[240px] sm:h-[340px] lg:h-[370px] rounded-2xl sm:rounded-3xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.6)] border border-white/10 z-10 transition-all duration-500 ease-out transform-gpu will-change-transform -rotate-[10deg] scale-90 -translate-x-6 sm:-translate-x-12 translate-y-3 group-hover/fandeck:-rotate-[13deg] group-hover/fandeck:scale-95 group-hover/fandeck:-translate-x-10 sm:group-hover/fandeck:-translate-x-16 group-hover/fandeck:translate-y-0">
               <img
                 src={current.images.back}
                 alt={`${current.collection} - Không gian phong cách sống`}
@@ -579,7 +579,7 @@ export const SpotlightBanner: React.FC<SpotlightBannerProps> = ({
             </div>
 
             {/* Mid Layer Card (-3deg -> -6deg on hover) */}
-            <div className="absolute w-[210px] sm:w-[260px] lg:w-[280px] h-[270px] sm:h-[340px] lg:h-[370px] rounded-2xl sm:rounded-3xl overflow-hidden shadow-[0_25px_60px_rgba(0,0,0,0.65)] border border-white/15 z-20 transition-all duration-500 ease-out transform-gpu will-change-transform -rotate-[3deg] scale-95 -translate-x-2 translate-y-1 group-hover/fandeck:-rotate-[6deg] group-hover/fandeck:scale-100 group-hover/fandeck:-translate-x-4 group-hover/fandeck:-translate-y-2">
+            <div className="absolute w-[180px] sm:w-[260px] lg:w-[280px] h-[240px] sm:h-[340px] lg:h-[370px] rounded-2xl sm:rounded-3xl overflow-hidden shadow-[0_25px_60px_rgba(0,0,0,0.65)] border border-white/15 z-20 transition-all duration-500 ease-out transform-gpu will-change-transform -rotate-[3deg] scale-95 -translate-x-2 translate-y-1 group-hover/fandeck:-rotate-[6deg] group-hover/fandeck:scale-100 group-hover/fandeck:-translate-x-4 group-hover/fandeck:-translate-y-2">
               <img
                 src={current.images.mid}
                 alt={`${current.collection} - Góc chụp chi tiết kiểm định`}
@@ -593,7 +593,7 @@ export const SpotlightBanner: React.FC<SpotlightBannerProps> = ({
             </div>
 
             {/* Front Layer Card (+5deg -> +8deg on hover) */}
-            <div className="absolute w-[210px] sm:w-[260px] lg:w-[280px] h-[270px] sm:h-[340px] lg:h-[370px] rounded-2xl ring-1 ring-white/30 shadow-2xl overflow-hidden border border-white/20 z-30 transition-all duration-500 ease-out transform-gpu will-change-transform rotate-[5deg] scale-100 translate-x-6 sm:translate-x-10 translate-y-0 group-hover/fandeck:rotate-[8deg] group-hover/fandeck:scale-105 group-hover/fandeck:translate-x-10 sm:group-hover/fandeck:translate-x-14 group-hover/fandeck:-translate-y-2">
+            <div className="absolute w-[180px] sm:w-[260px] lg:w-[280px] h-[240px] sm:h-[340px] lg:h-[370px] rounded-2xl ring-1 ring-white/30 shadow-2xl overflow-hidden border border-white/20 z-30 transition-all duration-500 ease-out transform-gpu will-change-transform rotate-[5deg] scale-100 translate-x-4 sm:translate-x-10 translate-y-0 group-hover/fandeck:rotate-[8deg] group-hover/fandeck:scale-105 group-hover/fandeck:translate-x-8 sm:group-hover/fandeck:translate-x-14 group-hover/fandeck:-translate-y-2">
               <img
                 src={current.images.front}
                 alt={`${current.collection} - Ảnh sắc nét`}

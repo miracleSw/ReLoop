@@ -142,10 +142,10 @@ export const ExchangeManagementPage: React.FC = () => {
       </div>
 
       {/* 3. MAIN TABS (Received vs Sent) */}
-      <div className="flex items-center gap-4 border-b border-slate-200">
+      <div className="flex items-center gap-4 border-b border-slate-200 overflow-x-auto scrollbar-none min-w-0 max-w-full pb-0.5">
         <button
           onClick={() => setActiveMainTab('RECEIVED')}
-          className={`pb-3.5 px-2 text-sm font-bold border-b-2 transition-all flex items-center gap-2 ${
+          className={`pb-3.5 px-2 text-xs sm:text-sm font-bold border-b-2 transition-all flex items-center gap-2 whitespace-nowrap flex-shrink-0 ${
             activeMainTab === 'RECEIVED'
               ? 'border-eco-600 text-eco-800 font-extrabold'
               : 'border-transparent text-slate-500 hover:text-slate-800'
@@ -164,7 +164,7 @@ export const ExchangeManagementPage: React.FC = () => {
 
         <button
           onClick={() => setActiveMainTab('SENT')}
-          className={`pb-3.5 px-2 text-sm font-bold border-b-2 transition-all flex items-center gap-2 ${
+          className={`pb-3.5 px-2 text-xs sm:text-sm font-bold border-b-2 transition-all flex items-center gap-2 whitespace-nowrap flex-shrink-0 ${
             activeMainTab === 'SENT'
               ? 'border-eco-600 text-eco-800 font-extrabold'
               : 'border-transparent text-slate-500 hover:text-slate-800'
@@ -183,12 +183,12 @@ export const ExchangeManagementPage: React.FC = () => {
       </div>
 
       {/* 4. STATUS SUB-FILTER CHIPS */}
-      <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none text-xs">
+      <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none text-xs min-w-0 max-w-full">
         {['ALL', 'PENDING', 'ACCEPTED', 'REJECTED', 'ON_HOLD'].map((st) => (
           <button
             key={st}
             onClick={() => setStatusFilter(st)}
-            className={`px-4 py-2 rounded-full font-bold whitespace-nowrap transition-all ${
+            className={`px-4 py-2 rounded-full font-bold whitespace-nowrap transition-all flex-shrink-0 ${
               statusFilter === st
                 ? 'bg-gradient-to-r from-eco-700 via-eco-600 to-teal-600 text-white shadow-glow-emerald'
                 : 'bg-white text-slate-700 hover:bg-slate-50 border border-slate-200/90 shadow-xs'
@@ -279,7 +279,7 @@ export const ExchangeManagementPage: React.FC = () => {
                           <img
                             src={offeredProd.images[0]}
                             alt={offeredProd.title}
-                            className="w-18 h-18 rounded-xl object-cover border border-slate-200 flex-shrink-0"
+                            className="w-16 h-16 sm:w-18 sm:h-18 rounded-xl object-cover border border-slate-200 flex-shrink-0"
                           />
                           <div className="min-w-0 flex-1">
                             <span className="text-[10px] uppercase font-bold text-eco-700 tracking-wider flex items-center gap-1">
@@ -320,7 +320,7 @@ export const ExchangeManagementPage: React.FC = () => {
                           <img
                             src={targetProd.images[0]}
                             alt={targetProd.title}
-                            className="w-18 h-18 rounded-xl object-cover border border-slate-200 flex-shrink-0"
+                            className="w-16 h-16 sm:w-18 sm:h-18 rounded-xl object-cover border border-slate-200 flex-shrink-0"
                           />
                           <div className="min-w-0 flex-1">
                             <span className="text-[10px] uppercase font-bold text-slate-500 tracking-wider">
@@ -478,7 +478,7 @@ export const ExchangeManagementPage: React.FC = () => {
                           <img
                             src={targetProd.images[0]}
                             alt={targetProd.title}
-                            className="w-18 h-18 rounded-xl object-cover border border-slate-200 flex-shrink-0"
+                            className="w-16 h-16 sm:w-18 sm:h-18 rounded-xl object-cover border border-slate-200 flex-shrink-0"
                           />
                           <div className="min-w-0 flex-1">
                             <span className="text-[10px] uppercase font-bold text-slate-500 tracking-wider">

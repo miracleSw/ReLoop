@@ -254,30 +254,30 @@ export const ProductCard: React.FC<ProductCardProps> = ({
         </div>
 
         {/* Price & Seller footer */}
-        <div className="mt-4 pt-3 border-t border-slate-100 flex items-end justify-between">
-          <div>
+        <div className="mt-4 pt-3 border-t border-slate-100 flex items-end justify-between gap-2">
+          <div className="min-w-0 flex-1">
             {product.price ? (
               <div>
-                <div className="flex items-baseline gap-1.5">
+                <div className="flex items-baseline gap-1.5 flex-wrap">
                   <span className="text-base sm:text-lg font-black text-clay-600 tracking-tight">
                     {formatPrice(product.price)}
                   </span>
                   {discountPercent && (
-                    <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 border border-emerald-200/60 px-1 py-0.2 rounded">
+                    <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 border border-emerald-200/60 px-1 py-0.5 rounded">
                       -{discountPercent}%
                     </span>
                   )}
                 </div>
                 {product.originalPrice && (
-                  <span className="text-[11px] text-sand-400 line-through">
+                  <span className="text-[11px] text-sand-400 line-through block truncate">
                     {formatPrice(product.originalPrice)}
                   </span>
                 )}
               </div>
             ) : (
-              <span className="text-sm font-bold text-eco-700 flex items-center gap-1">
-                <ArrowRightLeft className="w-3.5 h-3.5 text-eco-600" />
-                Đổi ngang / Bù tiền
+              <span className="text-xs sm:text-sm font-bold text-eco-700 flex items-center gap-1 truncate">
+                <ArrowRightLeft className="w-3.5 h-3.5 text-eco-600 flex-shrink-0" />
+                <span className="truncate">Đổi ngang / Bù tiền</span>
               </span>
             )}
           </div>
@@ -285,7 +285,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           {seller && (
             <Link
               to={`/sellers/${seller.id}`}
-              className="flex items-center gap-1.5 text-right hover:opacity-80 transition-opacity"
+              className="flex items-center gap-1.5 text-right hover:opacity-80 transition-opacity flex-shrink-0"
               title={`Người bán: ${seller.fullName} (${seller.trustScore}đ uy tín)`}
             >
               <div className="hidden sm:block">

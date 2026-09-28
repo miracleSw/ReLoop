@@ -55,13 +55,13 @@ export const Navbar: React.FC = () => {
 
   return (
     <header className="sticky top-0 z-30 bg-white/85 backdrop-blur-xl border-b border-slate-200/80 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.03)] transition-all">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20 gap-4">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16 sm:h-20 gap-2 sm:gap-4">
           {/* 1. BRAND LOGO */}
-          <Link to="/" className="flex items-center gap-3 group flex-shrink-0">
-            <div className="w-11 h-11 rounded-2xl bg-gradient-to-tr from-eco-700 via-eco-600 to-teal-500 text-white flex items-center justify-center shadow-md shadow-eco-600/20 group-hover:shadow-eco-500/40 group-hover:scale-105 transition-all duration-300">
+          <Link to="/" className="flex items-center gap-2 sm:gap-3 group flex-shrink-0">
+            <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-2xl bg-gradient-to-tr from-eco-700 via-eco-600 to-teal-500 text-white flex items-center justify-center shadow-md shadow-eco-600/20 group-hover:shadow-eco-500/40 group-hover:scale-105 transition-all duration-300">
               <svg
-                className="w-6 h-6 transform group-hover:rotate-12 transition-transform duration-300"
+                className="w-5 h-5 sm:w-6 sm:h-6 transform group-hover:rotate-12 transition-transform duration-300"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
@@ -78,14 +78,14 @@ export const Navbar: React.FC = () => {
             </div>
             <div>
               <div className="flex items-center gap-1.5">
-                <span className="font-extrabold text-2xl tracking-tight text-charcoal-900 font-sans">
+                <span className="font-extrabold text-xl sm:text-2xl tracking-tight text-charcoal-900 font-sans">
                   Re<span className="text-transparent bg-clip-text bg-gradient-to-r from-eco-600 to-teal-600">Loop</span>
                 </span>
-                <span className="text-[10px] font-bold uppercase tracking-wider bg-gradient-to-r from-eco-100 to-teal-50 text-eco-800 border border-eco-200/80 px-2 py-0.5 rounded-full shadow-subtle">
+                <span className="hidden sm:inline-block text-[10px] font-bold uppercase tracking-wider bg-gradient-to-r from-eco-100 to-teal-50 text-eco-800 border border-eco-200/80 px-1.5 sm:px-2 py-0.5 rounded-full shadow-subtle">
                   Eco
                 </span>
               </div>
-              <p className="text-[11px] text-sand-500 font-medium tracking-wide">
+              <p className="text-[11px] text-sand-500 font-medium tracking-wide hidden sm:block">
                 Trao đổi & Đồ cũ bền vững
               </p>
             </div>
@@ -150,16 +150,16 @@ export const Navbar: React.FC = () => {
           </form>
 
           {/* 4. ACTIONS & USER PROFILE */}
-          <div className="flex items-center gap-3 sm:gap-3.5">
+          <div className="flex items-center gap-1.5 sm:gap-3 flex-shrink-0">
             {/* Wishlist */}
             <Link
               to="/user/wishlist"
-              className="relative p-2.5 text-charcoal-700 hover:text-rose-600 hover:bg-rose-50 rounded-full transition-colors border border-transparent hover:border-rose-100"
+              className="hidden sm:inline-flex relative p-2 sm:p-2.5 text-charcoal-700 hover:text-rose-600 hover:bg-rose-50 rounded-full transition-colors border border-transparent hover:border-rose-100"
               title="Danh sách quan tâm"
             >
-              <Heart className="w-5 h-5" />
+              <Heart className="w-4 h-4 sm:w-5 sm:h-5" />
               {favorites.length > 0 && (
-                <span className="absolute top-1.5 right-1.5 w-4 h-4 bg-clay-500 text-white text-[10px] font-bold rounded-full flex items-center justify-center shadow-sm shadow-clay-500/50">
+                <span className="absolute top-1 right-1 sm:top-1.5 sm:right-1.5 w-3.5 h-3.5 sm:w-4 sm:h-4 bg-clay-500 text-white text-[9px] sm:text-[10px] font-bold rounded-full flex items-center justify-center shadow-sm shadow-clay-500/50">
                   {favorites.length}
                 </span>
               )}
@@ -172,10 +172,10 @@ export const Navbar: React.FC = () => {
                   setIsNotifOpen(!isNotifOpen);
                   setIsUserMenuOpen(false);
                 }}
-                className="relative p-2.5 text-charcoal-700 hover:text-eco-800 hover:bg-sand-100 rounded-full transition-colors"
+                className="relative p-2 sm:p-2.5 text-charcoal-700 hover:text-eco-800 hover:bg-sand-100 rounded-full transition-colors"
                 title="Thông báo"
               >
-                <Bell className="w-5 h-5" />
+                <Bell className="w-4 h-4 sm:w-5 sm:h-5" />
                 {unreadNotifs.length > 0 && (
                   <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-clay-500 rounded-full animate-ping" />
                 )}
@@ -186,7 +186,7 @@ export const Navbar: React.FC = () => {
 
               {/* Notification Popover */}
               {isNotifOpen && (
-                <div className="absolute right-0 mt-3 w-80 sm:w-96 bg-white rounded-2xl shadow-elevated border border-sand-200 py-3 z-50 animate-slide-up">
+                <div className="absolute right-0 mt-3 w-80 max-w-[calc(100vw-1.5rem)] sm:w-96 bg-white rounded-2xl shadow-elevated border border-sand-200 py-3 z-50 animate-slide-up">
                   <div className="px-4 py-2 border-b border-sand-100 flex items-center justify-between">
                     <div className="flex items-center gap-2">
                       <span className="font-bold text-sm text-charcoal-900">Thông báo</span>
@@ -264,7 +264,7 @@ export const Navbar: React.FC = () => {
                     setIsUserMenuOpen(!isUserMenuOpen);
                     setIsNotifOpen(false);
                   }}
-                  className="flex items-center gap-2 p-1 pl-3 rounded-full hover:bg-white bg-slate-50/80 border border-slate-200/80 shadow-subtle hover:shadow-soft transition-all"
+                  className="flex items-center gap-1.5 sm:gap-2 p-1 sm:pl-3 rounded-full hover:bg-white bg-slate-50/80 border border-slate-200/80 shadow-subtle hover:shadow-soft transition-all"
                 >
                   <div className="hidden md:flex flex-col text-right">
                     <span className="text-xs font-bold text-charcoal-900 max-w-[100px] truncate">
@@ -277,14 +277,14 @@ export const Navbar: React.FC = () => {
                   <img
                     src={currentUser.avatar}
                     alt={currentUser.fullName}
-                    className="w-8 h-8 rounded-full object-cover ring-2 ring-eco-500"
+                    className="w-7 h-7 sm:w-8 sm:h-8 rounded-full object-cover ring-2 ring-eco-500"
                   />
                   <ChevronDown className="w-3.5 h-3.5 text-sand-500 hidden sm:block" />
                 </button>
 
                 {/* User Dropdown */}
                 {isUserMenuOpen && (
-                  <div className="absolute right-0 mt-3 w-64 bg-white/95 backdrop-blur-xl rounded-2xl shadow-elevated border border-slate-200/80 py-2 z-50 animate-slide-up">
+                  <div className="absolute right-0 mt-3 w-64 max-w-[calc(100vw-1.5rem)] bg-white/95 backdrop-blur-xl rounded-2xl shadow-elevated border border-slate-200/80 py-2 z-50 animate-slide-up">
                     <div className="px-4 py-3 border-b border-sand-100 bg-sand-50/60 rounded-t-2xl">
                       <div className="font-bold text-sm text-charcoal-900">
                         {currentUser.fullName}
@@ -396,10 +396,10 @@ export const Navbar: React.FC = () => {
                 )}
               </div>
             ) : (
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-1.5 sm:gap-2">
                 <Link
                   to="/login"
-                  className="text-xs sm:text-sm font-bold text-charcoal-800 hover:text-eco-700 px-3.5 py-2 rounded-full hover:bg-eco-50/80 transition-colors"
+                  className="text-xs sm:text-sm font-bold text-charcoal-800 hover:text-eco-700 px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-full hover:bg-eco-50/80 transition-colors"
                 >
                   Đăng nhập
                 </Link>
@@ -415,20 +415,19 @@ export const Navbar: React.FC = () => {
             {/* Primary CTA: Post listing */}
             <Link
               to="/user/create-listing"
-              className="flex items-center gap-2 bg-gradient-to-r from-eco-600 via-emerald-600 to-teal-600 hover:from-eco-500 hover:to-teal-500 active:scale-95 text-white font-bold text-xs sm:text-sm px-4 sm:px-5 py-2.5 rounded-full shadow-md shadow-eco-600/25 hover:shadow-lg hover:shadow-eco-500/35 hover:-translate-y-0.5 transition-all"
+              className="hidden sm:inline-flex items-center gap-1 sm:gap-2 bg-gradient-to-r from-eco-600 via-emerald-600 to-teal-600 hover:from-eco-500 hover:to-teal-500 active:scale-95 text-white font-bold text-xs sm:text-sm px-2.5 sm:px-5 py-2 sm:py-2.5 rounded-full shadow-md shadow-eco-600/25 hover:shadow-lg hover:shadow-eco-500/35 hover:-translate-y-0.5 transition-all flex-shrink-0"
             >
-              <PlusCircle className="w-4 h-4" />
-              <span className="hidden sm:inline">Đăng tin</span>
-              <span className="sm:hidden">Đăng</span>
+              <PlusCircle className="w-4 h-4 flex-shrink-0" />
+              <span>Đăng tin</span>
             </Link>
 
             {/* Mobile Menu Toggle Button */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="lg:hidden p-2 text-charcoal-700 hover:text-eco-800 rounded-xl hover:bg-sand-100 transition-colors"
+              className="lg:hidden p-1.5 sm:p-2 text-charcoal-700 hover:text-eco-800 rounded-xl hover:bg-sand-100 transition-colors flex-shrink-0"
               aria-label="Mở menu"
             >
-              {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              {isMobileMenuOpen ? <X className="w-5 h-5 sm:w-6 sm:h-6" /> : <Menu className="w-5 h-5 sm:w-6 sm:h-6" />}
             </button>
           </div>
         </div>
@@ -437,6 +436,16 @@ export const Navbar: React.FC = () => {
       {/* MOBILE DRAWER */}
       {isMobileMenuOpen && (
         <div className="lg:hidden bg-white/95 backdrop-blur-xl border-b border-slate-200/80 px-4 pt-3 pb-6 space-y-4 animate-slide-up shadow-card">
+          {/* Mobile Primary CTA */}
+          <Link
+            to="/user/create-listing"
+            onClick={() => setIsMobileMenuOpen(false)}
+            className="flex items-center justify-center gap-2 w-full py-2.5 bg-gradient-to-r from-eco-600 via-emerald-600 to-teal-600 text-white font-bold text-sm rounded-xl shadow-glow-emerald"
+          >
+            <PlusCircle className="w-4 h-4" />
+            <span>+ Đăng tin thanh lý / Trao đổi</span>
+          </Link>
+
           <form onSubmit={handleSearchSubmit} className="relative">
             <input
               type="text"
@@ -449,6 +458,26 @@ export const Navbar: React.FC = () => {
           </form>
 
           <nav className="flex flex-col space-y-1.5 text-sm font-semibold text-charcoal-800">
+            <Link
+              to="/user/wishlist"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className={`px-3 py-2.5 rounded-xl transition-all flex items-center justify-between ${
+                location.pathname === '/user/wishlist'
+                  ? 'bg-eco-50 text-eco-800 font-bold'
+                  : 'hover:bg-slate-50 hover:text-eco-700'
+              }`}
+            >
+              <div className="flex items-center gap-2">
+                <Heart className="w-4 h-4 text-rose-500" />
+                <span>Danh sách quan tâm</span>
+              </div>
+              {favorites.length > 0 && (
+                <span className="text-[10px] bg-rose-100 text-rose-700 font-bold px-2 py-0.5 rounded-full">
+                  {favorites.length}
+                </span>
+              )}
+            </Link>
+
             <Link
               to="/explore"
               onClick={() => setIsMobileMenuOpen(false)}

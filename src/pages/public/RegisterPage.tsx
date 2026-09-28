@@ -127,7 +127,7 @@ export const RegisterPage: React.FC = () => {
       </div>
 
       {/* RIGHT: REGISTER FORM */}
-      <div className="lg:w-1/2 p-8 sm:p-12 lg:p-16 flex items-center justify-center bg-[#F8FAF9]">
+      <div className="lg:w-1/2 p-5 sm:p-12 lg:p-16 flex items-center justify-center bg-[#F8FAF9]">
         <div className="max-w-md w-full space-y-6">
           <div>
             <h1 className="text-2xl sm:text-3xl font-extrabold text-charcoal-900 tracking-tight">
@@ -266,7 +266,7 @@ export const RegisterPage: React.FC = () => {
       {/* OTP SIMULATION MODAL (UC01) */}
       {showOtpModal && (
         <div className="fixed inset-0 z-50 overflow-y-auto bg-charcoal-900/60 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-white rounded-3xl max-w-sm w-full p-6 sm:p-8 shadow-elevated border border-slate-200 animate-slide-up text-center space-y-4">
+          <div className="bg-white rounded-3xl max-w-sm w-full max-h-[90vh] overflow-y-auto p-6 sm:p-8 shadow-elevated border border-slate-200 animate-slide-up text-center space-y-4">
             <div className="w-14 h-14 bg-gradient-to-br from-eco-100 to-teal-100 text-eco-700 rounded-2xl flex items-center justify-center mx-auto shadow-subtle">
               <ShieldCheck className="w-7 h-7 text-eco-600" />
             </div>

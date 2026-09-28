@@ -165,8 +165,8 @@ export const AdminCategoriesPage: React.FC = () => {
 
       {/* ADD CATEGORY MODAL */}
       {isAddModalOpen && (
-        <div className="fixed inset-0 z-50 bg-charcoal-900/60 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 space-y-4 shadow-elevated border border-slate-200 animate-slide-up">
+        <div className="fixed inset-0 z-50 overflow-y-auto bg-charcoal-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 space-y-4 shadow-elevated border border-slate-200 animate-slide-up max-h-[90vh] overflow-y-auto">
             <h3 className="text-lg font-bold text-charcoal-900">Thêm danh mục ngành hàng mới</h3>
             <form onSubmit={handleCreateSubmit} className="space-y-4">
               <div>
@@ -242,8 +242,8 @@ export const AdminCategoriesPage: React.FC = () => {
 
       {/* EDIT CATEGORY MODAL */}
       {editingCategory && (
-        <div className="fixed inset-0 z-50 bg-charcoal-900/60 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 space-y-4 shadow-elevated border border-slate-200 animate-slide-up">
+        <div className="fixed inset-0 z-50 overflow-y-auto bg-charcoal-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 space-y-4 shadow-elevated border border-slate-200 animate-slide-up max-h-[90vh] overflow-y-auto">
             <h3 className="text-lg font-bold text-charcoal-900">Chỉnh sửa danh mục ngành hàng</h3>
             <form onSubmit={handleUpdateSubmit} className="space-y-4">
               <div>

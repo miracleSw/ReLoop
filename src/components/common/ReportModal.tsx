@@ -86,7 +86,7 @@ export const ReportModal: React.FC<ReportModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto bg-charcoal-900/60 backdrop-blur-sm flex items-center justify-center p-4">
-      <div className="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-elevated border border-sand-200 relative animate-slide-up">
+      <div className="bg-white rounded-3xl max-w-lg w-full max-h-[90vh] overflow-y-auto p-6 sm:p-8 shadow-elevated border border-sand-200 relative animate-slide-up">
         <button
           onClick={onClose}
           className="absolute top-5 right-5 text-sand-400 hover:text-charcoal-700 transition-colors"

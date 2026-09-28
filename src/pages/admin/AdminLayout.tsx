@@ -63,52 +63,53 @@ export const AdminLayout: React.FC = () => {
   return (
     <div className="min-h-screen bg-[#F8FAF9] text-charcoal-900 flex flex-col">
       {/* ADMIN TOPBAR */}
-      <header className="h-16 bg-slate-900 text-white px-6 flex items-center justify-between border-b border-slate-800/80 z-30 sticky top-0 backdrop-blur-md">
-        <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-eco-500 to-teal-500 text-white flex items-center justify-center font-black text-xs shadow-glow-emerald">
+      <header className="h-16 bg-slate-900 text-white px-3 sm:px-6 flex items-center justify-between border-b border-slate-800/80 z-30 sticky top-0 backdrop-blur-md">
+        <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+          <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-eco-500 to-teal-500 text-white flex items-center justify-center font-black text-xs shadow-glow-emerald flex-shrink-0">
             RL
           </div>
-          <span className="font-extrabold text-base tracking-tight">
-            Re<span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-300">Loop</span> Admin Portal
+          <span className="font-extrabold text-sm sm:text-base tracking-tight truncate">
+            Re<span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-300">Loop</span> Admin
           </span>
-          <span className="text-[10px] bg-white/10 text-emerald-300 border border-white/15 font-bold px-2.5 py-0.5 rounded-full ml-2">
+          <span className="text-[10px] bg-white/10 text-emerald-300 border border-white/15 font-bold px-2 py-0.5 rounded-full ml-1.5 hidden sm:inline-block flex-shrink-0">
             HUSC-33 Management
           </span>
         </div>
 
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2.5 sm:gap-4 flex-shrink-0">
           <Link
             to="/"
             className="flex items-center gap-1.5 text-xs text-sand-300 hover:text-white transition-colors"
           >
-            <span>Về giao diện Sàn</span>
+            <span className="hidden sm:inline">Về giao diện Sàn</span>
+            <span className="sm:hidden">Sàn</span>
             <ExternalLink className="w-3.5 h-3.5" />
           </Link>
 
           <div className="h-4 w-px bg-white/20" />
 
-          <div className="flex items-center gap-2.5">
+          <div className="flex items-center gap-2">
             <img
               src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=100&q=80"
               alt="Admin"
               className="w-7 h-7 rounded-full object-cover ring-2 ring-emerald-400/80"
             />
-            <span className="text-xs font-semibold text-white hidden sm:inline">
-              Trọng Nghĩa (Lead Admin)
+            <span className="text-xs font-semibold text-white hidden md:inline">
+              Trọng Nghĩa
             </span>
           </div>
         </div>
       </header>
 
       {/* ADMIN WORKSPACE (SIDEBAR + MAIN CONTENT) */}
-      <div className="flex-1 flex flex-col md:flex-row">
-        {/* SIDEBAR */}
-        <aside className="w-full md:w-64 bg-white border-r border-slate-200/90 p-4 space-y-6 flex-shrink-0">
-          <div className="text-[11px] font-bold text-sand-400 uppercase tracking-wider px-3">
+      <div className="flex-1 flex flex-col md:flex-row min-w-0 w-full max-w-full">
+        {/* SIDEBAR / MOBILE NAV RAIL */}
+        <aside className="w-full max-w-full md:max-w-xs md:w-64 bg-white border-b md:border-b-0 md:border-r border-slate-200/90 p-2 sm:p-4 md:space-y-6 flex-shrink-0 min-w-0 overflow-x-auto md:overflow-x-visible">
+          <div className="text-[11px] font-bold text-sand-400 uppercase tracking-wider px-3 hidden md:block">
             Hệ thống Quản trị
           </div>
 
-          <nav className="space-y-1.5 text-xs font-semibold">
+          <nav className="flex md:flex-col overflow-x-auto gap-1.5 md:space-y-1.5 text-xs font-semibold scrollbar-none pb-1 md:pb-0 min-w-0 max-w-full">
             {navItems.map((item) => {
               const isActive = item.exact
                 ? location.pathname === item.to
@@ -118,13 +119,13 @@ export const AdminLayout: React.FC = () => {
                 <Link
                   key={item.to}
                   to={item.to}
-                  className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl transition-all ${
+                  className={`flex-shrink-0 md:flex-shrink flex items-center justify-between gap-2 px-3 py-2 sm:px-3.5 sm:py-2.5 rounded-xl transition-all whitespace-nowrap ${
                     isActive
                       ? 'bg-gradient-to-r from-eco-700 to-eco-600 text-white font-bold shadow-glow-emerald'
-                      : 'text-charcoal-700 hover:bg-slate-50 hover:text-eco-700'
+                      : 'text-charcoal-700 hover:bg-slate-50 hover:text-eco-700 bg-slate-50 md:bg-transparent'
                   }`}
                 >
-                  <div className="flex items-center gap-2.5">
+                  <div className="flex items-center gap-2">
                     {item.icon}
                     <span>{item.label}</span>
                   </div>
@@ -140,7 +141,7 @@ export const AdminLayout: React.FC = () => {
             })}
           </nav>
 
-          <div className="pt-6 border-t border-slate-100">
+          <div className="pt-6 border-t border-slate-100 hidden md:block">
             <div className="p-3.5 bg-gradient-to-br from-eco-50/80 to-teal-50/80 rounded-2xl border border-eco-200/80 text-xs text-eco-950 space-y-1 shadow-subtle">
               <div className="font-bold flex items-center gap-1.5 text-eco-800">
                 <ShieldCheck className="w-4 h-4 text-eco-700" />
@@ -154,7 +155,7 @@ export const AdminLayout: React.FC = () => {
         </aside>
 
         {/* MAIN ADMIN CONTENT OUTLET */}
-        <main className="flex-1 p-6 sm:p-8 lg:p-10 overflow-y-auto">
+        <main className="flex-1 w-full max-w-full min-w-0 overflow-x-hidden p-4 sm:p-6 lg:p-8 overflow-y-auto">
           <Outlet />
         </main>
       </div>

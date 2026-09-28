@@ -55,12 +55,12 @@ export const AdminReportsPage: React.FC = () => {
       </div>
 
       {/* TABS */}
-      <div className="flex items-center gap-2 border-b border-slate-200/80 pb-3 text-xs">
+      <div className="flex items-center gap-2 border-b border-slate-200/80 pb-3 text-xs overflow-x-auto scrollbar-none min-w-0 max-w-full">
         {(['ALL', 'PENDING', 'PROCESSED'] as const).map((st) => (
           <button
             key={st}
             onClick={() => setStatusFilter(st)}
-            className={`px-4 py-2 rounded-full font-bold transition-all ${
+            className={`px-4 py-2 rounded-full font-bold whitespace-nowrap transition-all flex-shrink-0 ${
               statusFilter === st
                 ? 'bg-gradient-to-r from-eco-700 to-eco-600 text-white shadow-glow-emerald'
                 : 'bg-white text-slate-700 hover:bg-slate-50 border border-slate-200/90'
@@ -204,8 +204,8 @@ export const AdminReportsPage: React.FC = () => {
 
       {/* RESOLUTION MODAL */}
       {selectedReport && (
-        <div className="fixed inset-0 z-50 bg-charcoal-900/60 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 space-y-5 shadow-elevated border border-slate-200 animate-slide-up">
+        <div className="fixed inset-0 z-50 overflow-y-auto bg-charcoal-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 space-y-5 shadow-elevated border border-slate-200 animate-slide-up max-h-[90vh] overflow-y-auto">
             <h3 className="text-lg font-bold text-charcoal-900">
               Quyết định Xử lý Báo cáo #{selectedReport.id}
             </h3>

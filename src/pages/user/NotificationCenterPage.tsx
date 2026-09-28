@@ -46,7 +46,7 @@ export const NotificationCenterPage: React.FC = () => {
       </div>
 
       {/* Filter Tabs */}
-      <div className="flex items-center gap-2 overflow-x-auto pb-1 border-b border-slate-200/80 text-xs scrollbar-none">
+      <div className="flex items-center gap-2 overflow-x-auto pb-1 border-b border-slate-200/80 text-xs scrollbar-none min-w-0 max-w-full">
         {[
           { id: 'ALL', label: 'Tất cả thông báo' },
           { id: 'OFFER', label: 'Đề nghị Mua/Đổi' },
@@ -57,7 +57,7 @@ export const NotificationCenterPage: React.FC = () => {
           <button
             key={tab.id}
             onClick={() => setFilterType(tab.id)}
-            className={`px-4 py-2 rounded-full font-bold whitespace-nowrap transition-all ${
+            className={`px-4 py-2 rounded-full font-bold whitespace-nowrap transition-all flex-shrink-0 ${
               filterType === tab.id
                 ? 'bg-gradient-to-r from-eco-700 via-eco-600 to-teal-600 text-white shadow-glow-emerald'
                 : 'bg-white text-slate-700 hover:bg-slate-50 border border-slate-200/90 shadow-xs'

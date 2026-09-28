@@ -54,10 +54,10 @@ export const ReviewsPage: React.FC = () => {
       </div>
 
       {/* Tabs */}
-      <div className="flex items-center gap-6 border-b border-slate-200">
+      <div className="flex items-center gap-4 sm:gap-6 border-b border-slate-200 overflow-x-auto scrollbar-none min-w-0 max-w-full pb-0.5">
         <button
           onClick={() => setActiveTab('RECEIVED')}
-          className={`pb-3.5 text-xs sm:text-sm font-bold border-b-2 transition-all flex items-center gap-2 ${
+          className={`pb-3.5 text-xs sm:text-sm font-bold border-b-2 transition-all flex items-center gap-2 whitespace-nowrap flex-shrink-0 ${
             activeTab === 'RECEIVED'
               ? 'border-eco-600 text-eco-800 font-black'
               : 'border-transparent text-slate-500 hover:text-slate-800'
@@ -72,7 +72,7 @@ export const ReviewsPage: React.FC = () => {
         </button>
         <button
           onClick={() => setActiveTab('GIVEN')}
-          className={`pb-3.5 text-xs sm:text-sm font-bold border-b-2 transition-all flex items-center gap-2 ${
+          className={`pb-3.5 text-xs sm:text-sm font-bold border-b-2 transition-all flex items-center gap-2 whitespace-nowrap flex-shrink-0 ${
             activeTab === 'GIVEN'
               ? 'border-eco-600 text-eco-800 font-black'
               : 'border-transparent text-slate-500 hover:text-slate-800'
@@ -179,8 +179,8 @@ export const ReviewsPage: React.FC = () => {
 
       {/* APPEAL MODAL (UC21) */}
       {appealingReviewId && (
-        <div className="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-md flex items-center justify-center p-4">
-          <div className="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 space-y-5 shadow-2xl border border-slate-200 animate-slide-up">
+        <div className="fixed inset-0 z-50 overflow-y-auto bg-slate-900/50 backdrop-blur-md flex items-center justify-center p-4">
+          <div className="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 space-y-5 shadow-2xl border border-slate-200 animate-slide-up max-h-[90vh] overflow-y-auto">
             <div className="w-12 h-12 rounded-2xl bg-amber-50 border border-amber-200 text-amber-600 flex items-center justify-center mx-auto shadow-xs">
               <ShieldAlert className="w-6 h-6" />
             </div>

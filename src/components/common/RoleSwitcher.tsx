@@ -6,34 +6,52 @@ import { Link } from 'react-router-dom';
 export const RoleSwitcher: React.FC = () => {
   const { currentUser, currentRole, users, loginAs, resetData } = useApp();
   const [isOpen, setIsOpen] = useState(false);
+  const [isCollapsed, setIsCollapsed] = useState(false);
+
+  if (isCollapsed) {
+    return (
+      <aside aria-label="Khung điều khiển giả lập vai trò" className="fixed bottom-3 left-3 sm:bottom-4 sm:left-4 z-40">
+        <button
+          onClick={() => setIsCollapsed(false)}
+          className="bg-white/95 backdrop-blur-xl text-charcoal-900 rounded-full shadow-[0_8px_25px_-5px_rgba(16,185,129,0.25)] border border-slate-200/90 p-2 sm:p-2.5 flex items-center gap-1.5 text-xs hover:scale-105 transition-all"
+          title="Mở thanh chuyển vai trò"
+        >
+          <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse shadow-sm shadow-emerald-500/50" />
+          <span className="font-bold text-eco-700 text-[11px] sm:text-xs">
+            {currentRole === 'ADMIN' ? '👑' : currentUser ? '👤' : '👀'}
+          </span>
+        </button>
+      </aside>
+    );
+  }
 
   return (
-    <aside aria-label="Khung điều khiển giả lập vai trò" className="fixed bottom-4 left-4 z-40">
-      <div className="bg-white/95 backdrop-blur-xl text-charcoal-900 rounded-2xl shadow-[0_12px_30px_-5px_rgba(16,185,129,0.18)] border border-slate-200/90 p-2 sm:p-2.5 flex items-center gap-2 text-xs">
-        <div className="flex items-center gap-2 pl-2">
-          <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse shadow-sm shadow-emerald-500/50" />
-          <span className="text-slate-500 font-medium hidden sm:inline">Thử nghiệm vai trò:</span>
-          <span className="font-bold text-eco-700">
+    <aside aria-label="Khung điều khiển giả lập vai trò" className="fixed bottom-3 left-3 sm:bottom-4 sm:left-4 z-40 max-w-[calc(100vw-1.5rem)]">
+      <div className="bg-white/95 backdrop-blur-xl text-charcoal-900 rounded-2xl shadow-[0_12px_30px_-5px_rgba(16,185,129,0.18)] border border-slate-200/90 p-1.5 sm:p-2.5 flex items-center gap-1.5 sm:gap-2 text-xs">
+        <div className="flex items-center gap-1.5 pl-1 sm:pl-2 min-w-0">
+          <span className="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-emerald-500 animate-pulse shadow-sm shadow-emerald-500/50 flex-shrink-0" />
+          <span className="text-slate-500 font-medium hidden sm:inline">Thử nghiệm:</span>
+          <span className="font-bold text-eco-700 truncate max-w-[90px] sm:max-w-[140px] md:max-w-none">
             {currentRole === 'ADMIN'
-              ? '👑 Quản trị viên (Admin)'
+              ? '👑 Admin'
               : currentUser
               ? `👤 ${currentUser.fullName}`
-              : '👀 Khách (Guest)'}
+              : '👀 Khách'}
           </span>
         </div>
 
-        <div className="relative">
+        <div className="relative flex-shrink-0">
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="flex items-center gap-1.5 bg-slate-100 hover:bg-slate-200/80 text-charcoal-800 font-semibold px-2.5 py-1.5 rounded-xl transition-all"
+            className="flex items-center gap-1 bg-slate-100 hover:bg-slate-200/80 text-charcoal-800 font-semibold px-2 py-1 sm:px-2.5 sm:py-1.5 rounded-xl transition-all text-[11px] sm:text-xs"
             title="Đổi vai trò người dùng"
           >
-            <span>Đổi vai trò</span>
-            <ChevronDown className="w-3.5 h-3.5 opacity-70" />
+            <span>Đổi</span>
+            <ChevronDown className="w-3 h-3 sm:w-3.5 sm:h-3.5 opacity-70" />
           </button>
 
           {isOpen && (
-            <div className="absolute bottom-full left-0 mb-2 w-72 bg-white text-charcoal-900 rounded-2xl shadow-elevated border border-slate-200 p-2 animate-slide-up z-50">
+            <div className="absolute bottom-full left-0 mb-2 w-72 max-w-[calc(100vw-2rem)] bg-white text-charcoal-900 rounded-2xl shadow-elevated border border-slate-200 p-2 animate-slide-up z-50">
               <div className="px-3 py-2 border-b border-sand-100 flex items-center justify-between">
                 <span className="font-semibold text-xs text-charcoal-700 uppercase tracking-wider">
                   Chọn người dùng mô phỏng
@@ -199,6 +217,15 @@ export const RoleSwitcher: React.FC = () => {
           title="Khôi phục dữ liệu mẫu ban đầu"
         >
           <RotateCcw className="w-3.5 h-3.5" />
+        </button>
+
+        {/* Collapse button */}
+        <button
+          onClick={() => setIsCollapsed(true)}
+          className="p-1.5 hover:bg-slate-100 text-slate-400 hover:text-slate-600 rounded-xl transition-all text-[11px] font-bold"
+          title="Thu gọn"
+        >
+          ✕
         </button>
       </div>
     </aside>

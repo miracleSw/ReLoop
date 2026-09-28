@@ -161,7 +161,7 @@ export const ExplorePage: React.FC = () => {
               type="text"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              placeholder="Tìm theo tên, mô tả sản phẩm..."
+              placeholder="Tìm kiếm sản phẩm..."
               className="w-full text-sm bg-white border border-slate-200/90 rounded-full pl-10 pr-4 py-2.5 text-charcoal-900 focus:outline-none focus:ring-4 focus:ring-eco-500/15 focus:border-eco-500 shadow-soft"
             />
             <Search className="w-4 h-4 text-sand-400 absolute left-3.5 top-3 pointer-events-none" />
@@ -461,7 +461,7 @@ export const ExplorePage: React.FC = () => {
       {/* MOBILE FILTER MODAL DRAWER */}
       {isMobileFilterOpen && (
         <div className="fixed inset-0 z-50 overflow-y-auto bg-charcoal-900/60 backdrop-blur-sm lg:hidden flex justify-end">
-          <div className="bg-white w-full max-w-xs h-full p-6 overflow-y-auto space-y-6 animate-slide-up">
+          <div className="bg-white w-full max-w-[280px] sm:max-w-xs h-full p-5 sm:p-6 overflow-y-auto space-y-6 animate-slide-up">
             <div className="flex items-center justify-between pb-4 border-b border-sand-100">
               <h3 className="font-bold text-sm text-charcoal-900">Bộ lọc tìm kiếm</h3>
               <button

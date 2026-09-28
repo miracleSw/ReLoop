@@ -26,7 +26,7 @@ export const NotificationCenterPage: React.FC = () => {
           <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight flex items-center gap-2.5">
             <span>Trung tâm thông báo (Notification Center)</span>
             {unreadCount > 0 && (
-              <span className="text-xs font-black bg-gradient-to-r from-clay-500 to-rose-500 text-white px-2.5 py-0.5 rounded-full shadow-xs">
+              <span className="shrink-0 whitespace-nowrap text-xs font-black bg-gradient-to-r from-clay-500 to-rose-500 text-white px-2.5 py-0.5 rounded-full shadow-xs">
                 {unreadCount} mới
               </span>
             )}
@@ -41,7 +41,7 @@ export const NotificationCenterPage: React.FC = () => {
           className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-white border border-slate-200 text-xs font-bold text-slate-700 hover:text-eco-700 hover:bg-slate-50 shadow-xs transition-all"
         >
           <CheckCheck className="w-4 h-4 text-eco-600" />
-          <span>Đánh dấu tất cả đã đọc</span>
+          <span className="whitespace-nowrap">Đánh dấu tất cả đã đọc</span>
         </button>
       </div>
 

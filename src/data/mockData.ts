@@ -9,8 +9,16 @@ import {
   Review,
   Report,
   Notification,
-  SystemStats
+  SystemStats,
+  WishlistItem
 } from '../types';
+
+export const VIETNAM_LOCATIONS: Record<string, string[]> = {
+  'Hồ Chí Minh': ['Quận 1', 'Quận 3', 'Quận 5', 'Quận 7', 'Quận 10', 'Quận Bình Thạnh', 'Quận Phú Nhuận', 'TP. Thủ Đức', 'Quận Gò Vấp', 'Quận Tân Bình'],
+  'Hà Nội': ['Quận Ba Đình', 'Quận Cầu Giấy', 'Quận Đống Đa', 'Quận Hai Bà Trưng', 'Quận Hoàn Kiếm', 'Quận Thanh Xuân', 'Quận Tây Hồ', 'Quận Hà Đông'],
+  'Thừa Thiên Huế': ['Thành phố Huế', 'Thị xã Hương Thủy', 'Thị xã Hương Trà', 'Huyện Phú Vang', 'Huyện Quảng Điền'],
+  'Đà Nẵng': ['Quận Hải Châu', 'Quận Thanh Khê', 'Quận Sơn Trà', 'Quận Ngũ Hành Sơn', 'Quận Liên Chiểu', 'Quận Cẩm Lệ'],
+};
 
 export const mockUsers: User[] = [
   {
@@ -220,6 +228,7 @@ export const mockProducts: Product[] = [
       district: 'Quận 1',
       ward: 'Phường Bến Nghé',
     },
+    proposedMeetupLocation: 'The Coffee House, 45 Lê Duẩn, Quận 1',
     sellerId: 'user-1',
     status: 'AVAILABLE',
     views: 480,
@@ -246,6 +255,7 @@ export const mockProducts: Product[] = [
       district: 'Quận 3',
       ward: 'Phường Võ Thị Sáu',
     },
+    proposedMeetupLocation: 'Highlands Coffee Hồ Con Rùa, Quận 3',
     sellerId: 'user-2',
     status: 'AVAILABLE',
     views: 295,
@@ -271,6 +281,7 @@ export const mockProducts: Product[] = [
       district: 'Quận 1',
       ward: 'Phường Bến Nghé',
     },
+    proposedMeetupLocation: 'Quán Cafe Tinh Tế, 43 Cù Lao, Quận Phú Nhuận',
     sellerId: 'user-1',
     status: 'AVAILABLE',
     views: 610,
@@ -295,6 +306,7 @@ export const mockProducts: Product[] = [
       district: 'Thành phố Huế',
       ward: 'Phường Vĩnh Ninh',
     },
+    proposedMeetupLocation: 'The Alley Cafe, 12 Lê Lợi, TP. Huế',
     sellerId: 'user-4',
     status: 'AVAILABLE',
     views: 184,
@@ -321,6 +333,7 @@ export const mockProducts: Product[] = [
       district: 'Quận Cầu Giấy',
       ward: 'Phường Dịch Vọng Hậu',
     },
+    proposedMeetupLocation: 'Sảnh IPH 241 Xuân Thủy, Quận Cầu Giấy',
     sellerId: 'user-3',
     status: 'AVAILABLE',
     views: 420,
@@ -347,6 +360,7 @@ export const mockProducts: Product[] = [
       district: 'Thành phố Huế',
       ward: 'Phường Vĩnh Ninh',
     },
+    proposedMeetupLocation: 'Cộng Cà Phê, 22 Bến Nghé, TP. Huế',
     sellerId: 'user-4',
     status: 'AVAILABLE',
     views: 340,
@@ -372,6 +386,7 @@ export const mockProducts: Product[] = [
       district: 'Quận 3',
       ward: 'Phường Võ Thị Sáu',
     },
+    proposedMeetupLocation: 'Trung Nguyên Legend, 219 Nguyễn Thị Minh Khai, Quận 3',
     sellerId: 'user-2',
     status: 'RESERVED', // Currently on meetup appointment!
     views: 590,
@@ -397,6 +412,7 @@ export const mockProducts: Product[] = [
       district: 'Quận 1',
       ward: 'Phường Bến Nghé',
     },
+    proposedMeetupLocation: 'Phúc Long Coffee, 325 Lý Tự Trọng, Quận 1',
     sellerId: 'user-1',
     status: 'COMPLETED', // Successfully exchanged/sold!
     views: 312,
@@ -423,6 +439,7 @@ export const mockProducts: Product[] = [
       district: 'Quận Cầu Giấy',
       ward: 'Phường Dịch Vọng Hậu',
     },
+    proposedMeetupLocation: 'Aha Coffee, 26 Trần Thái Tông, Quận Cầu Giấy',
     sellerId: 'user-3',
     status: 'AVAILABLE',
     views: 245,
@@ -446,6 +463,7 @@ export const mockProducts: Product[] = [
       district: 'Quận Bình Thạnh',
       ward: 'Phường 25',
     },
+    proposedMeetupLocation: 'Cổng Vincom Landmark 81, Quận Bình Thạnh',
     sellerId: 'user-5',
     status: 'LOCKED', // Flagged and locked by Admin due to prohibited item policy!
     views: 45,
@@ -474,13 +492,182 @@ export const mockProducts: Product[] = [
       district: 'Thành phố Huế',
       ward: 'Phường Vĩnh Ninh',
     },
+    proposedMeetupLocation: 'Trung tâm Văn hóa Liễu Quán, Lê Lợi, TP. Huế',
     sellerId: 'user-4',
     status: 'HIDDEN', // Temporarily hidden by user
     views: 98,
     favoritesCount: 12,
     createdAt: '2026-09-12T13:00:00Z',
     updatedAt: '2026-09-22T09:00:00Z',
+  },
+  {
+    id: 'prod-12',
+    title: 'Tai nghe chống ồn Sony WH-1000XM4 màu đen nguyên hộp chính hãng',
+    description: 'Tai nghe chụp tai chống ồn chủ động đỉnh cao, đệm da êm ái, pin hơn 30h. Đầy đủ phụ kiện cáp sạc, giắc máy bay và hộp đựng zin. Phù hợp làm việc tập trung tại quán cafe hoặc văn phòng.',
+    categoryId: 'cat-tech',
+    condition: 'Mới 99%',
+    type: 'BOTH',
+    price: 3800000,
+    originalPrice: 6500000,
+    wantedExchangeItems: 'Đổi máy chơi game Switch OLED hoặc iPad Gen 9 (bù trừ thỏa thuận)',
+    images: [
+      'https://images.unsplash.com/photo-1546435770-a3e426bf472b?auto=format&fit=crop&w=1000&q=80',
+      'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=1000&q=80'
+    ],
+    location: {
+      province: 'Hồ Chí Minh',
+      district: 'Quận 1',
+      ward: 'Phường Bến Nghé',
+    },
+    proposedMeetupLocation: 'Highlands Coffee Nhà Hát Thành Phố, Quận 1',
+    sellerId: 'user-1',
+    status: 'AVAILABLE',
+    views: 310,
+    favoritesCount: 28,
+    createdAt: '2026-09-26T10:00:00Z',
+    updatedAt: '2026-09-26T10:00:00Z',
+  },
+  {
+    id: 'prod-13',
+    title: 'Bàn trà gỗ sồi tự nhiên chân sắt phong cách Japandi tối giản',
+    description: 'Bàn trà mặt gỗ sồi tự nhiên phủ sáp lau dầu thực vật an toàn sức khỏe. Kích thước đường kính 60cm, cao 42cm, thích hợp không gian phòng khách nhỏ hoặc góc đọc sách.',
+    categoryId: 'cat-home',
+    condition: 'Còn tốt',
+    type: 'SELL',
+    price: 850000,
+    originalPrice: 1600000,
+    images: [
+      'https://images.unsplash.com/photo-1533090161767-e6ffed986c88?auto=format&fit=crop&w=1000&q=80',
+      'https://images.unsplash.com/photo-1519974719765-e6559eac2575?auto=format&fit=crop&w=1000&q=80'
+    ],
+    location: {
+      province: 'Hà Nội',
+      district: 'Quận Cầu Giấy',
+      ward: 'Phường Dịch Vọng Hậu',
+    },
+    proposedMeetupLocation: 'Sảnh tòa nhà IPH 241 Xuân Thủy, Cầu Giấy',
+    sellerId: 'user-3',
+    status: 'AVAILABLE',
+    views: 195,
+    favoritesCount: 16,
+    createdAt: '2026-09-25T14:20:00Z',
+    updatedAt: '2026-09-25T14:20:00Z',
+  },
+  {
+    id: 'prod-14',
+    title: 'Vợt cầu lông Yonex Astrox 88D Pro 4U G5 căng cước BG66 Ultimax 11kg',
+    description: 'Vợt chính hãng mua tại VNB shop, khung đầm trợ lực đập cầu uy lực. Nước sơn còn rất đẹp chỉ xước dăm nhỏ ở đầu vợt. Tặng kèm quấn cán vải Yonex mới và bao đựng.',
+    categoryId: 'cat-sports',
+    condition: 'Còn tốt',
+    type: 'BOTH',
+    price: 2150000,
+    originalPrice: 3800000,
+    wantedExchangeItems: 'Đổi vợt Yonex Nanoflare 800 hoặc Lining Axforce 80',
+    images: [
+      'https://images.unsplash.com/photo-1626224583764-f87db24ac4ea?auto=format&fit=crop&w=1000&q=80',
+      'https://images.unsplash.com/photo-1613918108466-292b78a8ef95?auto=format&fit=crop&w=1000&q=80'
+    ],
+    location: {
+      province: 'Đà Nẵng',
+      district: 'Quận Hải Châu',
+      ward: 'Phường Hải Châu 1',
+    },
+    proposedMeetupLocation: 'Cộng Cà Phê, 96 Bạch Đằng, Quận Hải Châu',
+    sellerId: 'user-2',
+    status: 'AVAILABLE',
+    views: 220,
+    favoritesCount: 14,
+    createdAt: '2026-09-27T08:30:00Z',
+    updatedAt: '2026-09-27T08:30:00Z',
+  },
+  {
+    id: 'prod-15',
+    title: 'Bộ ấm chén gốm mộc hỏa biến men tro cổ điển kèm khay trà tre',
+    description: 'Bộ ấm trà đất nung thủ công làng nghề, dung tích ấm 180ml, dòng chảy tròn đều ngắt nước tốt. Bộ gồm 1 ấm, 6 chén và 1 khay tre ép chống cong vênh.',
+    categoryId: 'cat-lifestyle',
+    condition: 'Mới 99%',
+    type: 'BOTH',
+    price: 520000,
+    originalPrice: 950000,
+    wantedExchangeItems: 'Đổi sách văn học kinh điển hoặc đĩa than vinyl nhạc tiền chiến',
+    images: [
+      'https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?auto=format&fit=crop&w=1000&q=80',
+      'https://images.unsplash.com/photo-1517849845537-4d257902454a?auto=format&fit=crop&w=1000&q=80'
+    ],
+    location: {
+      province: 'Thừa Thiên Huế',
+      district: 'Thành phố Huế',
+      ward: 'Phường Vĩnh Ninh',
+    },
+    proposedMeetupLocation: 'The Alley Cafe, 12 Lê Lợi, TP. Huế',
+    sellerId: 'user-4',
+    status: 'AVAILABLE',
+    views: 178,
+    favoritesCount: 21,
+    createdAt: '2026-09-27T15:00:00Z',
+    updatedAt: '2026-09-27T15:00:00Z',
+  },
+  {
+    id: 'prod-16',
+    title: 'Bàn phím không dây Logitech MX Keys Mini xám không gian Space Gray',
+    description: 'Phím gõ phím cắt kéo cực êm tay, đèn led nền tự động sáng khi đưa tay lại gần. Kết nối Bluetooth 3 thiết bị cùng lúc (Mac, Win, iPad). Hàng chính hãng FPT còn hộp và cáp sạc.',
+    categoryId: 'cat-tech',
+    condition: 'Mới 99%',
+    type: 'SELL',
+    price: 1550000,
+    originalPrice: 2490000,
+    images: [
+      'https://images.unsplash.com/photo-1587829741301-dc798b83add3?auto=format&fit=crop&w=1000&q=80'
+    ],
+    location: {
+      province: 'Hồ Chí Minh',
+      district: 'Quận 3',
+      ward: 'Phường Võ Thị Sáu',
+    },
+    proposedMeetupLocation: 'Starbucks Hồ Con Rùa, Quận 3',
+    sellerId: 'user-2',
+    status: 'AVAILABLE',
+    views: 260,
+    favoritesCount: 33,
+    createdAt: '2026-09-28T09:15:00Z',
+    updatedAt: '2026-09-28T09:15:00Z',
+  },
+  {
+    id: 'prod-17',
+    title: 'Đèn bàn học chống cận thị bảo vệ mắt Xiaomi Philips Wi-Fi',
+    description: 'Đèn học thông minh kết nối app Mi Home, độ sáng đồng đều đạt chuẩn quốc gia. Ít dùng, còn nguyên hộp sạc.',
+    categoryId: 'cat-home',
+    condition: 'Còn tốt',
+    type: 'BOTH',
+    price: 450000,
+    originalPrice: 890000,
+    images: [
+      'https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=1000&q=80'
+    ],
+    location: {
+      province: 'Hà Nội',
+      district: 'Quận Cầu Giấy',
+      ward: 'Phường Dịch Vọng',
+    },
+    proposedMeetupLocation: 'Circle K số 10 Trần Đăng Ninh, Dịch Vọng, Cầu Giấy',
+    sellerId: 'user-3',
+    status: 'AVAILABLE',
+    views: 110,
+    favoritesCount: 14,
+    createdAt: '2026-09-28T10:00:00Z',
+    updatedAt: '2026-09-28T10:00:00Z',
   }
+];
+
+export const mockWishlist: WishlistItem[] = [
+  { userId: 'user-1', productId: 'prod-2', savedAt: '2026-09-24T12:00:00Z' },
+  { userId: 'user-1', productId: 'prod-3', savedAt: '2026-09-25T14:00:00Z' },
+  { userId: 'user-1', productId: 'prod-7', savedAt: '2026-09-26T16:00:00Z' },
+  { userId: 'user-2', productId: 'prod-1', savedAt: '2026-09-23T10:00:00Z' },
+  { userId: 'user-2', productId: 'prod-4', savedAt: '2026-09-25T08:00:00Z' },
+  { userId: 'user-3', productId: 'prod-1', savedAt: '2026-09-22T09:00:00Z' },
+  { userId: 'user-3', productId: 'prod-3', savedAt: '2026-09-24T11:00:00Z' },
+  { userId: 'user-4', productId: 'prod-6', savedAt: '2026-09-25T13:00:00Z' },
 ];
 
 export const mockBarterRequests: BarterRequest[] = [

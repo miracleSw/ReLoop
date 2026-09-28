@@ -4,15 +4,19 @@ import { useApp } from '../../context/AppContext';
 import { Bell, CheckCircle2, Clock, ShieldCheck, ArrowRightLeft, Calendar, Sparkles, CheckCheck, Inbox } from 'lucide-react';
 
 export const NotificationCenterPage: React.FC = () => {
-  const { notifications, markNotificationRead, markAllNotificationsRead } = useApp();
+  const { notifications, currentUser, markNotificationRead, markAllNotificationsRead } = useApp();
   const [filterType, setFilterType] = useState<string>('ALL');
 
-  const filtered = notifications.filter((n) => {
+  const userNotifications = currentUser
+    ? notifications.filter((n) => n.userId === currentUser.id)
+    : [];
+
+  const filtered = userNotifications.filter((n) => {
     if (filterType === 'ALL') return true;
     return n.type === filterType;
   });
 
-  const unreadCount = notifications.filter((n) => !n.isRead).length;
+  const unreadCount = userNotifications.filter((n) => !n.isRead).length;
 
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-8">

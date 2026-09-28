@@ -4,6 +4,7 @@ import { Navbar } from './components/common/Navbar';
 import { Footer } from './components/common/Footer';
 import { RoleSwitcher } from './components/common/RoleSwitcher';
 import { ToastContainer } from './components/common/ToastContainer';
+import { LoginPromptModal } from './components/common/LoginPromptModal';
 
 // Public pages
 import { HomePage } from './pages/public/HomePage';
@@ -49,6 +50,7 @@ const PublicLayout: React.FC = () => {
       <Footer />
       <RoleSwitcher />
       <ToastContainer />
+      <LoginPromptModal />
     </div>
   );
 };

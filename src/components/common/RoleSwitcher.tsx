@@ -203,7 +203,7 @@ export const RoleSwitcher: React.FC = () => {
                   className="text-[11px] text-eco-700 hover:underline font-medium flex items-center gap-1"
                 >
                   <UserCheck className="w-3.5 h-3.5" />
-                  Vào User Hub
+                  Vào trang Cá nhân
                 </Link>
               </div>
             </div>

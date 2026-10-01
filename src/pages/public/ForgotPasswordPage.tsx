@@ -221,7 +221,7 @@ export const ForgotPasswordPage: React.FC = () => {
           {step === 2 && (
             <form onSubmit={handleVerifyOtp} className="space-y-5">
               <div className="p-3.5 bg-emerald-50 rounded-2xl border border-emerald-200 text-xs text-emerald-800 font-semibold text-center">
-                Mã xác nhận (Demo): <span className="text-base font-black text-emerald-900">8888</span>
+                Mã xác nhận: <span className="text-base font-black text-emerald-900">8888</span>
                 <div className="text-[11px] text-emerald-700 mt-0.5">
                   Thời gian hiệu lực còn: <span className="font-bold">{Math.floor(otpTimer / 60)}:{(otpTimer % 60).toString().padStart(2, '0')}</span>
                 </div>

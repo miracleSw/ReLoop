@@ -603,7 +603,7 @@ export const ProductDetailPage: React.FC = () => {
               </li>
               <li className="flex items-start gap-2.5">
                 <CheckCircle2 className="w-4 h-4 text-eco-600 flex-shrink-0 mt-0.5" />
-                <span>Sau khi nhận hàng, cả 2 bên bấm "Xác nhận hoàn tất" trên hệ thống.</span>
+                <span>Sau khi nhận đồ, cả hai bên bấm "Xác nhận hoàn tất" trên ứng dụng.</span>
               </li>
             </ul>
           </div>

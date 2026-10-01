@@ -279,7 +279,7 @@ export const RegisterPage: React.FC = () => {
             </p>
 
             <div className="p-3 bg-gradient-to-r from-eco-50 to-teal-50 rounded-2xl border border-eco-200 text-xs text-eco-800 font-semibold">
-              Mã xác nhận (Demo): <span className="text-base font-black text-eco-800">8888</span>
+              Mã xác nhận: <span className="text-base font-black text-eco-800">8888</span>
             </div>
 
             <form onSubmit={handleVerifyOtp} className="space-y-4 pt-2">

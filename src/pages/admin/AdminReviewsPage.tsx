@@ -84,7 +84,7 @@ export const AdminReviewsPage: React.FC = () => {
                       {reviewer?.fullName} → {targetUser?.fullName}
                     </span>
                     <span className="text-[11px] text-slate-400">
-                      Mã GD: #{rev.transactionId} • {new Date(rev.createdAt).toLocaleDateString('vi-VN')}
+                      Giao dịch #{rev.transactionId.replace('tx-', '')} • {new Date(rev.createdAt).toLocaleDateString('vi-VN')}
                     </span>
                   </div>
                   <div className="flex items-center gap-3">

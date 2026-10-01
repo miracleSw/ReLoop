@@ -95,7 +95,7 @@ export const Footer: React.FC = () => {
           {/* Column 3: Chính sách an toàn */}
           <div>
             <h5 className="text-charcoal-900 font-bold text-sm mb-4 uppercase tracking-wider">
-              An toàn & Quy chuẩn
+              An toàn & Bảo mật
             </h5>
             <ul className="space-y-2.5 text-sm text-slate-600">
               <li>

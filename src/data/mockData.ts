@@ -79,7 +79,7 @@ export const mockUsers: User[] = [
     status: 'ACTIVE',
     createdAt: '2024-01-10T10:00:00Z',
     blockedUserIds: [],
-    bio: 'Sinh viên năm cuối ĐHQG. Tìm kiếm đồ công nghệ bền bỉ, trao đổi phụ kiện laptop và sách chuyên ngành.',
+    bio: 'Đam mê đồ công nghệ bền bỉ, trao đổi phụ kiện laptop và sách chuyên ngành.',
   },
   {
     id: 'user-4',
@@ -610,7 +610,7 @@ export const mockProducts: Product[] = [
   {
     id: 'prod-16',
     title: 'Bàn phím không dây Logitech MX Keys Mini xám không gian Space Gray',
-    description: 'Phím gõ phím cắt kéo cực êm tay, đèn led nền tự động sáng khi đưa tay lại gần. Kết nối Bluetooth 3 thiết bị cùng lúc (Mac, Win, iPad). Hàng chính hãng FPT còn hộp và cáp sạc.',
+    description: 'Phím gõ phím cắt kéo cực êm tay, đèn led nền tự động sáng khi đưa tay lại gần. Kết nối Bluetooth 3 thiết bị cùng lúc (Mac, Win, iPad). Hàng chính hãng còn hộp và cáp sạc.',
     categoryId: 'cat-tech',
     condition: 'Mới 99%',
     type: 'SELL',

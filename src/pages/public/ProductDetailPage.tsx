@@ -151,7 +151,7 @@ export const ProductDetailPage: React.FC = () => {
       return;
     }
     if (barterNote.length > 500) {
-      setBarterError('Lời nhắn không được vượt quá 500 ký tự (theo quy chuẩn BR 13_2).');
+      setBarterError('Lời nhắn tối đa 500 ký tự.');
       return;
     }
 
@@ -484,7 +484,7 @@ export const ProductDetailPage: React.FC = () => {
                     className="w-full py-3.5 px-6 rounded-2xl bg-white hover:bg-slate-50 border border-slate-200 text-charcoal-800 font-bold text-sm shadow-subtle transition-all flex items-center justify-center gap-2"
                   >
                     <PhoneCall className="w-4 h-4 text-eco-700" />
-                    <span>Liên hệ người bán (Bảo mật quyền riêng tư)</span>
+                    <span>Liên hệ người bán</span>
                   </button>
                 </>
               ) : (
@@ -506,7 +506,7 @@ export const ProductDetailPage: React.FC = () => {
                       to="/user/products"
                       className="w-full sm:w-auto px-5 py-2.5 bg-white border border-slate-200 text-charcoal-800 rounded-xl text-xs font-bold hover:bg-slate-50 shadow-subtle transition-all"
                     >
-                      Quản lý trong Kho đồ cá nhân →
+                      Xem trong Kho đồ →
                     </Link>
                   </div>
                 </div>

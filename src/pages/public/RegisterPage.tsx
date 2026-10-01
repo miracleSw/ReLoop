@@ -45,14 +45,14 @@ export const RegisterPage: React.FC = () => {
       return;
     }
 
-    // BR-02: Password complexity (min 8 chars, 1 uppercase, 1 lowercase, 1 number)
+    // Password complexity check
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
     if (!passwordRegex.test(password)) {
-      setErrorMsg('Mật khẩu phải có độ dài tối thiểu 8 ký tự, bao gồm ít nhất 1 chữ hoa, 1 chữ thường và 1 chữ số (BR-02).');
+      setErrorMsg('Mật khẩu cần tối thiểu 8 ký tự, gồm cả chữ hoa, chữ thường và chữ số.');
       return;
     }
 
-    // Trigger OTP simulation modal
+    // Trigger OTP modal
     setShowOtpModal(true);
   };
 
@@ -272,14 +272,14 @@ export const RegisterPage: React.FC = () => {
             <div className="w-14 h-14 bg-gradient-to-br from-eco-100 to-teal-100 text-eco-700 rounded-2xl flex items-center justify-center mx-auto shadow-subtle">
               <ShieldCheck className="w-7 h-7 text-eco-600" />
             </div>
-            <h3 className="text-lg font-bold text-charcoal-900">Xác thực mã OTP</h3>
+            <h3 className="text-lg font-bold text-charcoal-900">Xác thực mã kích hoạt</h3>
             <p className="text-xs text-sand-500 leading-relaxed">
-              Mã kích hoạt tài khoản đã được mô phỏng gửi đến email{' '}
+              Mã kích hoạt tài khoản đã được gửi đến email{' '}
               <strong className="text-charcoal-900">{email}</strong>.
             </p>
 
             <div className="p-3 bg-gradient-to-r from-eco-50 to-teal-50 rounded-2xl border border-eco-200 text-xs text-eco-800 font-semibold">
-              Mã thử nghiệm nhanh: <span className="text-base font-black text-eco-800">8888</span>
+              Mã xác nhận (Demo): <span className="text-base font-black text-eco-800">8888</span>
             </div>
 
             <form onSubmit={handleVerifyOtp} className="space-y-4 pt-2">

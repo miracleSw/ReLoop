@@ -39,11 +39,8 @@ export const ReviewsPage: React.FC = () => {
       {/* Header */}
       <div className="pb-4 border-b border-slate-200/80">
         <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
-          Đánh giá uy tín & Phản hồi
+          Đánh giá & Phản hồi
         </h1>
-        <p className="text-xs sm:text-sm text-slate-500 mt-1">
-          Hệ thống đánh giá 2 chiều minh bạch sau các giao dịch gặp mặt hoàn tất thành công.
-        </p>
       </div>
 
       {/* Tabs */}
@@ -56,7 +53,7 @@ export const ReviewsPage: React.FC = () => {
               : 'border-transparent text-slate-500 hover:text-slate-800'
           }`}
         >
-          <span>Đánh giá tôi nhận được</span>
+          <span>Đánh giá nhận được</span>
           <span className={`text-[11px] px-2 py-0.5 rounded-full font-bold ${
             activeTab === 'RECEIVED' ? 'bg-eco-100 text-eco-800' : 'bg-slate-100 text-slate-600'
           }`}>
@@ -71,7 +68,7 @@ export const ReviewsPage: React.FC = () => {
               : 'border-transparent text-slate-500 hover:text-slate-800'
           }`}
         >
-          <span>Đánh giá tôi đã gửi</span>
+          <span>Đánh giá đã gửi</span>
           <span className={`text-[11px] px-2 py-0.5 rounded-full font-bold ${
             activeTab === 'GIVEN' ? 'bg-eco-100 text-eco-800' : 'bg-slate-100 text-slate-600'
           }`}>
@@ -117,7 +114,7 @@ export const ReviewsPage: React.FC = () => {
                         {activeTab === 'RECEIVED' ? 'Từ:' : 'Gửi đến:'} {partnerUser?.fullName}
                       </div>
                       <span className="text-[11px] text-slate-400 font-medium">
-                        Ngày {new Date(rev.createdAt).toLocaleDateString('vi-VN')} • Mã GD: #{rev.transactionId}
+                        Ngày {new Date(rev.createdAt).toLocaleDateString('vi-VN')}
                       </span>
                     </div>
                   </div>

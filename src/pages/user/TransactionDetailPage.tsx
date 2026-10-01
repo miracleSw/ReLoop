@@ -129,11 +129,11 @@ export const TransactionDetailPage: React.FC = () => {
       return;
     }
 
-    // BR-37: Lịch hẹn gặp phải được thiết lập ở mốc thời gian trong tương lai (tối thiểu sau 1 giờ)
+    // Ràng buộc thời gian hẹn trong tương lai
     const selectedTime = new Date(newTime).getTime();
     const oneHourAhead = Date.now() + 60 * 60 * 1000;
     if (selectedTime < oneHourAhead) {
-      setRescheduleError('Lịch hẹn gặp phải được thiết lập ở mốc thời gian trong tương lai (tối thiểu sau 1 giờ kể từ thời điểm tạo theo quy chuẩn BR-37).');
+      setRescheduleError('Thời gian hẹn mới phải cách thời điểm hiện tại ít nhất 1 giờ.');
       return;
     }
 
@@ -236,14 +236,14 @@ export const TransactionDetailPage: React.FC = () => {
               ) : (
                 <Clock className="w-4 h-4 text-amber-600 animate-pulse" />
               )}
-              <span>3. Xác nhận 2 chiều</span>
+              <span>3. Xác nhận hoàn tất</span>
             </div>
             <p className="text-[11px] text-slate-600 leading-snug">
               {transaction.buyerConfirmed && transaction.sellerConfirmed
                 ? 'Cả hai bên đã xác nhận hoàn tất'
                 : myConfirmation
                 ? 'Bạn đã xác nhận (Chờ đối tác)'
-                : 'Chờ 2 bên cùng bấm hoàn tất'}
+                : 'Chờ cả 2 bên bấm xác nhận'}
             </p>
           </div>
 
@@ -496,7 +496,7 @@ export const TransactionDetailPage: React.FC = () => {
             {!existingReview ? (
               (Date.now() - new Date(transaction.updatedAt).getTime()) > 7 * 86400000 ? (
                 <span className="text-xs text-slate-500 font-bold bg-slate-100 px-3.5 py-1.5 rounded-xl border border-slate-200" title="Quyền đánh giá tự động đóng sau 7 ngày">
-                  Đã quá hạn đánh giá (7 ngày - BR-41)
+                  Đã hết hạn đánh giá (sau 7 ngày)
                 </span>
               ) : (
                 <button

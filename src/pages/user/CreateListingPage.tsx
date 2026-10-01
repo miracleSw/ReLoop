@@ -63,7 +63,7 @@ export const CreateListingPage: React.FC = () => {
     const files = Array.from(e.target.files);
     const remainingSlots = 10 - images.length;
     if (remainingSlots <= 0) {
-      setErrorMsg('Tối đa 10 hình ảnh cho mỗi bài đăng (BR-16).');
+      setErrorMsg('Bạn chỉ có thể tải lên tối đa 10 hình ảnh.');
       return;
     }
     const filesToLoad = files.slice(0, remainingSlots);
@@ -83,7 +83,7 @@ export const CreateListingPage: React.FC = () => {
 
   const handleAddSampleImage = (url: string) => {
     if (images.length >= 10) {
-      setErrorMsg('Tối đa 10 hình ảnh cho mỗi bài đăng (BR-16).');
+      setErrorMsg('Bạn chỉ có thể tải lên tối đa 10 hình ảnh.');
       return;
     }
     setImages([...images, url]);
@@ -99,25 +99,24 @@ export const CreateListingPage: React.FC = () => {
     setErrorMsg('');
 
     if (title.trim().length < 10) {
-      setErrorMsg('Tiêu đề bài đăng phải có ít nhất 10 ký tự rõ ràng.');
+      setErrorMsg('Tiêu đề cần có ít nhất 10 ký tự.');
       return;
     }
     if (description.trim().length < 20) {
-      setErrorMsg('Mô tả tình trạng thực tế phải có ít nhất 20 ký tự để người mua nắm rõ.');
+      setErrorMsg('Mô tả chi tiết cần có ít nhất 20 ký tự.');
       return;
     }
     if (images.length === 0) {
-      setErrorMsg('Vui lòng tải lên ít nhất 1 hình ảnh thực tế của sản phẩm (BR-16).');
+      setErrorMsg('Vui lòng thêm ít nhất 1 hình ảnh sản phẩm.');
       return;
     }
 
-    // BR-15: Ràng buộc hình thức giao dịch
     if (type !== 'EXCHANGE' && (!price || price <= 0)) {
-      setErrorMsg('Hình thức Mua bán bắt buộc nhập Giá bán lớn hơn 0 (BR-15 / MSG 6).');
+      setErrorMsg('Vui lòng nhập giá bán lớn hơn 0.');
       return;
     }
     if (type !== 'SELL' && !wantedExchangeItems.trim()) {
-      setErrorMsg('Hình thức Trao đổi bắt buộc ghi rõ nhu cầu muốn đổi lấy sản phẩm gì (BR-15).');
+      setErrorMsg('Vui lòng nhập món đồ bạn mong muốn đổi lấy.');
       return;
     }
 
@@ -334,10 +333,10 @@ export const CreateListingPage: React.FC = () => {
 
               <div className="flex items-center justify-between mb-2">
                 <label className="text-xs font-bold text-charcoal-800">
-                  Ảnh chụp thực tế sản phẩm (Tối đa 5 ảnh) <span className="text-rose-500">*</span>
+                  Ảnh chụp thực tế sản phẩm (Tối đa 10 ảnh) <span className="text-rose-500">*</span>
                 </label>
                 <span className="text-[11px] text-slate-500 font-medium">
-                  {images.length}/5 ảnh
+                  {images.length}/10 ảnh
                 </span>
               </div>
 

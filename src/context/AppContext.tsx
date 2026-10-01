@@ -301,7 +301,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       updatedAt: new Date().toISOString(),
     };
     setProducts((prev) => [newProd, ...prev]);
-    showToast('Đăng tin sản phẩm thành công! Trạng thái: Còn hàng (AVAILABLE)', 'success');
+    showToast('Đăng tin thành công! Món đồ của bạn đã sẵn sàng hiển thị trên ReLoop.', 'success');
     return newProd;
   };
 
@@ -333,14 +333,14 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       prev.map((p) => (p.id === id ? { ...p, status, updatedAt: new Date().toISOString() } : p))
     );
     const statusLabels: Record<ProductStatus, string> = {
-      AVAILABLE: 'Còn hàng (AVAILABLE)',
-      RESERVED: 'Đã hẹn gặp / Tạm giữ (RESERVED)',
-      COMPLETED: 'Đã giao dịch hoàn tất (COMPLETED)',
-      HIDDEN: 'Tạm ẩn bài đăng (HIDDEN)',
-      LOCKED: 'Bị khóa do vi phạm (LOCKED)',
-      REMOVED: 'Đã gỡ bỏ (REMOVED)',
+      AVAILABLE: 'Còn hàng',
+      RESERVED: 'Đang có hẹn',
+      COMPLETED: 'Đã giao dịch',
+      HIDDEN: 'Tạm ẩn',
+      LOCKED: 'Tạm khóa',
+      REMOVED: 'Đã gỡ bỏ',
     };
-    showToast(`Trạng thái bài đăng chuyển sang: ${statusLabels[status]}`, 'info');
+    showToast(`Trạng thái bài đăng: ${statusLabels[status]}`, 'info');
   };
 
   const toggleFavorite = (productId: string): boolean => {
@@ -405,7 +405,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   const lockUser = (userId: string, durationDays: number, reason: string) => {
     if (currentUser?.id === userId) {
-      showToast('Quản trị viên không được phép tự khóa chính tài khoản Admin đang đăng nhập (BR-03).', 'error');
+      showToast('Bạn không thể tự khóa tài khoản quản trị của chính mình.', 'error');
       throw new Error('Quản trị viên không được phép tự khóa chính tài khoản Admin đang đăng nhập (BR-03).');
     }
     const lockedUntil = new Date(Date.now() + durationDays * 86400000).toISOString();
@@ -423,7 +423,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       setCurrentUserId(null);
     }
 
-    showToast(`Đã khóa tài khoản thành viên trong ${durationDays} ngày. Toàn bộ tin đăng Còn hàng đã tự động chuyển sang Bị ẩn (BR-46).`, 'warning');
+    showToast(`Đã khóa tài khoản thành viên trong ${durationDays} ngày. Các tin đăng đang bán đã được tạm ẩn.`, 'warning');
   };
 
   const unlockUser = (userId: string) => {
@@ -461,7 +461,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
     // BR-32: Không tự gửi đề nghị mua/trao đổi trên bài đăng của chính mình
     if (targetProd.sellerId === currentUser.id) {
-      showToast('Bạn không thể tự gửi đề nghị trao đổi trên bài đăng của chính mình (BR-32).', 'error');
+      showToast('Bạn không thể gửi đề nghị trao đổi trên món đồ của chính mình.', 'error');
       return false;
     }
 
@@ -470,14 +470,14 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       barterRequests.some((r) => r.targetProductId === data.targetProductId && r.senderId === currentUser.id && r.status === 'PENDING') ||
       buyRequests.some((r) => r.targetProductId === data.targetProductId && r.senderId === currentUser.id && r.status === 'PENDING');
     if (hasPendingOffer) {
-      showToast('Bạn đã có 1 đề nghị đang chờ xử lý trên sản phẩm này (BR-33).', 'warning');
+      showToast('Bạn đã có đề nghị đang chờ phản hồi trên món đồ này.', 'warning');
       return false;
     }
 
     // BR-34: Ràng buộc kho đồ trao đổi - Món đồ đổi bắt buộc thuộc sở hữu người gửi và ở trạng thái Còn hàng
     const offeredProd = products.find((p) => p.id === data.offeredProductId);
     if (!offeredProd || offeredProd.sellerId !== currentUser.id || offeredProd.status !== 'AVAILABLE') {
-      showToast('Sản phẩm đem đi đổi bắt buộc phải nằm trong Kho đồ cá nhân của bạn và đang ở trạng thái Còn hàng (BR-34).', 'error');
+      showToast('Món đồ đem đi đổi phải có trong kho cá nhân của bạn và đang ở trạng thái Còn hàng.', 'error');
       return false;
     }
 
@@ -528,13 +528,13 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
     // BR-32: Không tự gửi đề nghị mua trên bài đăng của chính mình
     if (targetProd.sellerId === currentUser.id) {
-      showToast('Bạn không thể tự gửi đề xuất mua trên bài đăng của chính mình (BR-32).', 'error');
+      showToast('Bạn không thể gửi đề xuất mua trên món đồ của chính mình.', 'error');
       return false;
     }
 
     // BR-15 & SRS MSG 6: Giá đề xuất phải là số và lớn hơn 0
     if (!data.offeredPrice || data.offeredPrice <= 0) {
-      showToast('Giá đề xuất mua phải lớn hơn 0 (MSG 6 / BR-15).', 'error');
+      showToast('Vui lòng nhập mức giá mua hợp lệ lớn hơn 0.', 'error');
       return false;
     }
 
@@ -543,7 +543,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       buyRequests.some((r) => r.targetProductId === data.targetProductId && r.senderId === currentUser.id && r.status === 'PENDING') ||
       barterRequests.some((r) => r.targetProductId === data.targetProductId && r.senderId === currentUser.id && r.status === 'PENDING');
     if (hasPendingOffer) {
-      showToast('Bạn đã có 1 đề nghị đang chờ xử lý trên sản phẩm này (BR-33).', 'warning');
+      showToast('Bạn đã có đề xuất đang chờ người bán phản hồi trên món đồ này.', 'warning');
       return false;
     }
 
@@ -648,7 +648,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     };
     setNotifications((prev) => [newNotif, ...prev]);
 
-    showToast('Đã chấp nhận đề nghị! Tin đăng chuyển sang Tạm giữ (RESERVED) và đã mở thông tin liên hệ.', 'success');
+    showToast('Đã đồng ý đề nghị! Tin đăng chuyển sang Đang có hẹn và đã mở thông tin liên hệ.', 'success');
   };
 
   const rejectBarterRequest = (requestId: string, reason?: string) => {
@@ -885,7 +885,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       )
     );
 
-    showToast('Giao dịch đã hủy. Bài đăng được phục hồi trạng thái Còn hàng (AVAILABLE) và kích hoạt lại hàng chờ.', 'info');
+    showToast('Đã hủy lịch hẹn. Tin đăng của bạn đã được chuyển về trạng thái Còn hàng.', 'info');
   };
 
   // Messages
@@ -914,7 +914,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     if (!currentUser) return;
     const tx = transactions.find((t) => t.id === data.transactionId);
     if (!tx || tx.status !== 'COMPLETED') {
-      showToast('Chỉ có thể đánh giá khi giao dịch đã hoàn tất thành công (COMPLETED).', 'error');
+      showToast('Chỉ có thể đánh giá khi giao dịch đã hoàn tất thành công.', 'error');
       return;
     }
 
@@ -922,7 +922,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       (r) => r.transactionId === data.transactionId && r.reviewerId === currentUser.id
     );
     if (alreadyReviewed) {
-      showToast('Mỗi bên chỉ được đánh giá 01 lần cho mỗi giao dịch hoàn tất (BR-40).', 'warning');
+      showToast('Bạn đã đánh giá giao dịch này rồi.', 'warning');
       return;
     }
 
@@ -930,7 +930,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     const completedTime = new Date(tx.updatedAt).getTime();
     const diffDays = (Date.now() - completedTime) / (1000 * 60 * 60 * 24);
     if (diffDays > 7) {
-      showToast('Thời hạn đánh giá (07 ngày kể từ khi hoàn tất) đã kết thúc (BR-41).', 'warning');
+      showToast('Thời hạn đánh giá giao dịch đã kết thúc (sau 7 ngày kể từ khi hoàn tất).', 'warning');
       return;
     }
 

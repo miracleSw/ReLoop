@@ -141,7 +141,7 @@ export const SellerProfilePage: React.FC = () => {
       <section className="space-y-6">
         <div className="flex items-center justify-between">
           <h2 className="text-xl font-bold text-charcoal-900 tracking-tight">
-            Món đồ đang đăng bán / trao đổi ({sellerListings.length})
+            Đang bán & trao đổi ({sellerListings.length})
           </h2>
         </div>
 
@@ -161,7 +161,7 @@ export const SellerProfilePage: React.FC = () => {
       {/* 3. REVIEWS & RATINGS RECEIVED */}
       <section className="bg-white rounded-3xl border border-slate-200/90 shadow-soft p-6 sm:p-8 space-y-6">
         <h3 className="text-lg font-bold text-charcoal-900 tracking-tight">
-          Đánh giá từ đối tác sau buổi hẹn gặp ({sellerReviews.length})
+          Đánh giá từ đối tác ({sellerReviews.length})
         </h3>
 
         {sellerReviews.length === 0 ? (

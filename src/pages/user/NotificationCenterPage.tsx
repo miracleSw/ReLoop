@@ -31,9 +31,6 @@ export const NotificationCenterPage: React.FC = () => {
               </span>
             )}
           </h1>
-          <p className="text-xs sm:text-sm text-slate-500 mt-1">
-            Cập nhật đề nghị giao dịch, lịch hẹn và thông báo tài khoản.
-          </p>
         </div>
 
         <button
@@ -41,18 +38,18 @@ export const NotificationCenterPage: React.FC = () => {
           className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-white border border-slate-200 text-xs font-bold text-slate-700 hover:text-eco-700 hover:bg-slate-50 shadow-xs transition-all"
         >
           <CheckCheck className="w-4 h-4 text-eco-600" />
-          <span className="whitespace-nowrap">Đánh dấu tất cả đã đọc</span>
+          <span className="whitespace-nowrap">Đánh dấu đã đọc</span>
         </button>
       </div>
 
       {/* Filter Tabs */}
       <div className="flex items-center gap-2 overflow-x-auto pb-1 border-b border-slate-200/80 text-xs scrollbar-none min-w-0 max-w-full">
         {[
-          { id: 'ALL', label: 'Tất cả thông báo' },
-          { id: 'OFFER', label: 'Đề nghị Mua/Đổi' },
-          { id: 'TRANSACTION', label: 'Lịch hẹn gặp' },
-          { id: 'REVIEW', label: 'Đánh giá uy tín' },
-          { id: 'SYSTEM', label: 'Hệ thống ReLoop' },
+          { id: 'ALL', label: 'Tất cả' },
+          { id: 'OFFER', label: 'Đề nghị' },
+          { id: 'TRANSACTION', label: 'Lịch hẹn' },
+          { id: 'REVIEW', label: 'Đánh giá' },
+          { id: 'SYSTEM', label: 'Hệ thống' },
         ].map((tab) => (
           <button
             key={tab.id}

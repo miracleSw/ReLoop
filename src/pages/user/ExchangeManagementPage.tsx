@@ -188,14 +188,14 @@ export const ExchangeManagementPage: React.FC = () => {
             }`}
           >
             {st === 'ALL'
-              ? 'Tất cả trạng thái'
+              ? 'Tất cả'
               : st === 'PENDING'
-              ? 'Chờ duyệt'
+              ? 'Chờ phản hồi'
               : st === 'ACCEPTED'
-              ? 'Đã chấp thuận'
+              ? 'Đã đồng ý'
               : st === 'REJECTED'
               ? 'Đã từ chối'
-              : 'Trong hàng chờ (ON_HOLD)'}
+              : 'Hàng chờ'}
           </button>
         ))}
       </div>
@@ -230,8 +230,6 @@ export const ExchangeManagementPage: React.FC = () => {
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-100">
                     <div className="flex flex-wrap items-center gap-2 sm:gap-3">
                       <StatusBadge status={req.status} size="sm" />
-                      <span className="text-xs font-semibold text-slate-500">Mã: #{req.id}</span>
-                      <span className="text-slate-300 hidden sm:inline">•</span>
                       <span className="text-xs text-slate-500 flex items-center gap-1">
                         <Clock className="w-3.5 h-3.5 text-slate-400" />
                         {new Date(req.createdAt).toLocaleString('vi-VN')}
@@ -429,8 +427,6 @@ export const ExchangeManagementPage: React.FC = () => {
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-100">
                     <div className="flex flex-wrap items-center gap-2 sm:gap-3">
                       <StatusBadge status={req.status} size="sm" />
-                      <span className="text-xs font-semibold text-slate-500">Mã đề xuất: #{req.id}</span>
-                      <span className="text-slate-300 hidden sm:inline">•</span>
                       <span className="text-xs text-slate-500 flex items-center gap-1">
                         <Clock className="w-3.5 h-3.5 text-slate-400" />
                         {new Date(req.createdAt).toLocaleString('vi-VN')}

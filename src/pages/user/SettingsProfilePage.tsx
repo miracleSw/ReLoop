@@ -68,21 +68,21 @@ export const SettingsProfilePage: React.FC = () => {
       return;
     }
 
-    // BR-11: Mật khẩu mới không được trùng với mật khẩu hiện tại
+    // Mật khẩu mới không được trùng với mật khẩu hiện tại
     if (newPassword === oldPassword) {
-      setPasswordError('Mật khẩu mới không được trùng với mật khẩu hiện tại (BR-11).');
+      setPasswordError('Mật khẩu mới không được trùng với mật khẩu hiện tại.');
       return;
     }
 
-    // BR-02: Mật khẩu tối thiểu 8 ký tự, ít nhất 1 chữ hoa, 1 chữ thường, 1 số
+    // Mật khẩu tối thiểu 8 ký tự, ít nhất 1 chữ hoa, 1 chữ thường, 1 số
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
     if (!passwordRegex.test(newPassword)) {
-      setPasswordError('Mật khẩu mới phải có tối thiểu 8 ký tự, bao gồm ít nhất 1 chữ hoa, 1 chữ thường và 1 chữ số (BR-02).');
+      setPasswordError('Mật khẩu mới cần tối thiểu 8 ký tự, gồm cả chữ hoa, chữ thường và chữ số.');
       return;
     }
 
     if (newPassword !== confirmNewPassword) {
-      setPasswordError('Mật khẩu mới xác nhận không trùng khớp (MSG 4).');
+      setPasswordError('Mật khẩu mới xác nhận không trùng khớp.');
       return;
     }
 

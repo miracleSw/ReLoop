@@ -114,7 +114,6 @@ export const TransactionsListPage: React.FC = () => {
                   <div className="space-y-1.5 min-w-0 flex-1">
                     <div className="flex flex-wrap items-center gap-2">
                       <StatusBadge status={tx.status} size="sm" />
-                      <span className="text-[11px] font-semibold text-slate-400">Mã: #{tx.id}</span>
                     </div>
 
                     <h3 className="text-sm sm:text-base font-black text-slate-900 truncate">
@@ -139,7 +138,7 @@ export const TransactionsListPage: React.FC = () => {
                     to={`/user/transactions/${tx.id}`}
                     className="w-full md:w-auto justify-center px-5 py-2.5 bg-gradient-to-r from-eco-700 via-eco-600 to-teal-600 hover:from-eco-600 hover:to-teal-500 text-white rounded-xl text-xs font-bold shadow-glow-emerald hover:shadow-lg flex items-center gap-2 transition-all"
                   >
-                    <span>Xem hành trình chi tiết</span>
+                    <span>Xem chi tiết lịch hẹn</span>
                     <ArrowRight className="w-3.5 h-3.5" />
                   </Link>
                 </div>

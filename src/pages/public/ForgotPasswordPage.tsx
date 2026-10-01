@@ -49,29 +49,29 @@ export const ForgotPasswordPage: React.FC = () => {
     setStep(2);
     setOtpTimer(180);
     setOtpRetryCount(0);
-    showToast(`Mã OTP khôi phục đã được mô phỏng gửi đến ${found.email}.`, 'info');
+    showToast(`Mã xác thực đã được gửi đến ${found.email}.`, 'info');
   };
 
   const handleVerifyOtp = (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMsg('');
 
-    // BR-04: OTP expiration check
+    // OTP expiration check
     if (otpTimer <= 0) {
-      setErrorMsg('Mã OTP đã hết hạn hiệu lực (3 phút). Vui lòng yêu cầu gửi lại mã mới (BR-04).');
+      setErrorMsg('Mã xác thực đã hết hạn hiệu lực. Vui lòng bấm gửi lại mã mới.');
       return;
     }
 
-    // BR-05: Failed attempt limit (max 5)
+    // Failed attempt limit (max 5)
     if (otpCode !== '8888') {
       const newRetries = otpRetryCount + 1;
       setOtpRetryCount(newRetries);
       if (newRetries >= 5) {
-        setErrorMsg('Bạn đã nhập sai OTP quá 5 lần liên tiếp. Mã OTP này đã bị vô hiệu hóa (BR-05). Vui lòng gửi lại mã mới.');
+        setErrorMsg('Bạn đã nhập sai mã xác thực quá 5 lần. Mã này đã bị vô hiệu hóa, vui lòng gửi lại mã mới.');
         setOtpCode('');
         return;
       }
-      setErrorMsg(`Mã OTP không chính xác. Bạn còn ${5 - newRetries} lần thử (Mã mẫu: 8888).`);
+      setErrorMsg(`Mã xác thực không chính xác. Bạn còn ${5 - newRetries} lần thử.`);
       return;
     }
 
@@ -81,7 +81,7 @@ export const ForgotPasswordPage: React.FC = () => {
 
   const handleResendOtp = () => {
     if (resendCount >= 3) {
-      setErrorMsg('Bạn đã vượt quá giới hạn gửi lại mã OTP (tối đa 3 lần / 15 phút theo BR-06).');
+      setErrorMsg('Bạn đã gửi lại mã nhiều lần liên tiếp. Vui lòng thử lại sau ít phút.');
       return;
     }
     setResendCount((c) => c + 1);
@@ -89,34 +89,34 @@ export const ForgotPasswordPage: React.FC = () => {
     setOtpRetryCount(0);
     setOtpCode('');
     setErrorMsg('');
-    showToast('Đã gửi lại mã OTP khôi phục mật khẩu (Mã mẫu: 8888).', 'info');
+    showToast('Đã gửi lại mã xác thực mới.', 'info');
   };
 
   const handleResetPassword = (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMsg('');
 
-    // BR-02: Mật khẩu tối thiểu 8 ký tự, ít nhất 1 chữ hoa, 1 chữ thường, 1 số
+    // Password complexity check
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
     if (!passwordRegex.test(newPassword)) {
-      setErrorMsg('Mật khẩu mới phải có tối thiểu 8 ký tự, bao gồm ít nhất 1 chữ hoa, 1 chữ thường và 1 chữ số (BR-02).');
+      setErrorMsg('Mật khẩu mới phải có tối thiểu 8 ký tự, bao gồm ít nhất 1 chữ hoa, 1 chữ thường và 1 chữ số.');
       return;
     }
 
-    // MSG 4: Mật khẩu không trùng khớp
+    // Password confirmation check
     if (newPassword !== confirmPassword) {
-      setErrorMsg('Mật khẩu xác nhận không trùng khớp (MSG 4).');
+      setErrorMsg('Mật khẩu xác nhận không trùng khớp.');
       return;
     }
 
-    // BR-11: Mật khẩu mới không được trùng với mật khẩu cũ (giả định mật khẩu cũ là password123)
+    // New password differs from current
     if (newPassword === 'password123') {
-      setErrorMsg('Mật khẩu mới không được trùng với mật khẩu hiện tại của bạn (BR-11).');
+      setErrorMsg('Mật khẩu mới không được trùng với mật khẩu hiện tại của bạn.');
       return;
     }
 
     setStep(4);
-    showToast('Khôi phục mật khẩu thành công! Bạn có thể đăng nhập ngay.', 'success');
+    showToast('Đặt lại mật khẩu thành công! Bạn có thể đăng nhập ngay.', 'success');
   };
 
   return (
@@ -147,11 +147,11 @@ export const ForgotPasswordPage: React.FC = () => {
         <div className="relative z-10 pt-10 border-t border-white/15 text-xs text-sand-300 space-y-2">
           <div className="flex items-center gap-2">
             <CheckCircle2 className="w-4 h-4 text-emerald-300" />
-            <span>Xác thực OTP thời hạn 3 phút (BR-04)</span>
+            <span>Bảo mật 2 lớp qua mã xác thực gửi về Email hoặc Số điện thoại</span>
           </div>
           <div className="flex items-center gap-2">
             <CheckCircle2 className="w-4 h-4 text-emerald-300" />
-            <span>Bảo vệ chống brute-force và spam gửi lại (BR-05, BR-06)</span>
+            <span>Bảo vệ tài khoản, hồ sơ uy tín và lịch sử giao dịch</span>
           </div>
         </div>
       </div>
@@ -169,14 +169,14 @@ export const ForgotPasswordPage: React.FC = () => {
             </Link>
             <h1 className="text-2xl sm:text-3xl font-extrabold text-charcoal-900 tracking-tight">
               {step === 1 && 'Quên mật khẩu?'}
-              {step === 2 && 'Xác thực mã OTP'}
+              {step === 2 && 'Xác thực mã bảo mật'}
               {step === 3 && 'Tạo mật khẩu mới'}
               {step === 4 && 'Khôi phục thành công!'}
             </h1>
             <p className="text-xs sm:text-sm text-sand-500 mt-1">
-              {step === 1 && 'Nhập Email hoặc Số điện thoại đăng ký để nhận mã OTP khôi phục.'}
-              {step === 2 && `Mã xác thực 4 số đã được gửi đến ${targetUserEmail}.`}
-              {step === 3 && 'Thiết lập mật khẩu bảo mật mới cho tài khoản của bạn.'}
+              {step === 1 && 'Nhập Email hoặc Số điện thoại để nhận mã xác thực đặt lại mật khẩu.'}
+              {step === 2 && `Mã xác thực đã được gửi đến ${targetUserEmail}.`}
+              {step === 3 && 'Thiết lập mật khẩu mới cho tài khoản của bạn.'}
               {step === 4 && 'Mật khẩu tài khoản đã được cập nhật thành công.'}
             </p>
           </div>
@@ -212,7 +212,7 @@ export const ForgotPasswordPage: React.FC = () => {
                 type="submit"
                 className="w-full py-3.5 px-6 rounded-xl bg-gradient-to-r from-eco-700 via-eco-600 to-teal-600 hover:from-eco-600 hover:to-teal-500 text-white font-bold text-sm shadow-glow-emerald transition-all"
               >
-                Gửi mã OTP khôi phục
+                Gửi mã xác thực
               </button>
             </form>
           )}
@@ -221,7 +221,7 @@ export const ForgotPasswordPage: React.FC = () => {
           {step === 2 && (
             <form onSubmit={handleVerifyOtp} className="space-y-5">
               <div className="p-3.5 bg-emerald-50 rounded-2xl border border-emerald-200 text-xs text-emerald-800 font-semibold text-center">
-                Mã thử nghiệm nhanh: <span className="text-base font-black text-emerald-900">8888</span>
+                Mã xác nhận (Demo): <span className="text-base font-black text-emerald-900">8888</span>
                 <div className="text-[11px] text-emerald-700 mt-0.5">
                   Thời gian hiệu lực còn: <span className="font-bold">{Math.floor(otpTimer / 60)}:{(otpTimer % 60).toString().padStart(2, '0')}</span>
                 </div>
@@ -229,7 +229,7 @@ export const ForgotPasswordPage: React.FC = () => {
 
               <div>
                 <label className="block text-xs font-bold text-charcoal-800 mb-1.5 text-center">
-                  Nhập mã OTP 4 chữ số
+                  Nhập mã xác thực 4 chữ số
                 </label>
                 <input
                   type="text"
@@ -257,7 +257,7 @@ export const ForgotPasswordPage: React.FC = () => {
                 type="submit"
                 className="w-full py-3.5 px-6 rounded-xl bg-gradient-to-r from-eco-700 via-eco-600 to-teal-600 hover:from-eco-600 hover:to-teal-500 text-white font-bold text-sm shadow-glow-emerald transition-all"
               >
-                Xác nhận OTP & Tiếp tục
+                Xác nhận & Tiếp tục
               </button>
             </form>
           )}
@@ -281,7 +281,7 @@ export const ForgotPasswordPage: React.FC = () => {
                   <Lock className="w-4 h-4 text-sand-400 absolute left-3.5 top-3 pointer-events-none" />
                 </div>
                 <p className="text-[11px] text-sand-500 mt-1">
-                  Ít nhất 8 ký tự, bao gồm chữ hoa, chữ thường và chữ số (BR-02).
+                  Tối thiểu 8 ký tự, gồm cả chữ hoa, chữ thường và chữ số.
                 </p>
               </div>
 

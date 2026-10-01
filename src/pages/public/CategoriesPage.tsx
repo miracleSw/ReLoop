@@ -52,9 +52,8 @@ export const CategoriesPage: React.FC = () => {
 
                 <div className="mt-5 pt-4 border-t border-slate-100 flex items-center justify-between text-xs">
                   <span className="font-bold text-emerald-800 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200/50">
-                    {sampleProducts.length} bài đăng đang mở
+                    {sampleProducts.length} món đồ
                   </span>
-                  <span className="text-sand-400 font-medium">Đã kiểm duyệt</span>
                 </div>
               </div>
 

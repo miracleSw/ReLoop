@@ -73,12 +73,12 @@ export const ReportModal: React.FC<ReportModalProps> = ({
       return;
     }
 
-    // BR-43: Báo cáo vi phạm liên quan đến lừa đảo/tranh chấp bắt buộc có ít nhất 1 ảnh bằng chứng
+    // Báo cáo vi phạm liên quan đến lừa đảo/tranh chấp bắt buộc có ít nhất 1 ảnh bằng chứng
     const isFraudOrDispute =
       reason === 'Lừa đảo / Chiếm đoạt tài sản' ||
       reason === 'Hàng giả / Sai mô tả nghiêm trọng';
     if (isFraudOrDispute && evidenceImages.length === 0) {
-      setErrorMsg('Báo cáo liên quan đến lừa đảo hoặc sai mô tả nghiêm trọng bắt buộc phải đính kèm ít nhất 1 hình ảnh bằng chứng (BR-43).');
+      setErrorMsg('Vui lòng đính kèm ít nhất 1 hình ảnh hoặc tài liệu bằng chứng để chúng tôi đối soát báo cáo này.');
       return;
     }
 

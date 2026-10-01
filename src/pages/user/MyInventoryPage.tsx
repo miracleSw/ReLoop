@@ -56,9 +56,6 @@ export const MyInventoryPage: React.FC = () => {
           <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
             Kho đồ cá nhân
           </h1>
-          <p className="text-xs sm:text-sm text-slate-500 mt-1">
-            Quản lý danh sách sản phẩm đăng tải và theo dõi các giao dịch.
-          </p>
         </div>
 
         <Link
@@ -66,14 +63,14 @@ export const MyInventoryPage: React.FC = () => {
           className="px-5 py-3 rounded-xl bg-gradient-to-r from-eco-700 via-eco-600 to-teal-600 hover:from-eco-600 hover:to-teal-500 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-glow-emerald hover:shadow-lg transition-all"
         >
           <PlusCircle className="w-4 h-4" />
-          <span>+ Đăng món đồ mới</span>
+          <span>Đăng tin mới</span>
         </Link>
       </div>
 
       {/* 2. STATUS TABS */}
       <div className="flex items-center gap-2 overflow-x-auto pb-1 border-b border-slate-200/80 scrollbar-none min-w-0 max-w-full">
         {[
-          { id: 'ALL', label: 'Tất cả bài đăng', count: myListings.length },
+          { id: 'ALL', label: 'Tất cả', count: myListings.length },
           {
             id: 'AVAILABLE',
             label: 'Còn hàng',
@@ -81,12 +78,12 @@ export const MyInventoryPage: React.FC = () => {
           },
           {
             id: 'RESERVED',
-            label: 'Đã hẹn gặp',
+            label: 'Đang có hẹn',
             count: myListings.filter((p) => p.status === 'RESERVED').length,
           },
           {
             id: 'COMPLETED',
-            label: 'Đã hoàn tất',
+            label: 'Đã giao dịch',
             count: myListings.filter((p) => p.status === 'COMPLETED').length,
           },
           {
@@ -96,7 +93,7 @@ export const MyInventoryPage: React.FC = () => {
           },
           {
             id: 'LOCKED',
-            label: 'Bị khóa',
+            label: 'Tạm khóa',
             count: myListings.filter((p) => p.status === 'LOCKED').length,
           },
         ].map((tab) => (
@@ -131,7 +128,7 @@ export const MyInventoryPage: React.FC = () => {
             Không có món đồ nào trong mục này
           </h3>
           <p className="text-xs text-slate-500">
-            Bạn chưa có sản phẩm nào thuộc trạng thái "{activeTab}".
+            Chưa có sản phẩm nào được lưu ở trạng thái này.
           </p>
         </div>
       ) : (
@@ -193,10 +190,10 @@ export const MyInventoryPage: React.FC = () => {
                 {pendingOffersCount > 0 && (
                   <Link
                     to="/user/exchanges"
-                    className="px-3.5 py-2 rounded-xl bg-emerald-50 text-emerald-800 border border-emerald-200/90 text-xs font-bold flex items-center gap-2 shadow-xs hover:bg-emerald-100 transition-colors animate-pulse w-full lg:w-auto justify-center"
+                    className="px-3.5 py-2 rounded-xl bg-emerald-50 text-emerald-800 border border-emerald-200/90 text-xs font-bold flex items-center gap-2 shadow-xs hover:bg-emerald-100 transition-colors w-full lg:w-auto justify-center"
                   >
                     <ArrowRightLeft className="w-4 h-4 text-emerald-600 flex-shrink-0" />
-                    <span className="truncate">{pendingOffersCount} đề nghị mới đang chờ duyệt!</span>
+                    <span className="truncate">{pendingOffersCount} đề nghị đang chờ phản hồi</span>
                   </Link>
                 )}
 

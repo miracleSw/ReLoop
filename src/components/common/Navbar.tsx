@@ -120,17 +120,17 @@ export const Navbar: React.FC = () => {
           <nav className="hidden xl:flex items-center gap-1 xl:gap-1.5 text-xs xl:text-[13px] font-semibold text-charcoal-700 whitespace-nowrap flex-shrink-0">
             <Link
               to="/explore"
-              className={`px-2.5 py-1.5 rounded-full transition-all whitespace-nowrap ${
+              className={`px-3 py-1.5 rounded-full transition-all whitespace-nowrap ${
                 location.pathname === '/explore' && !location.search.includes('type=EXCHANGE')
                   ? 'text-eco-800 bg-eco-50 font-bold shadow-subtle'
                   : 'hover:text-eco-700 hover:bg-eco-50/70'
               }`}
             >
-              Khám phá đồ cũ
+              Khám phá
             </Link>
             <Link
               to="/explore?type=EXCHANGE"
-              className={`px-2.5 py-1.5 rounded-full hover:text-eco-800 hover:bg-eco-50/70 transition-all flex items-center gap-1.5 whitespace-nowrap group/item ${
+              className={`px-3 py-1.5 rounded-full hover:text-eco-800 hover:bg-eco-50/70 transition-all flex items-center gap-1.5 whitespace-nowrap group/item ${
                 location.search.includes('type=EXCHANGE')
                   ? 'text-eco-800 bg-eco-50 font-bold shadow-subtle'
                   : ''
@@ -139,11 +139,11 @@ export const Navbar: React.FC = () => {
               <div className="w-4 h-4 rounded-full bg-eco-100 text-eco-700 flex items-center justify-center group-hover/item:rotate-180 transition-transform duration-500">
                 <ArrowRightLeft className="w-2.5 h-2.5" />
               </div>
-              <span>Góc Đổi đồ</span>
+              <span>Đổi đồ</span>
             </Link>
             <Link
               to="/categories"
-              className={`px-2.5 py-1.5 rounded-full transition-all whitespace-nowrap ${
+              className={`px-3 py-1.5 rounded-full transition-all whitespace-nowrap ${
                 location.pathname === '/categories'
                   ? 'text-eco-800 bg-eco-50 font-bold shadow-subtle'
                   : 'hover:text-eco-700 hover:bg-eco-50/70'
@@ -153,7 +153,7 @@ export const Navbar: React.FC = () => {
             </Link>
             <Link
               to="/safety"
-              className={`px-2.5 py-1.5 rounded-full transition-all whitespace-nowrap ${
+              className={`px-3 py-1.5 rounded-full transition-all whitespace-nowrap ${
                 location.pathname === '/safety'
                   ? 'text-eco-800 bg-eco-50 font-bold shadow-subtle'
                   : 'hover:text-eco-700 hover:bg-eco-50/70'

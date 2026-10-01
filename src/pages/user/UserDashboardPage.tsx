@@ -156,7 +156,7 @@ export const UserDashboardPage: React.FC = () => {
           className="p-4 sm:p-6 rounded-3xl bg-white border border-slate-200/90 hover:border-amber-500 hover:shadow-card shadow-soft transition-all group"
         >
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold text-sand-500 uppercase tracking-wider">Lịch hẹn gặp mặt</span>
+            <span className="text-xs font-bold text-sand-500 uppercase tracking-wider">Lịch hẹn & Giao dịch</span>
             <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-amber-50 to-orange-100 text-amber-700 flex items-center justify-center group-hover:scale-110 transition-transform shadow-subtle">
               <Calendar className="w-4 h-4 text-amber-600" />
             </div>
@@ -174,7 +174,7 @@ export const UserDashboardPage: React.FC = () => {
           className="p-5 sm:p-6 rounded-3xl bg-white border border-slate-200/90 hover:border-clay-500 hover:shadow-card shadow-soft transition-all group"
         >
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold text-sand-500 uppercase tracking-wider">Đồ yêu thích</span>
+            <span className="text-xs font-bold text-sand-500 uppercase tracking-wider">Danh sách yêu thích</span>
             <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-clay-50 to-orange-100 text-clay-700 flex items-center justify-center group-hover:scale-110 transition-transform shadow-subtle">
               <Heart className="w-4 h-4 text-clay-600" />
             </div>

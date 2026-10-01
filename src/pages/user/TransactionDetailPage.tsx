@@ -163,11 +163,8 @@ export const TransactionDetailPage: React.FC = () => {
             <span>/</span>
             <span className="text-slate-700">Mã GD: #{transaction.id}</span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight flex items-center gap-2.5">
-            <span>Hành trình Giao dịch Gặp mặt</span>
-            <span className="inline-flex items-center justify-center p-1 rounded-lg bg-eco-100/70 text-eco-700">
-              <Sparkles className="w-4 h-4" />
-            </span>
+          <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
+            Chi tiết giao dịch
           </h1>
         </div>
 
@@ -179,7 +176,7 @@ export const TransactionDetailPage: React.FC = () => {
       {/* 2. TRANSACTION JOURNEY PROGRESS TIMELINE */}
       <div className="bg-white rounded-3xl border border-slate-200/90 shadow-[0_10px_35px_-8px_rgba(16,185,129,0.08)] p-6 sm:p-8">
         <h3 className="text-xs font-black text-slate-500 uppercase tracking-wider mb-6 flex items-center gap-2">
-          <span>Tiến trình cuộc hẹn (Transaction Journey)</span>
+          <span>Tiến trình giao dịch</span>
         </h3>
 
         <div className="grid grid-cols-1 sm:grid-cols-4 gap-4 relative">
@@ -261,10 +258,10 @@ export const TransactionDetailPage: React.FC = () => {
         <div className="bg-white rounded-3xl border border-slate-200/90 shadow-[0_8px_30px_-6px_rgba(0,0,0,0.06)] p-6 space-y-4">
           <div className="flex items-center justify-between pb-3 border-b border-slate-100">
             <span className="text-xs font-bold text-eco-800 uppercase tracking-wider">
-              {isBuyer ? 'Người bán (Đối tác hẹn gặp):' : 'Người mua/đổi (Đối tác hẹn gặp):'}
+              {isBuyer ? 'Người bán:' : 'Người mua / đổi:'}
             </span>
             <span className="text-[11px] font-black text-emerald-800 bg-emerald-100 px-2.5 py-0.5 rounded-full">
-              ★ {partner?.trustScore}đ Uy tín
+              ★ {partner?.trustScore} điểm uy tín
             </span>
           </div>
 

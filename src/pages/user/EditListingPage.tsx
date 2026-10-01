@@ -164,11 +164,8 @@ export const EditListingPage: React.FC = () => {
             </span>
             <StatusBadge status={product.status} size="sm" />
           </div>
-          <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight flex items-center gap-2.5">
-            <span>Chỉnh sửa bài đăng</span>
-            <span className="inline-flex items-center justify-center p-1 rounded-lg bg-eco-100/70 text-eco-700">
-              <Sparkles className="w-4 h-4" />
-            </span>
+          <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
+            Chỉnh sửa bài đăng
           </h1>
           <p className="text-xs sm:text-sm text-slate-500 mt-1">
             Cập nhật lại thông tin, mô tả thực tế, hình ảnh hoặc khu vực gặp mặt trực tiếp.

@@ -103,7 +103,7 @@ export const AdminReportsPage: React.FC = () => {
                           : 'bg-emerald-100 text-emerald-800 border border-emerald-200'
                       }`}
                     >
-                      {rep.status === 'PENDING' ? 'Chờ thẩm định' : 'Đã xử lý xong'}
+                      {rep.status === 'PENDING' ? 'Chờ xử lý' : 'Đã xử lý'}
                     </span>
                     <span className="text-xs text-slate-500 font-medium">Mã báo cáo: #{rep.id}</span>
                   </div>

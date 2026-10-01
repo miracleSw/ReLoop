@@ -427,7 +427,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
             <Link
               to={`/sellers/${seller.id}`}
               className="flex items-center gap-1.5 text-right hover:opacity-80 transition-opacity flex-shrink-0"
-              title={`Người bán: ${seller.fullName} (${seller.trustScore}đ uy tín)`}
+              title={`Người bán: ${seller.fullName} (${seller.trustScore} điểm uy tín)`}
             >
               <div className="hidden xs:block sm:block text-right">
                 <div className="text-[11px] font-semibold text-charcoal-800 max-w-[85px] truncate">

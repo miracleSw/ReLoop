@@ -57,15 +57,8 @@ export const WishlistPage: React.FC = () => {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200/80">
         <div>
-          <div className="inline-flex items-center gap-1.5 text-xs font-bold text-rose-700 uppercase tracking-wider bg-rose-50 px-3 py-1 rounded-full border border-rose-200/80 mb-2 shadow-xs">
-            <Heart className="w-3.5 h-3.5 text-rose-500 fill-rose-500" />
-            <span>Bộ sưu tập yêu thích</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight flex items-center gap-2.5">
-            <span>Danh sách yêu thích</span>
-            <span className="inline-flex items-center justify-center p-1 rounded-lg bg-eco-100/70 text-eco-700">
-              <Sparkles className="w-4 h-4" />
-            </span>
+          <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
+            Danh sách yêu thích
           </h1>
           <p className="text-xs sm:text-sm text-slate-500 mt-1">
             Lưu lại để theo dõi trạng thái món đồ hoặc chuẩn bị đồ để trao đổi.

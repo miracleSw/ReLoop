@@ -131,7 +131,7 @@ export const AdminPostsPage: React.FC = () => {
                         {seller?.fullName}
                       </span>
                       <span className="text-[10px] text-emerald-800 font-medium">
-                        ★ {seller?.trustScore}đ Uy tín
+                        ★ {seller?.trustScore} điểm uy tín
                       </span>
                     </td>
 

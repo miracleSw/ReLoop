@@ -422,7 +422,7 @@ export const ProductDetailPage: React.FC = () => {
 
               <div className="text-right flex-shrink-0">
                 <span className="inline-block text-xs font-bold text-eco-800 bg-emerald-50 border border-eco-200/80 px-2.5 sm:px-3 py-1 rounded-full shadow-subtle">
-                  ★ {seller.trustScore}/100 Uy tín
+                  ★ {seller.trustScore}/100 điểm uy tín
                 </span>
               </div>
             </div>

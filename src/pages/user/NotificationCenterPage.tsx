@@ -23,12 +23,8 @@ export const NotificationCenterPage: React.FC = () => {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200/80">
         <div>
-          <div className="inline-flex items-center gap-1.5 text-xs font-bold text-eco-800 uppercase tracking-wider bg-eco-100/70 px-3 py-1 rounded-full border border-eco-200/80 mb-2 shadow-xs">
-            <Bell className="w-3.5 h-3.5 text-eco-700" />
-            <span>Thông báo & nhắc nhở</span>
-          </div>
           <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight flex items-center gap-2.5">
-            <span>Trung tâm thông báo (Notification Center)</span>
+            <span>Thông báo</span>
             {unreadCount > 0 && (
               <span className="shrink-0 whitespace-nowrap text-xs font-black bg-gradient-to-r from-clay-500 to-rose-500 text-white px-2.5 py-0.5 rounded-full shadow-xs">
                 {unreadCount} mới
@@ -36,7 +32,7 @@ export const NotificationCenterPage: React.FC = () => {
             )}
           </h1>
           <p className="text-xs sm:text-sm text-slate-500 mt-1">
-            Cập nhật biến động các đề nghị giao dịch, nhắc nhở lịch hẹn và thông báo hệ thống.
+            Cập nhật đề nghị giao dịch, lịch hẹn và thông báo tài khoản.
           </p>
         </div>
 

@@ -88,18 +88,11 @@ export const ExchangeManagementPage: React.FC = () => {
       {/* 1. HEADER */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200/80">
         <div>
-          <div className="inline-flex items-center gap-1.5 text-xs font-bold text-eco-800 uppercase tracking-wider bg-eco-100/70 px-3 py-1 rounded-full border border-eco-200/80 mb-2 shadow-xs">
-            <ArrowRightLeft className="w-3.5 h-3.5 text-eco-700" />
-            <span>Trung tâm quản lý thương lượng & đề nghị</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight flex items-center gap-2.5">
-            <span>Quản lý Đề nghị & Đề xuất Giao dịch</span>
-            <span className="inline-flex items-center justify-center p-1 rounded-lg bg-eco-100/70 text-eco-700">
-              <Sparkles className="w-4 h-4" />
-            </span>
+          <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
+            Quản lý đề nghị giao dịch
           </h1>
           <p className="text-xs sm:text-sm text-slate-500 mt-1">
-            Theo dõi, thương lượng và xét duyệt cả đề nghị Đổi đồ (Barter) và đề xuất Mua trực tiếp (Buy) minh bạch.
+            Theo dõi, thương lượng và phản hồi các đề nghị trao đổi hoặc mua bán sản phẩm.
           </p>
         </div>
       </div>

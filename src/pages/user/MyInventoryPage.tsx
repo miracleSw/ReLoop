@@ -53,18 +53,11 @@ export const MyInventoryPage: React.FC = () => {
       {/* 1. HEADER */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200/80">
         <div>
-          <div className="inline-flex items-center gap-1.5 text-xs font-bold text-eco-800 uppercase tracking-wider bg-eco-100/70 px-3 py-1 rounded-full border border-eco-200/80 mb-2 shadow-xs">
-            <Package className="w-3.5 h-3.5 text-eco-700" />
-            <span>Kho hàng cá nhân</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight flex items-center gap-2.5">
-            <span>Kho đồ cá nhân</span>
-            <span className="inline-flex items-center justify-center p-1 rounded-lg bg-eco-100/70 text-eco-700">
-              <Sparkles className="w-4 h-4" />
-            </span>
+          <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
+            Kho đồ cá nhân
           </h1>
           <p className="text-xs sm:text-sm text-slate-500 mt-1">
-            Quản lý toàn bộ danh sách sản phẩm đăng tải và theo dõi trạng thái các giao dịch gặp mặt.
+            Quản lý danh sách sản phẩm đăng tải và theo dõi các giao dịch.
           </p>
         </div>
 

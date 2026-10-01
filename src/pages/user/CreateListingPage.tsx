@@ -146,11 +146,8 @@ export const CreateListingPage: React.FC = () => {
     <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-8">
       {/* 1. HEADER */}
       <div className="text-center max-w-2xl mx-auto space-y-2">
-        <span className="text-xs font-bold text-eco-800 uppercase tracking-wider bg-eco-50 px-3.5 py-1 rounded-full border border-eco-200/80 inline-flex shadow-subtle">
-          Mô hình tuần hoàn đồ cũ
-        </span>
         <h1 className="text-2xl sm:text-3xl font-extrabold text-charcoal-900 tracking-tight">
-          Đăng tin Sản phẩm mới
+          Đăng tin mới
         </h1>
         <p className="text-xs sm:text-sm text-slate-500">
           Hãy mô tả chân thực tình trạng để kết nối với những người trân trọng đồ cũ như bạn.

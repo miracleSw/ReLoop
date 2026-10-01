@@ -320,7 +320,7 @@ export const AdminUsersPage: React.FC = () => {
                 </span>
               </div>
               <div>
-                <span className="text-slate-500 block font-medium">Chỉ số Uy tín:</span>
+                <span className="text-slate-500 block font-medium">Điểm uy tín:</span>
                 <span className="font-extrabold text-emerald-800">{selectedUser.trustScore}/100</span>
               </div>
               <div>

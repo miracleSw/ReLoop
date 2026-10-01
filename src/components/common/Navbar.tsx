@@ -630,7 +630,7 @@ export const Navbar: React.FC = () => {
                     {currentUser.fullName}
                   </div>
                   <div className="text-[11px] text-eco-700 font-semibold">
-                    ★ {currentUser.trustScore}đ Uy tín
+                    ★ {currentUser.trustScore} điểm uy tín
                   </div>
                 </div>
               </div>
@@ -641,7 +641,7 @@ export const Navbar: React.FC = () => {
                 className="flex items-center gap-2.5 px-3 py-2 text-xs font-semibold text-charcoal-700 hover:bg-slate-50 rounded-lg"
               >
                 <User className="w-3.5 h-3.5 text-sand-500" />
-                <span>Dashboard cá nhân</span>
+                <span>Tổng quan tài khoản</span>
               </Link>
               <Link
                 to="/user/products"
@@ -673,7 +673,7 @@ export const Navbar: React.FC = () => {
                 className="flex items-center gap-2.5 px-3 py-2 text-xs font-semibold text-charcoal-700 hover:bg-slate-50 rounded-lg"
               >
                 <MessageSquare className="w-3.5 h-3.5 text-sand-500" />
-                <span>Hộp thư thương lượng</span>
+                <span>Tin nhắn trao đổi</span>
               </Link>
               <Link
                 to="/user/profile"

@@ -120,17 +120,17 @@ export const Navbar: React.FC = () => {
           <nav className="hidden xl:flex items-center gap-1 xl:gap-1.5 text-xs xl:text-[13px] font-semibold text-charcoal-700 whitespace-nowrap flex-shrink-0">
             <Link
               to="/explore"
-              className={`px-2.5 py-1.5 rounded-full transition-all whitespace-nowrap ${
+              className={`px-3 py-1.5 rounded-full transition-all whitespace-nowrap ${
                 location.pathname === '/explore' && !location.search.includes('type=EXCHANGE')
                   ? 'text-eco-800 bg-eco-50 font-bold shadow-subtle'
                   : 'hover:text-eco-700 hover:bg-eco-50/70'
               }`}
             >
-              Khám phá đồ cũ
+              Khám phá
             </Link>
             <Link
               to="/explore?type=EXCHANGE"
-              className={`px-2.5 py-1.5 rounded-full hover:text-eco-800 hover:bg-eco-50/70 transition-all flex items-center gap-1.5 whitespace-nowrap group/item ${
+              className={`px-3 py-1.5 rounded-full hover:text-eco-800 hover:bg-eco-50/70 transition-all flex items-center gap-1.5 whitespace-nowrap group/item ${
                 location.search.includes('type=EXCHANGE')
                   ? 'text-eco-800 bg-eco-50 font-bold shadow-subtle'
                   : ''
@@ -139,11 +139,11 @@ export const Navbar: React.FC = () => {
               <div className="w-4 h-4 rounded-full bg-eco-100 text-eco-700 flex items-center justify-center group-hover/item:rotate-180 transition-transform duration-500">
                 <ArrowRightLeft className="w-2.5 h-2.5" />
               </div>
-              <span>Góc Đổi đồ</span>
+              <span>Đổi đồ</span>
             </Link>
             <Link
               to="/categories"
-              className={`px-2.5 py-1.5 rounded-full transition-all whitespace-nowrap ${
+              className={`px-3 py-1.5 rounded-full transition-all whitespace-nowrap ${
                 location.pathname === '/categories'
                   ? 'text-eco-800 bg-eco-50 font-bold shadow-subtle'
                   : 'hover:text-eco-700 hover:bg-eco-50/70'
@@ -153,7 +153,7 @@ export const Navbar: React.FC = () => {
             </Link>
             <Link
               to="/safety"
-              className={`px-2.5 py-1.5 rounded-full transition-all whitespace-nowrap ${
+              className={`px-3 py-1.5 rounded-full transition-all whitespace-nowrap ${
                 location.pathname === '/safety'
                   ? 'text-eco-800 bg-eco-50 font-bold shadow-subtle'
                   : 'hover:text-eco-700 hover:bg-eco-50/70'
@@ -229,7 +229,7 @@ export const Navbar: React.FC = () => {
             <Link
               to="/user/wishlist"
               className="hidden sm:inline-flex relative p-2 text-charcoal-700 hover:text-rose-600 hover:bg-rose-50 rounded-full transition-colors border border-transparent hover:border-rose-100 flex-shrink-0"
-              title="Danh sách quan tâm"
+              title="Danh sách yêu thích"
             >
               <Heart className="w-4 h-4 sm:w-5 sm:h-5" />
               {favorites.length > 0 && (
@@ -394,7 +394,7 @@ export const Navbar: React.FC = () => {
                         className="flex items-center gap-2.5 px-4 py-2 hover:bg-sand-50 transition-colors"
                       >
                         <User className="w-4 h-4 text-sand-500" />
-                        <span>Tổng quan Dashboard</span>
+                        <span>Tổng quan tài khoản</span>
                       </Link>
 
                       <Link
@@ -430,7 +430,7 @@ export const Navbar: React.FC = () => {
                         className="flex items-center gap-2.5 px-4 py-2 hover:bg-sand-50 transition-colors"
                       >
                         <MessageSquare className="w-4 h-4 text-sand-500" />
-                        <span>Hộp thư thương lượng</span>
+                        <span>Tin nhắn trao đổi</span>
                       </Link>
 
                       <Link
@@ -630,7 +630,7 @@ export const Navbar: React.FC = () => {
                     {currentUser.fullName}
                   </div>
                   <div className="text-[11px] text-eco-700 font-semibold">
-                    ★ {currentUser.trustScore}đ Uy tín
+                    ★ {currentUser.trustScore} điểm uy tín
                   </div>
                 </div>
               </div>
@@ -641,7 +641,7 @@ export const Navbar: React.FC = () => {
                 className="flex items-center gap-2.5 px-3 py-2 text-xs font-semibold text-charcoal-700 hover:bg-slate-50 rounded-lg"
               >
                 <User className="w-3.5 h-3.5 text-sand-500" />
-                <span>Dashboard cá nhân</span>
+                <span>Tổng quan tài khoản</span>
               </Link>
               <Link
                 to="/user/products"
@@ -673,7 +673,7 @@ export const Navbar: React.FC = () => {
                 className="flex items-center gap-2.5 px-3 py-2 text-xs font-semibold text-charcoal-700 hover:bg-slate-50 rounded-lg"
               >
                 <MessageSquare className="w-3.5 h-3.5 text-sand-500" />
-                <span>Hộp thư thương lượng</span>
+                <span>Tin nhắn trao đổi</span>
               </Link>
               <Link
                 to="/user/profile"

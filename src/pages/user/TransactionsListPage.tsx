@@ -33,18 +33,11 @@ export const TransactionsListPage: React.FC = () => {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-8">
       {/* Header */}
       <div className="pb-4 border-b border-slate-200/80">
-        <div className="inline-flex items-center gap-1.5 text-xs font-bold text-eco-800 uppercase tracking-wider bg-eco-100/70 px-3 py-1 rounded-full border border-eco-200/80 mb-2 shadow-xs">
-          <Calendar className="w-3.5 h-3.5 text-eco-700" />
-          <span>Theo dõi cuộc hẹn trực tiếp</span>
-        </div>
-        <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight flex items-center gap-2.5">
-          <span>Lịch hẹn & Giao dịch gặp mặt</span>
-          <span className="inline-flex items-center justify-center p-1 rounded-lg bg-eco-100/70 text-eco-700">
-            <Sparkles className="w-4 h-4" />
-          </span>
+        <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
+          Lịch hẹn & Giao dịch
         </h1>
         <p className="text-xs sm:text-sm text-slate-500 mt-1">
-          Theo dõi tiến trình các cuộc hẹn bàn giao đồ trực tiếp ngoài đời và xác nhận 2 chiều.
+          Theo dõi tiến trình các cuộc hẹn gặp mặt và hoàn tất giao dịch.
         </p>
       </div>
 
@@ -54,17 +47,17 @@ export const TransactionsListPage: React.FC = () => {
           { id: 'ALL', label: 'Tất cả cuộc hẹn', count: myTransactions.length },
           {
             id: 'APPOINTED',
-            label: 'Đã lên lịch (APPOINTED)',
+            label: 'Đã lên lịch',
             count: myTransactions.filter((t) => t.status === 'APPOINTED').length,
           },
           {
             id: 'COMPLETED',
-            label: 'Hoàn tất thành công (COMPLETED)',
+            label: 'Đã hoàn tất',
             count: myTransactions.filter((t) => t.status === 'COMPLETED').length,
           },
           {
             id: 'CANCELLED',
-            label: 'Đã hủy (CANCELLED)',
+            label: 'Đã hủy',
             count: myTransactions.filter((t) => t.status === 'CANCELLED').length,
           },
         ].map((tab) => (
@@ -121,7 +114,6 @@ export const TransactionsListPage: React.FC = () => {
                   <div className="space-y-1.5 min-w-0 flex-1">
                     <div className="flex flex-wrap items-center gap-2">
                       <StatusBadge status={tx.status} size="sm" />
-                      <span className="text-[11px] font-semibold text-slate-400">Mã: #{tx.id}</span>
                     </div>
 
                     <h3 className="text-sm sm:text-base font-black text-slate-900 truncate">
@@ -146,7 +138,7 @@ export const TransactionsListPage: React.FC = () => {
                     to={`/user/transactions/${tx.id}`}
                     className="w-full md:w-auto justify-center px-5 py-2.5 bg-gradient-to-r from-eco-700 via-eco-600 to-teal-600 hover:from-eco-600 hover:to-teal-500 text-white rounded-xl text-xs font-bold shadow-glow-emerald hover:shadow-lg flex items-center gap-2 transition-all"
                   >
-                    <span>Xem hành trình chi tiết</span>
+                    <span>Xem chi tiết lịch hẹn</span>
                     <ArrowRight className="w-3.5 h-3.5" />
                   </Link>
                 </div>

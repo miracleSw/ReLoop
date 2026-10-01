@@ -73,7 +73,7 @@ export const EditListingPage: React.FC = () => {
         </div>
         <h2 className="text-xl font-bold text-rose-700">Không có quyền chỉnh sửa</h2>
         <p className="text-xs text-slate-600 mt-1">
-          Bạn chỉ có thể chỉnh sửa bài đăng do chính mình tạo ra (BR UC06).
+          Bạn chỉ có thể chỉnh sửa bài đăng do chính mình tạo ra.
         </p>
         <Link
           to="/user/products"
@@ -90,9 +90,9 @@ export const EditListingPage: React.FC = () => {
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return;
     const files = Array.from(e.target.files);
-    const remainingSlots = 5 - images.length;
+    const remainingSlots = 10 - images.length;
     if (remainingSlots <= 0) {
-      setErrorMsg('Tối đa 5 hình ảnh cho mỗi bài đăng.');
+      setErrorMsg('Bạn chỉ có thể tải lên tối đa 10 hình ảnh.');
       return;
     }
     const filesToLoad = files.slice(0, remainingSlots);
@@ -101,7 +101,7 @@ export const EditListingPage: React.FC = () => {
       reader.onload = (uploadEvent) => {
         const result = uploadEvent.target?.result as string;
         if (result) {
-          setImages((prev) => (prev.length < 5 ? [...prev, result] : prev));
+          setImages((prev) => (prev.length < 10 ? [...prev, result] : prev));
         }
       };
       reader.readAsDataURL(file);
@@ -112,7 +112,7 @@ export const EditListingPage: React.FC = () => {
 
   const handleRemoveImage = (index: number) => {
     if (images.length <= 1) {
-      setErrorMsg('Bài đăng phải có ít nhất 1 hình ảnh đại diện.');
+      setErrorMsg('Bài đăng cần có ít nhất 1 hình ảnh đại diện.');
       return;
     }
     setImages(images.filter((_, i) => i !== index));
@@ -120,6 +120,10 @@ export const EditListingPage: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (isLockedOrCompleted) {
+      setErrorMsg('Bài đăng đang trong tiến trình giao dịch nên không thể chỉnh sửa.');
+      return;
+    }
     if (title.trim().length < 10) {
       setErrorMsg('Tiêu đề phải có ít nhất 10 ký tự.');
       return;
@@ -133,14 +137,23 @@ export const EditListingPage: React.FC = () => {
       return;
     }
 
+    if (type !== 'EXCHANGE' && (!price || price <= 0)) {
+      setErrorMsg('Vui lòng nhập giá bán lớn hơn 0.');
+      return;
+    }
+    if (type !== 'SELL' && !wantedExchangeItems.trim()) {
+      setErrorMsg('Vui lòng nhập món đồ bạn mong muốn đổi lấy.');
+      return;
+    }
+
     updateProduct(product.id, {
       title,
       categoryId,
-      type: isLockedOrCompleted ? product.type : type,
+      type,
       condition,
-      price: !isLockedOrCompleted && type !== 'EXCHANGE' ? price : product.price,
-      originalPrice: !isLockedOrCompleted && type !== 'EXCHANGE' ? originalPrice : product.originalPrice,
-      wantedExchangeItems: !isLockedOrCompleted && type !== 'SELL' ? wantedExchangeItems : product.wantedExchangeItems,
+      price: type !== 'EXCHANGE' ? price : undefined,
+      originalPrice: type !== 'EXCHANGE' ? originalPrice : undefined,
+      wantedExchangeItems: type !== 'SELL' ? wantedExchangeItems : undefined,
       description,
       images,
       location: {
@@ -159,16 +172,10 @@ export const EditListingPage: React.FC = () => {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200/80">
         <div>
           <div className="flex items-center gap-2 mb-1.5">
-            <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-600 border border-slate-200">
-              Mã: #{product.id}
-            </span>
             <StatusBadge status={product.status} size="sm" />
           </div>
-          <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight flex items-center gap-2.5">
-            <span>Chỉnh sửa bài đăng</span>
-            <span className="inline-flex items-center justify-center p-1 rounded-lg bg-eco-100/70 text-eco-700">
-              <Sparkles className="w-4 h-4" />
-            </span>
+          <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
+            Chỉnh sửa bài đăng
           </h1>
           <p className="text-xs sm:text-sm text-slate-500 mt-1">
             Cập nhật lại thông tin, mô tả thực tế, hình ảnh hoặc khu vực gặp mặt trực tiếp.
@@ -187,9 +194,8 @@ export const EditListingPage: React.FC = () => {
         <div className="p-4 bg-amber-50/90 rounded-2xl border border-amber-200 text-xs text-amber-900 flex items-start gap-3 shadow-sm">
           <Info className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
           <div>
-            <strong className="font-bold">Lưu ý nghiệp vụ (HUSC-33):</strong> Bài đăng đang ở trạng thái{' '}
-            <span className="font-bold underline">{product.status}</span> (đã chấp thuận đề nghị hoặc đã hoàn tất).
-            Để bảo vệ sự minh bạch giao dịch, bạn không thể thay đổi giá bán hoặc hình thức trao đổi trong khi lịch hẹn đang diễn ra.
+            <strong className="font-bold">Không thể chỉnh sửa:</strong> Bài đăng đang có người hẹn giao dịch hoặc đã hoàn tất.
+            Để đảm bảo tính minh bạch, thông tin bài đăng được tạm khóa trong lúc này.
           </div>
         </div>
       )}
@@ -263,11 +269,11 @@ export const EditListingPage: React.FC = () => {
             className="hidden"
             onChange={handleFileUpload}
           />
-          <div className="flex items-center justify-between mb-2">
+          <div className="flex items-center justify-between mb-1.5">
             <label className="text-xs font-bold text-slate-800 uppercase tracking-wider">
-              Hình ảnh thực tế ({images.length}/5) <span className="text-rose-500">*</span>
+              Hình ảnh thực tế ({images.length}/10) <span className="text-rose-500">*</span>
             </label>
-            <span className="text-[11px] text-slate-500">Kéo ảnh đầu tiên làm ảnh bìa</span>
+            <span className="text-[11px] text-slate-500">Ảnh đầu tiên là ảnh đại diện</span>
           </div>
 
           <div className="flex flex-wrap gap-3">
@@ -412,9 +418,14 @@ export const EditListingPage: React.FC = () => {
           </button>
           <button
             type="submit"
-            className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-eco-700 via-eco-600 to-teal-600 hover:from-eco-600 hover:to-teal-500 text-white text-xs font-bold shadow-glow-emerald hover:shadow-lg transition-all"
+            disabled={isLockedOrCompleted}
+            className={`px-6 py-2.5 rounded-xl text-white text-xs font-bold transition-all ${
+              isLockedOrCompleted
+                ? 'bg-slate-400 cursor-not-allowed opacity-70'
+                : 'bg-gradient-to-r from-eco-700 via-eco-600 to-teal-600 hover:from-eco-600 hover:to-teal-500 shadow-glow-emerald hover:shadow-lg'
+            }`}
           >
-            Lưu thay đổi
+            {isLockedOrCompleted ? 'Đang có giao dịch' : 'Lưu thay đổi'}
           </button>
         </div>
       </form>

@@ -17,7 +17,7 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({ status, size = 'md' })
   const config: Record<string, { label: string; bg: string; text: string; dot: string; border: string }> = {
     // Product states (UC07)
     AVAILABLE: {
-      label: 'Còn hàng / Đang hiển thị',
+      label: 'Còn hàng',
       bg: 'bg-emerald-50',
       text: 'text-emerald-800',
       dot: 'bg-emerald-500',
@@ -31,28 +31,28 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({ status, size = 'md' })
       border: 'border-amber-200',
     },
     COMPLETED: {
-      label: 'Đã giao dịch thành công',
+      label: 'Đã giao dịch',
       bg: 'bg-eco-50',
       text: 'text-eco-900',
       dot: 'bg-eco-600',
       border: 'border-eco-200',
     },
     HIDDEN: {
-      label: 'Tạm ẩn bài đăng',
+      label: 'Tạm ẩn',
       bg: 'bg-sand-100',
       text: 'text-sand-700',
       dot: 'bg-sand-400',
       border: 'border-sand-200',
     },
     LOCKED: {
-      label: 'Bị khóa bởi Admin',
+      label: 'Tạm khóa',
       bg: 'bg-rose-50',
       text: 'text-rose-700',
       dot: 'bg-rose-500',
       border: 'border-rose-200',
     },
     REMOVED: {
-      label: 'Đã gỡ bỏ vĩnh viễn',
+      label: 'Đã gỡ bỏ',
       bg: 'bg-rose-100',
       text: 'text-rose-900',
       dot: 'bg-rose-600',
@@ -61,7 +61,7 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({ status, size = 'md' })
 
     // Offer states (UC14, UC15, UC16)
     PENDING: {
-      label: 'Đang chờ duyệt',
+      label: 'Chờ phản hồi',
       bg: 'bg-sky-50',
       text: 'text-sky-800',
       dot: 'bg-sky-500 animate-pulse',
@@ -89,7 +89,7 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({ status, size = 'md' })
       border: 'border-sand-200',
     },
     ON_HOLD: {
-      label: 'Trong hàng chờ',
+      label: 'Hàng chờ',
       bg: 'bg-amber-50',
       text: 'text-amber-700',
       dot: 'bg-amber-400',
@@ -98,21 +98,21 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({ status, size = 'md' })
 
     // Meetup states (UC17, UC18)
     APPOINTED: {
-      label: 'Đã lên lịch hẹn gặp',
+      label: 'Đã lên lịch hẹn',
       bg: 'bg-teal-50',
       text: 'text-teal-800',
       dot: 'bg-teal-500',
       border: 'border-teal-200',
     },
     RESCHEDULED: {
-      label: 'Đã dời lịch hẹn',
+      label: 'Đã đổi lịch hẹn',
       bg: 'bg-amber-50',
       text: 'text-amber-800',
       dot: 'bg-amber-500',
       border: 'border-amber-200',
     },
     DISPUTED: {
-      label: 'Có khiếu nại / Tranh chấp',
+      label: 'Đang khiếu nại',
       bg: 'bg-purple-50',
       text: 'text-purple-800',
       dot: 'bg-purple-500',

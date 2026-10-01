@@ -53,19 +53,9 @@ export const MyInventoryPage: React.FC = () => {
       {/* 1. HEADER */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200/80">
         <div>
-          <div className="inline-flex items-center gap-1.5 text-xs font-bold text-eco-800 uppercase tracking-wider bg-eco-100/70 px-3 py-1 rounded-full border border-eco-200/80 mb-2 shadow-xs">
-            <Package className="w-3.5 h-3.5 text-eco-700" />
-            <span>Kho hàng cá nhân</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight flex items-center gap-2.5">
-            <span>Kho đồ cá nhân (Personal Inventory)</span>
-            <span className="inline-flex items-center justify-center p-1 rounded-lg bg-eco-100/70 text-eco-700">
-              <Sparkles className="w-4 h-4" />
-            </span>
+          <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
+            Kho đồ cá nhân
           </h1>
-          <p className="text-xs sm:text-sm text-slate-500 mt-1">
-            Quản lý toàn bộ danh sách sản phẩm đăng tải và theo dõi trạng thái các giao dịch gặp mặt.
-          </p>
         </div>
 
         <Link
@@ -73,37 +63,37 @@ export const MyInventoryPage: React.FC = () => {
           className="px-5 py-3 rounded-xl bg-gradient-to-r from-eco-700 via-eco-600 to-teal-600 hover:from-eco-600 hover:to-teal-500 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-glow-emerald hover:shadow-lg transition-all"
         >
           <PlusCircle className="w-4 h-4" />
-          <span>+ Đăng món đồ mới</span>
+          <span>Đăng tin mới</span>
         </Link>
       </div>
 
-      {/* 2. STATUS TABS (UC07) */}
+      {/* 2. STATUS TABS */}
       <div className="flex items-center gap-2 overflow-x-auto pb-1 border-b border-slate-200/80 scrollbar-none min-w-0 max-w-full">
         {[
-          { id: 'ALL', label: 'Tất cả bài đăng', count: myListings.length },
+          { id: 'ALL', label: 'Tất cả', count: myListings.length },
           {
             id: 'AVAILABLE',
-            label: 'Còn hàng (AVAILABLE)',
+            label: 'Còn hàng',
             count: myListings.filter((p) => p.status === 'AVAILABLE').length,
           },
           {
             id: 'RESERVED',
-            label: 'Đã hẹn gặp (RESERVED)',
+            label: 'Đang có hẹn',
             count: myListings.filter((p) => p.status === 'RESERVED').length,
           },
           {
             id: 'COMPLETED',
-            label: 'Đã giao dịch (COMPLETED)',
+            label: 'Đã giao dịch',
             count: myListings.filter((p) => p.status === 'COMPLETED').length,
           },
           {
             id: 'HIDDEN',
-            label: 'Tạm ẩn (HIDDEN)',
+            label: 'Tạm ẩn',
             count: myListings.filter((p) => p.status === 'HIDDEN').length,
           },
           {
             id: 'LOCKED',
-            label: 'Bị khóa (LOCKED)',
+            label: 'Tạm khóa',
             count: myListings.filter((p) => p.status === 'LOCKED').length,
           },
         ].map((tab) => (
@@ -138,7 +128,7 @@ export const MyInventoryPage: React.FC = () => {
             Không có món đồ nào trong mục này
           </h3>
           <p className="text-xs text-slate-500">
-            Bạn chưa có sản phẩm nào thuộc trạng thái "{activeTab}".
+            Chưa có sản phẩm nào được lưu ở trạng thái này.
           </p>
         </div>
       ) : (
@@ -200,10 +190,10 @@ export const MyInventoryPage: React.FC = () => {
                 {pendingOffersCount > 0 && (
                   <Link
                     to="/user/exchanges"
-                    className="px-3.5 py-2 rounded-xl bg-emerald-50 text-emerald-800 border border-emerald-200/90 text-xs font-bold flex items-center gap-2 shadow-xs hover:bg-emerald-100 transition-colors animate-pulse w-full lg:w-auto justify-center"
+                    className="px-3.5 py-2 rounded-xl bg-emerald-50 text-emerald-800 border border-emerald-200/90 text-xs font-bold flex items-center gap-2 shadow-xs hover:bg-emerald-100 transition-colors w-full lg:w-auto justify-center"
                   >
                     <ArrowRightLeft className="w-4 h-4 text-emerald-600 flex-shrink-0" />
-                    <span className="truncate">{pendingOffersCount} đề nghị mới đang chờ duyệt!</span>
+                    <span className="truncate">{pendingOffersCount} đề nghị đang chờ phản hồi</span>
                   </Link>
                 )}
 

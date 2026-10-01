@@ -4,7 +4,7 @@ import { useApp } from '../../context/AppContext';
 import { Sparkles, CheckCircle2, AlertTriangle, ArrowRight, UserPlus, ShieldCheck } from 'lucide-react';
 
 export const RegisterPage: React.FC = () => {
-  const { users, loginAs, showToast } = useApp();
+  const { users, addUser, loginAs, showToast } = useApp();
   const navigate = useNavigate();
 
   const [fullName, setFullName] = useState('');
@@ -25,32 +25,34 @@ export const RegisterPage: React.FC = () => {
     // BR-01: Email format and duplicate
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
-      setErrorMsg('Định dạng email không hợp lệ (BR-01).');
+      setErrorMsg('Định dạng email không hợp lệ.');
       return;
     }
     if (users.some((u) => u.email.toLowerCase() === email.trim().toLowerCase())) {
-      setErrorMsg('Email này đã được sử dụng bởi một tài khoản khác trên hệ thống (BR-01).');
+      setErrorMsg('Email này đã được sử dụng bởi một tài khoản khác.');
       return;
     }
 
     // BR-02: Phone duplicate
     if (users.some((u) => u.phone === phone.trim())) {
-      setErrorMsg('Số điện thoại này đã tồn tại trên hệ thống (BR-02).');
+      setErrorMsg('Số điện thoại này đã được sử dụng.');
       return;
     }
 
     // BR-03: Password match
     if (password !== confirmPassword) {
-      setErrorMsg('Mật khẩu xác nhận không khớp tuyệt đối với mật khẩu đã nhập (BR-03).');
+      setErrorMsg('Mật khẩu xác nhận không trùng khớp.');
       return;
     }
 
-    if (password.length < 6) {
-      setErrorMsg('Mật khẩu phải có độ dài tối thiểu 6 ký tự.');
+    // Password complexity check
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+    if (!passwordRegex.test(password)) {
+      setErrorMsg('Mật khẩu cần tối thiểu 8 ký tự, gồm cả chữ hoa, chữ thường và chữ số.');
       return;
     }
 
-    // Trigger OTP simulation modal
+    // Trigger OTP modal
     setShowOtpModal(true);
   };
 
@@ -63,7 +65,7 @@ export const RegisterPage: React.FC = () => {
 
     // Create user in system state
     const newId = 'user-' + Date.now();
-    users.push({
+    addUser({
       id: newId,
       fullName,
       email,
@@ -270,14 +272,14 @@ export const RegisterPage: React.FC = () => {
             <div className="w-14 h-14 bg-gradient-to-br from-eco-100 to-teal-100 text-eco-700 rounded-2xl flex items-center justify-center mx-auto shadow-subtle">
               <ShieldCheck className="w-7 h-7 text-eco-600" />
             </div>
-            <h3 className="text-lg font-bold text-charcoal-900">Xác thực mã OTP</h3>
+            <h3 className="text-lg font-bold text-charcoal-900">Xác thực mã kích hoạt</h3>
             <p className="text-xs text-sand-500 leading-relaxed">
-              Mã kích hoạt tài khoản đã được mô phỏng gửi đến email{' '}
+              Mã kích hoạt tài khoản đã được gửi đến email{' '}
               <strong className="text-charcoal-900">{email}</strong>.
             </p>
 
             <div className="p-3 bg-gradient-to-r from-eco-50 to-teal-50 rounded-2xl border border-eco-200 text-xs text-eco-800 font-semibold">
-              Mã thử nghiệm nhanh: <span className="text-base font-black text-eco-800">8888</span>
+              Mã xác nhận: <span className="text-base font-black text-eco-800">8888</span>
             </div>
 
             <form onSubmit={handleVerifyOtp} className="space-y-4 pt-2">

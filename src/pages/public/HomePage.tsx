@@ -115,7 +115,7 @@ export const HomePage: React.FC = () => {
               <ArrowRightLeft className="w-6 h-6" />
             </div>
             <h3 className="text-base sm:text-lg font-bold text-charcoal-900 group-hover:text-eco-700 transition-colors">
-              Cơ chế Đổi đồ (Barter) linh hoạt
+              Trao đổi linh hoạt
             </h3>
             <p className="text-xs sm:text-sm text-sand-600 mt-2 leading-relaxed">
               Chọn món đồ từ kho cá nhân để gửi đề nghị đổi lấy món đồ yêu thích. Hỗ trợ thỏa thuận bù trừ tiền mặt minh bạch và sòng phẳng.
@@ -127,7 +127,7 @@ export const HomePage: React.FC = () => {
               <ShieldCheck className="w-6 h-6" />
             </div>
             <h3 className="text-base sm:text-lg font-bold text-charcoal-900 group-hover:text-teal-700 transition-colors">
-              Gặp mặt trực tiếp tại nơi công cộng
+              Gặp mặt an toàn
             </h3>
             <p className="text-xs sm:text-sm text-sand-600 mt-2 leading-relaxed">
               Ẩn hoàn toàn số điện thoại trên bài đăng công khai; chỉ mở liên hệ khi chốt đề nghị. Hẹn gặp kiểm tra thực tế tại quán cafe, TTTM đông người.
@@ -139,7 +139,7 @@ export const HomePage: React.FC = () => {
               <Sparkles className="w-6 h-6" />
             </div>
             <h3 className="text-base sm:text-lg font-bold text-charcoal-900 group-hover:text-clay-600 transition-colors">
-              Đánh giá uy tín 2 chiều & Chống ảo
+              Đánh giá minh bạch
             </h3>
             <p className="text-xs sm:text-sm text-sand-600 mt-2 leading-relaxed">
               Chỉ mở quyền chấm sao khi cả hai bên cùng xác nhận đã bàn giao hàng ngoài đời. Tiêu chí chuẩn hóa: đúng giờ, lịch sự và đúng mô tả.
@@ -354,9 +354,9 @@ export const HomePage: React.FC = () => {
             <span className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-eco-700 to-teal-600 text-white font-extrabold text-sm flex items-center justify-center mb-5 shadow-md shadow-eco-600/30 group-hover:scale-105 transition-transform">
               4
             </span>
-            <h4 className="text-base font-bold text-charcoal-900 group-hover:text-eco-700 transition-colors">Xác nhận & Chấm sao</h4>
+            <h4 className="text-base font-bold text-charcoal-900 group-hover:text-eco-700 transition-colors">Xác nhận & Đánh giá</h4>
             <p className="text-xs text-sand-600 mt-2 leading-relaxed">
-              Cả 2 bên cùng bấm xác nhận trên hệ thống để hoàn tất giao dịch và viết nhận xét uy tín cho đối phương.
+              Cả hai bên xác nhận đã nhận hàng để hoàn tất và để lại đánh giá uy tín cho đối tác.
             </p>
           </div>
         </div>
@@ -410,7 +410,7 @@ export const HomePage: React.FC = () => {
                     </div>
                     <div className="mt-2.5 flex items-center gap-3 text-xs">
                       <span className="font-bold text-emerald-800 bg-emerald-100/80 px-2 py-0.5 rounded-full text-[10px] shadow-subtle">
-                        ★ {u.trustScore}đ Uy tín
+                        ★ {u.trustScore} điểm uy tín
                       </span>
                       <span className="text-sand-500 text-[11px] font-medium">
                         {u.totalTransactions} giao dịch

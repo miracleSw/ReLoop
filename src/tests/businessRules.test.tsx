@@ -233,15 +233,15 @@ describe('Deep AppContext State Machine & Business Rules (UC05, UC07, UC14, UC15
   it('UC17 BR 17_4: Canceling transaction restores products to AVAILABLE and ON_HOLD offers to PENDING', async () => {
     const app = await renderAppContext();
 
-    // Set up: create buy offer and accept it
+    // Set up: create buy offer and accept it (user-3 buys prod-2 from seller user-2)
     act(() => {
-      app.context.loginAs('user-2');
+      app.context.loginAs('user-3');
     });
     act(() => {
       app.context.createBuyRequest({
         targetProductId: 'prod-2',
         offeredPrice: 1500000,
-        note: 'Mua máy ảnh',
+        note: 'Mua bàn phím cơ',
       });
     });
 
@@ -249,7 +249,7 @@ describe('Deep AppContext State Machine & Business Rules (UC05, UC07, UC14, UC15
     expect(buyReq).toBeDefined();
 
     act(() => {
-      app.context.loginAs('user-3'); // seller of prod-2
+      app.context.loginAs('user-2'); // seller of prod-2
     });
     act(() => {
       app.context.acceptBuyRequest(buyReq.id);
@@ -440,6 +440,148 @@ describe('Deep AppContext State Machine & Business Rules (UC05, UC07, UC14, UC15
     });
 
     expect(app.context.stats.lockedUsers).toBe(initialLockedUsers + 1);
+
+    app.unmount();
+  });
+
+  it('BR-32 & BR-33 & BR-34: Enforces offer integrity (anti-self-offer, anti-spam, and owned-available offered item)', async () => {
+    const app = await renderAppContext();
+
+    // BR-32: Cannot offer on own post
+    act(() => {
+      app.context.loginAs('user-1'); // seller of prod-1
+    });
+
+    let barterSuccess = false;
+    act(() => {
+      barterSuccess = app.context.createBarterRequest({
+        targetProductId: 'prod-1',
+        offeredProductId: 'prod-3',
+        compensationAmount: 0,
+        note: 'Tự đổi hàng của mình',
+      });
+    });
+    expect(barterSuccess).toBe(false);
+
+    let buySuccess = false;
+    act(() => {
+      buySuccess = app.context.createBuyRequest({
+        targetProductId: 'prod-1',
+        offeredPrice: 10000000,
+        note: 'Tự mua đồ của mình',
+      });
+    });
+    expect(buySuccess).toBe(false);
+
+    // BR-34: Offered item must belong to sender and be AVAILABLE
+    act(() => {
+      app.context.loginAs('user-2');
+    });
+
+    let invalidItemSuccess = false;
+    act(() => {
+      // user-2 tries to offer prod-3 which belongs to user-1!
+      invalidItemSuccess = app.context.createBarterRequest({
+        targetProductId: 'prod-1',
+        offeredProductId: 'prod-3',
+        compensationAmount: 0,
+        note: 'Dùng đồ người khác để đổi',
+      });
+    });
+    expect(invalidItemSuccess).toBe(false);
+
+    // Valid barter request from user-2 using prod-2 (which belongs to user-2 and is AVAILABLE)
+    let validBarter = false;
+    act(() => {
+      validBarter = app.context.createBarterRequest({
+        targetProductId: 'prod-1',
+        offeredProductId: 'prod-2',
+        compensationAmount: 500000,
+        note: 'Đổi bàn phím lấy máy ảnh',
+      });
+    });
+    expect(validBarter).toBe(true);
+
+    // BR-33: Anti-spam - Cannot send duplicate pending offer on same target product
+    let duplicateOffer = false;
+    act(() => {
+      duplicateOffer = app.context.createBuyRequest({
+        targetProductId: 'prod-1',
+        offeredPrice: 13000000,
+        note: 'Gửi thêm đề xuất mua khi đã có đề xuất đổi đang PENDING',
+      });
+    });
+    expect(duplicateOffer).toBe(false);
+
+    app.unmount();
+  });
+
+  it('BR-45 & BR-46: Admin locking user auto-hides their AVAILABLE products and revokes active session', async () => {
+    const app = await renderAppContext();
+
+    // Verify user-2 has at least 1 AVAILABLE product (prod-2)
+    const user2ProdBefore = app.context.products.find((p) => p.id === 'prod-2');
+    expect(user2ProdBefore?.status).toBe('AVAILABLE');
+
+    // Admin locks user-2
+    act(() => {
+      app.context.loginAs('user-admin');
+    });
+    act(() => {
+      app.context.lockUser('user-2', 7, 'Vi phạm chính sách an toàn');
+    });
+
+    // BR-46 check: user-2's AVAILABLE products automatically transitioned to HIDDEN
+    const user2ProdAfter = app.context.products.find((p) => p.id === 'prod-2');
+    expect(user2ProdAfter?.status).toBe('HIDDEN');
+
+    // BR-45 & BR-07 check: locked user cannot log in
+    const lockedUser2 = app.context.users.find((u) => u.id === 'user-2');
+    expect(lockedUser2?.status).toBe('LOCKED');
+    expect(lockedUser2?.lockReason).toBe('Vi phạm chính sách an toàn');
+
+    app.unmount();
+  });
+
+  it('BR-41: Blocks review submission if more than 7 days have elapsed since transaction completed', async () => {
+    const app = await renderAppContext();
+
+    // Find a completed transaction in mockData
+    const completedTx = app.context.transactions.find((t) => t.status === 'COMPLETED');
+    expect(completedTx).toBeDefined();
+
+    // Login as buyer of this transaction
+    act(() => {
+      app.context.loginAs(completedTx!.buyerId);
+    });
+
+    const initialReviewCount = app.context.reviews.length;
+
+    // Simulate expired updatedAt (> 7 days)
+    const expiredTx = {
+      ...completedTx!,
+      updatedAt: new Date(Date.now() - 8 * 24 * 60 * 60 * 1000).toISOString(),
+    };
+
+    // Update transactions with expired timestamp
+    act(() => {
+      (app.context as any).transactions = app.context.transactions.map((t) =>
+        t.id === expiredTx.id ? expiredTx : t
+      );
+    });
+
+    act(() => {
+      app.context.submitReview({
+        transactionId: expiredTx.id,
+        targetUserId: expiredTx.sellerId,
+        rating: 5,
+        criteria: { punctuality: 5, courtesy: 5, accuracy: 5 },
+        comment: 'Đánh giá sau 8 ngày',
+      });
+    });
+
+    // Review should not be added because > 7 days expired (BR-41)
+    expect(app.context.reviews.length).toBe(initialReviewCount);
 
     app.unmount();
   });

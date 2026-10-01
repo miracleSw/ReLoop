@@ -43,6 +43,7 @@ export const TransactionDetailPage: React.FC = () => {
   const [isRescheduleOpen, setIsRescheduleOpen] = useState(false);
   const [newTime, setNewTime] = useState('');
   const [newLocation, setNewLocation] = useState('');
+  const [rescheduleError, setRescheduleError] = useState('');
 
   const [isCancelOpen, setIsCancelOpen] = useState(false);
   const [cancelReason, setCancelReason] = useState('Bùng hẹn / Không đến điểm hẹn');
@@ -93,7 +94,7 @@ export const TransactionDetailPage: React.FC = () => {
         <div className="w-14 h-14 rounded-2xl bg-rose-50 text-rose-600 border border-rose-200 mx-auto flex items-center justify-center mb-4">
           <AlertTriangle className="w-7 h-7" />
         </div>
-        <h2 className="text-xl font-bold text-slate-900">Từ chối truy cập (MSG 17_1)</h2>
+        <h2 className="text-xl font-bold text-slate-900">Không có quyền truy cập</h2>
         <p className="text-xs text-slate-600 mt-2 leading-relaxed">
           Bạn không có quyền truy cập giao dịch này. Chi tiết lịch hẹn và số điện thoại liên lạc chỉ dành riêng cho các bên trực tiếp tham gia giao dịch.
         </p>
@@ -122,7 +123,20 @@ export const TransactionDetailPage: React.FC = () => {
 
   const handleRescheduleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!newTime || !newLocation) return;
+    setRescheduleError('');
+    if (!newTime || !newLocation) {
+      setRescheduleError('Vui lòng chọn đầy đủ thời gian và địa điểm hẹn mới.');
+      return;
+    }
+
+    // Ràng buộc thời gian hẹn trong tương lai
+    const selectedTime = new Date(newTime).getTime();
+    const oneHourAhead = Date.now() + 60 * 60 * 1000;
+    if (selectedTime < oneHourAhead) {
+      setRescheduleError('Thời gian hẹn mới phải cách thời điểm hiện tại ít nhất 1 giờ.');
+      return;
+    }
+
     rescheduleMeetup(transaction.id, newTime, newLocation);
     setIsRescheduleOpen(false);
   };
@@ -163,11 +177,8 @@ export const TransactionDetailPage: React.FC = () => {
             <span>/</span>
             <span className="text-slate-700">Mã GD: #{transaction.id}</span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight flex items-center gap-2.5">
-            <span>Hành trình Giao dịch Gặp mặt</span>
-            <span className="inline-flex items-center justify-center p-1 rounded-lg bg-eco-100/70 text-eco-700">
-              <Sparkles className="w-4 h-4" />
-            </span>
+          <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
+            Chi tiết giao dịch
           </h1>
         </div>
 
@@ -179,7 +190,7 @@ export const TransactionDetailPage: React.FC = () => {
       {/* 2. TRANSACTION JOURNEY PROGRESS TIMELINE */}
       <div className="bg-white rounded-3xl border border-slate-200/90 shadow-[0_10px_35px_-8px_rgba(16,185,129,0.08)] p-6 sm:p-8">
         <h3 className="text-xs font-black text-slate-500 uppercase tracking-wider mb-6 flex items-center gap-2">
-          <span>Tiến trình cuộc hẹn (Transaction Journey)</span>
+          <span>Tiến trình giao dịch</span>
         </h3>
 
         <div className="grid grid-cols-1 sm:grid-cols-4 gap-4 relative">
@@ -225,14 +236,14 @@ export const TransactionDetailPage: React.FC = () => {
               ) : (
                 <Clock className="w-4 h-4 text-amber-600 animate-pulse" />
               )}
-              <span>3. Xác nhận 2 chiều</span>
+              <span>3. Xác nhận hoàn tất</span>
             </div>
             <p className="text-[11px] text-slate-600 leading-snug">
               {transaction.buyerConfirmed && transaction.sellerConfirmed
                 ? 'Cả hai bên đã xác nhận hoàn tất'
                 : myConfirmation
                 ? 'Bạn đã xác nhận (Chờ đối tác)'
-                : 'Chờ 2 bên cùng bấm hoàn tất'}
+                : 'Chờ cả 2 bên bấm xác nhận'}
             </p>
           </div>
 
@@ -261,10 +272,10 @@ export const TransactionDetailPage: React.FC = () => {
         <div className="bg-white rounded-3xl border border-slate-200/90 shadow-[0_8px_30px_-6px_rgba(0,0,0,0.06)] p-6 space-y-4">
           <div className="flex items-center justify-between pb-3 border-b border-slate-100">
             <span className="text-xs font-bold text-eco-800 uppercase tracking-wider">
-              {isBuyer ? 'Người bán (Đối tác hẹn gặp):' : 'Người mua/đổi (Đối tác hẹn gặp):'}
+              {isBuyer ? 'Người bán:' : 'Người mua / đổi:'}
             </span>
             <span className="text-[11px] font-black text-emerald-800 bg-emerald-100 px-2.5 py-0.5 rounded-full">
-              ★ {partner?.trustScore}đ Uy tín
+              ★ {partner?.trustScore} điểm uy tín
             </span>
           </div>
 
@@ -422,7 +433,7 @@ export const TransactionDetailPage: React.FC = () => {
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
             <h3 className="text-lg font-black text-slate-900">
-              Xác nhận hoàn tất giao dịch 2 bên (2-Way Confirmation)
+              Xác nhận hoàn tất giao dịch 2 bên
             </h3>
             <p className="text-xs sm:text-sm text-slate-500 mt-1">
               Sau khi gặp mặt và bàn giao sản phẩm ngoài đời, cả 2 bên bấm xác nhận để hoàn tất giao dịch.
@@ -483,13 +494,19 @@ export const TransactionDetailPage: React.FC = () => {
 
             {/* Leave Review Button */}
             {!existingReview ? (
-              <button
-                onClick={() => setIsReviewOpen(true)}
-                className="px-5 py-2.5 bg-gradient-to-r from-eco-700 via-eco-600 to-teal-600 hover:from-eco-600 hover:to-teal-500 text-white font-bold text-xs rounded-xl shadow-glow-emerald hover:shadow-lg flex items-center gap-2 whitespace-nowrap transition-all"
-              >
-                <Star className="w-4 h-4 fill-amber-300 text-amber-300" />
-                <span>Đánh giá đối tác ngay</span>
-              </button>
+              (Date.now() - new Date(transaction.updatedAt).getTime()) > 7 * 86400000 ? (
+                <span className="text-xs text-slate-500 font-bold bg-slate-100 px-3.5 py-1.5 rounded-xl border border-slate-200" title="Quyền đánh giá tự động đóng sau 7 ngày">
+                  Đã hết hạn đánh giá (sau 7 ngày)
+                </span>
+              ) : (
+                <button
+                  onClick={() => setIsReviewOpen(true)}
+                  className="px-5 py-2.5 bg-gradient-to-r from-eco-700 via-eco-600 to-teal-600 hover:from-eco-600 hover:to-teal-500 text-white font-bold text-xs rounded-xl shadow-glow-emerald hover:shadow-lg flex items-center gap-2 whitespace-nowrap transition-all"
+                >
+                  <Star className="w-4 h-4 fill-amber-300 text-amber-300" />
+                  <span>Đánh giá đối tác ngay</span>
+                </button>
+              )
             ) : (
               <span className="text-xs text-emerald-800 font-bold bg-white/80 px-3.5 py-1.5 rounded-xl border border-emerald-200">
                 ✓ Bạn đã gửi đánh giá
@@ -538,6 +555,12 @@ export const TransactionDetailPage: React.FC = () => {
             <p className="text-xs text-slate-500">
               Chỉ dời lịch trước giờ hẹn tối thiểu 2 tiếng khi có sự đồng thuận 2 bên.
             </p>
+            {rescheduleError && (
+              <div className="p-3 bg-rose-50 border border-rose-200 text-rose-700 text-xs rounded-xl flex items-start gap-2">
+                <AlertTriangle className="w-4 h-4 text-rose-600 flex-shrink-0 mt-0.5" />
+                <span>{rescheduleError}</span>
+              </div>
+            )}
             <form onSubmit={handleRescheduleSubmit} className="space-y-4">
               <div>
                 <label className="block text-xs font-bold text-slate-800 mb-1.5 uppercase tracking-wider">
@@ -589,7 +612,7 @@ export const TransactionDetailPage: React.FC = () => {
           <div className="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 space-y-4 shadow-2xl border border-slate-200 animate-slide-up max-h-[90vh] overflow-y-auto">
             <h3 className="text-lg font-black text-slate-900">Hủy lịch hẹn gặp mặt</h3>
             <p className="text-xs text-slate-500">
-              Bài đăng sẽ được tự động phục hồi về trạng thái Còn hàng (AVAILABLE) để tiếp nhận đề nghị khác.
+              Bài đăng sẽ được tự động chuyển về trạng thái Còn hàng để tiếp nhận đề nghị khác.
             </p>
             <form onSubmit={handleCancelSubmit} className="space-y-4">
               <div>
@@ -636,7 +659,7 @@ export const TransactionDetailPage: React.FC = () => {
                 Đánh giá uy tín đối tác: {partner.fullName}
               </h3>
               <p className="text-xs text-slate-500">
-                Chỉ mở quyền chấm sao sau khi giao dịch hoàn tất. Mỗi mã giao dịch chỉ đánh giá 1 lần.
+                Đánh giá trải nghiệm giao dịch và thái độ của đối tác sau buổi gặp.
               </p>
             </div>
 

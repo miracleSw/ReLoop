@@ -151,7 +151,7 @@ export const ProductDetailPage: React.FC = () => {
       return;
     }
     if (barterNote.length > 500) {
-      setBarterError('Lời nhắn không được vượt quá 500 ký tự (theo quy chuẩn BR 13_2).');
+      setBarterError('Lời nhắn tối đa 500 ký tự.');
       return;
     }
 
@@ -422,7 +422,7 @@ export const ProductDetailPage: React.FC = () => {
 
               <div className="text-right flex-shrink-0">
                 <span className="inline-block text-xs font-bold text-eco-800 bg-emerald-50 border border-eco-200/80 px-2.5 sm:px-3 py-1 rounded-full shadow-subtle">
-                  ★ {seller.trustScore}/100 Uy tín
+                  ★ {seller.trustScore}/100 điểm uy tín
                 </span>
               </div>
             </div>
@@ -484,7 +484,7 @@ export const ProductDetailPage: React.FC = () => {
                     className="w-full py-3.5 px-6 rounded-2xl bg-white hover:bg-slate-50 border border-slate-200 text-charcoal-800 font-bold text-sm shadow-subtle transition-all flex items-center justify-center gap-2"
                   >
                     <PhoneCall className="w-4 h-4 text-eco-700" />
-                    <span>Liên hệ người bán (Bảo mật quyền riêng tư)</span>
+                    <span>Liên hệ người bán</span>
                   </button>
                 </>
               ) : (
@@ -506,7 +506,7 @@ export const ProductDetailPage: React.FC = () => {
                       to="/user/products"
                       className="w-full sm:w-auto px-5 py-2.5 bg-white border border-slate-200 text-charcoal-800 rounded-xl text-xs font-bold hover:bg-slate-50 shadow-subtle transition-all"
                     >
-                      Quản lý trong Kho đồ cá nhân →
+                      Xem trong Kho đồ →
                     </Link>
                   </div>
                 </div>
@@ -603,7 +603,7 @@ export const ProductDetailPage: React.FC = () => {
               </li>
               <li className="flex items-start gap-2.5">
                 <CheckCircle2 className="w-4 h-4 text-eco-600 flex-shrink-0 mt-0.5" />
-                <span>Sau khi nhận hàng, cả 2 bên bấm "Xác nhận hoàn tất" trên hệ thống.</span>
+                <span>Sau khi nhận đồ, cả hai bên bấm "Xác nhận hoàn tất" trên ứng dụng.</span>
               </li>
             </ul>
           </div>
@@ -802,7 +802,7 @@ export const ProductDetailPage: React.FC = () => {
               <div className="p-6 bg-slate-50 border border-slate-200 rounded-2xl text-center space-y-3">
                 <AlertTriangle className="w-8 h-8 text-amber-500 mx-auto" />
                 <p className="text-xs text-charcoal-800 font-medium">
-                  Kho đồ cá nhân của bạn chưa có món đồ nào khả dụng (AVAILABLE) để đem đổi. Vui lòng đăng tin sản phẩm trước!
+                  Kho đồ cá nhân của bạn chưa có món đồ nào sẵn sàng để đem đổi. Vui lòng đăng tin món đồ mới trước!
                 </p>
                 <Link
                   to="/user/create-listing"

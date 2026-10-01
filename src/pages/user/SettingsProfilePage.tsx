@@ -64,13 +64,23 @@ export const SettingsProfilePage: React.FC = () => {
     setPasswordError('');
 
     if (oldPassword !== 'password123' && oldPassword.length === 0) {
-      setPasswordError('Vui lòng nhập mật khẩu hiện tại chính xác (UC04 BR-01).');
+      setPasswordError('Mật khẩu hiện tại không chính xác.');
       return;
     }
-    if (newPassword.length < 6) {
-      setPasswordError('Mật khẩu mới phải có tối thiểu 6 ký tự.');
+
+    // Mật khẩu mới không được trùng với mật khẩu hiện tại
+    if (newPassword === oldPassword) {
+      setPasswordError('Mật khẩu mới không được trùng với mật khẩu hiện tại.');
       return;
     }
+
+    // Mật khẩu tối thiểu 8 ký tự, ít nhất 1 chữ hoa, 1 chữ thường, 1 số
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+    if (!passwordRegex.test(newPassword)) {
+      setPasswordError('Mật khẩu mới cần tối thiểu 8 ký tự, gồm cả chữ hoa, chữ thường và chữ số.');
+      return;
+    }
+
     if (newPassword !== confirmNewPassword) {
       setPasswordError('Mật khẩu mới xác nhận không trùng khớp.');
       return;
@@ -88,18 +98,11 @@ export const SettingsProfilePage: React.FC = () => {
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-10">
       {/* Header */}
       <div className="pb-4 border-b border-slate-200/80">
-        <div className="inline-flex items-center gap-1.5 text-xs font-bold text-eco-800 uppercase tracking-wider bg-eco-100/70 px-3 py-1 rounded-full border border-eco-200/80 mb-2 shadow-xs">
-          <Settings className="w-3.5 h-3.5 text-eco-700" />
-          <span>Thiết lập tài khoản</span>
-        </div>
-        <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight flex items-center gap-2.5">
-          <span>Cài đặt tài khoản & Hồ sơ cá nhân</span>
-          <span className="inline-flex items-center justify-center p-1 rounded-lg bg-eco-100/70 text-eco-700">
-            <Sparkles className="w-4 h-4" />
-          </span>
+        <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
+          Cài đặt tài khoản
         </h1>
         <p className="text-xs sm:text-sm text-slate-500 mt-1">
-          Quản lý thông tin liên hệ, mật khẩu bảo mật và danh sách người dùng bị chặn.
+          Quản lý thông tin liên hệ, mật khẩu và danh sách người dùng bị chặn.
         </p>
       </div>
 
@@ -110,10 +113,10 @@ export const SettingsProfilePage: React.FC = () => {
             <span className="p-1.5 rounded-xl bg-eco-100/70 text-eco-700">
               <User className="w-4 h-4" />
             </span>
-            <span>Hồ sơ thành viên ReLoop</span>
+            <span>Thông tin cá nhân</span>
           </h3>
           <span className="text-xs font-bold text-emerald-800 bg-emerald-100/80 px-2.5 py-1 rounded-full">
-            ★ {currentUser.trustScore} điểm tín nhiệm
+            ★ {currentUser.trustScore} điểm uy tín
           </span>
         </div>
 

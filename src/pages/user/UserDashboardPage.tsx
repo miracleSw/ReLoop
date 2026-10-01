@@ -89,11 +89,11 @@ export const UserDashboardPage: React.FC = () => {
                 Xin chào, {currentUser.fullName}
               </h1>
               <span className="text-xs font-bold text-eco-800 bg-gradient-to-r from-eco-50 to-teal-50 border border-eco-200/80 px-2.5 py-0.5 rounded-full shadow-subtle">
-                ★ {currentUser.trustScore}đ Uy tín
+                ★ {currentUser.trustScore} điểm uy tín
               </span>
             </div>
             <p className="text-xs text-sand-500 mt-1 font-medium">
-              Khu vực sinh sống: <span className="font-semibold text-charcoal-800">{currentUser.district}, {currentUser.province}</span>
+              <span className="font-semibold text-charcoal-800">{currentUser.district}, {currentUser.province}</span>
             </p>
           </div>
         </div>
@@ -104,13 +104,13 @@ export const UserDashboardPage: React.FC = () => {
             className="flex-1 sm:flex-none px-5 py-3 rounded-xl bg-gradient-to-r from-eco-700 via-eco-600 to-teal-600 hover:from-eco-600 hover:to-teal-500 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-glow-emerald transition-all whitespace-nowrap"
           >
             <PlusCircle className="w-4 h-4 flex-shrink-0" />
-            <span>+ Đăng tin mới</span>
+            <span>Đăng tin mới</span>
           </Link>
           <Link
             to="/explore"
             className="flex-1 sm:flex-none px-5 py-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-charcoal-800 font-bold text-xs flex items-center justify-center gap-1.5 transition-colors border border-slate-200/60 whitespace-nowrap"
           >
-            <span>Khám phá sàn</span>
+            <span>Khám phá</span>
           </Link>
         </div>
       </div>
@@ -156,7 +156,7 @@ export const UserDashboardPage: React.FC = () => {
           className="p-4 sm:p-6 rounded-3xl bg-white border border-slate-200/90 hover:border-amber-500 hover:shadow-card shadow-soft transition-all group"
         >
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold text-sand-500 uppercase tracking-wider">Lịch hẹn gặp mặt</span>
+            <span className="text-xs font-bold text-sand-500 uppercase tracking-wider">Lịch hẹn & Giao dịch</span>
             <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-amber-50 to-orange-100 text-amber-700 flex items-center justify-center group-hover:scale-110 transition-transform shadow-subtle">
               <Calendar className="w-4 h-4 text-amber-600" />
             </div>
@@ -174,7 +174,7 @@ export const UserDashboardPage: React.FC = () => {
           className="p-5 sm:p-6 rounded-3xl bg-white border border-slate-200/90 hover:border-clay-500 hover:shadow-card shadow-soft transition-all group"
         >
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold text-sand-500 uppercase tracking-wider">Đồ yêu thích</span>
+            <span className="text-xs font-bold text-sand-500 uppercase tracking-wider">Danh sách yêu thích</span>
             <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-clay-50 to-orange-100 text-clay-700 flex items-center justify-center group-hover:scale-110 transition-transform shadow-subtle">
               <Heart className="w-4 h-4 text-clay-600" />
             </div>
@@ -201,7 +201,7 @@ export const UserDashboardPage: React.FC = () => {
                 <div key={tx.id} className="bg-white p-5 rounded-2xl border border-amber-200/80 shadow-soft flex flex-col justify-between">
                   <div>
                     <div className="flex items-center justify-between text-xs text-sand-500 mb-2">
-                      <span className="font-semibold">Mã GD: #{tx.id}</span>
+                      <span className="font-semibold text-slate-600">{new Date(tx.appointmentTime).toLocaleDateString('vi-VN')}</span>
                       <StatusBadge status={tx.status} size="sm" />
                     </div>
                     <h4 className="text-sm font-bold text-charcoal-900 truncate">
@@ -242,15 +242,12 @@ export const UserDashboardPage: React.FC = () => {
             <h2 className="text-lg sm:text-xl font-bold text-charcoal-900">
               Bài đăng của bạn ({myListings.length})
             </h2>
-            <p className="text-xs text-sand-600 mt-0.5">
-              Quản lý trạng thái Còn hàng, Đã hẹn hoặc Tạm ẩn bài viết.
-            </p>
           </div>
           <Link
             to="/user/products"
             className="text-xs font-semibold text-eco-800 hover:text-eco-900"
           >
-            Quản lý tất cả trong Kho đồ →
+            Xem tất cả →
           </Link>
         </div>
 

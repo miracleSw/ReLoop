@@ -349,7 +349,7 @@ export const ExplorePage: React.FC = () => {
             Khám phá kho đồ cũ
           </h1>
           <p className="text-xs sm:text-sm text-sand-500 mt-1">
-            Tìm thấy <span className="font-bold text-eco-700">{filteredProducts.length}</span> món đồ sẵn sàng giao dịch gặp mặt trực tiếp (AVAILABLE)
+            Tìm thấy <span className="font-bold text-eco-700">{filteredProducts.length}</span> món đồ sẵn sàng giao dịch
           </p>
         </div>
 
@@ -447,7 +447,7 @@ export const ExplorePage: React.FC = () => {
 
           {(priceMin !== '' || priceMax !== '') && (
             <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-eco-100 text-eco-800 font-semibold border border-eco-200/60 shadow-subtle">
-              Khoảng giá: {priceMin ? `${Number(priceMin).toLocaleString('vi-VN')}₫` : '0₫'} - {priceMax ? `${Number(priceMax).toLocaleString('vi-VN')}₫` : 'Vô cực'}
+              Khoảng giá: {priceMin ? `${Number(priceMin).toLocaleString('vi-VN')}₫` : '0₫'} - {priceMax ? `${Number(priceMax).toLocaleString('vi-VN')}₫` : 'Trở lên'}
               <button onClick={() => applyPricePreset('all')} className="hover:text-eco-950">
                 <X className="w-3 h-3" />
               </button>

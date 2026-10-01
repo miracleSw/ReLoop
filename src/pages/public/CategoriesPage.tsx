@@ -9,12 +9,8 @@ export const CategoriesPage: React.FC = () => {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16 space-y-12">
       <div className="text-center max-w-2xl mx-auto space-y-3">
-        <div className="inline-flex items-center gap-1.5 text-xs font-bold text-eco-700 uppercase tracking-wider bg-eco-50 px-3.5 py-1 rounded-full border border-eco-200/80 shadow-subtle">
-          <Layers className="w-3.5 h-3.5 text-eco-600" />
-          <span>Hệ thống phân loại chuẩn</span>
-        </div>
         <h1 className="text-3xl sm:text-4xl font-extrabold text-charcoal-900 tracking-tight">
-          Danh mục ngành hàng ReLoop
+          Danh mục sản phẩm
         </h1>
         <p className="text-sm text-sand-500 leading-relaxed">
           Tất cả sản phẩm đã qua sử dụng được sắp xếp khoa học, giúp bạn tìm kiếm nhanh chóng món đồ cần thiết trong khu vực của mình.
@@ -56,9 +52,8 @@ export const CategoriesPage: React.FC = () => {
 
                 <div className="mt-5 pt-4 border-t border-slate-100 flex items-center justify-between text-xs">
                   <span className="font-bold text-emerald-800 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200/50">
-                    {sampleProducts.length} bài đăng đang mở
+                    {sampleProducts.length} món đồ
                   </span>
-                  <span className="text-sand-400 font-medium">Đã kiểm duyệt</span>
                 </div>
               </div>
 

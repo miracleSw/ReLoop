@@ -256,22 +256,9 @@ export const ChatInboxPage: React.FC = () => {
     <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 py-2 sm:py-4 space-y-2 sm:space-y-3.5 w-full min-w-0">
       {/* Header — compact on mobile, rich on desktop */}
       <div className="pb-1 sm:pb-3 border-b border-slate-200/80 flex-shrink-0 min-w-0">
-        <div className="hidden sm:inline-flex items-center gap-1.5 text-xs font-bold text-eco-800 uppercase tracking-wider bg-eco-100/70 px-3 py-1 rounded-full border border-eco-200/80 mb-1.5 shadow-xs">
-          <MessageSquare className="w-3.5 h-3.5 text-eco-700" />
-          <span>Kênh đối thoại trực tiếp</span>
-        </div>
-        <div className="flex items-center justify-between gap-2">
-          <h1 className="text-base sm:text-xl md:text-2xl font-black text-slate-900 tracking-tight flex items-center gap-2">
-            <span>Hộp thư trao đổi đề nghị</span>
-            <span className="hidden sm:inline text-slate-400 text-sm font-semibold">(Offer Messages)</span>
-            <span className="hidden sm:inline-flex items-center justify-center p-1 rounded-lg bg-eco-100/70 text-eco-700">
-              <Sparkles className="w-3.5 h-3.5" />
-            </span>
-          </h1>
-        </div>
-        <p className="hidden sm:block text-xs text-slate-500 mt-0.5 truncate">
-          Kênh đối thoại thương lượng chi tiết và thỏa thuận địa điểm công cộng an toàn. Lịch sử trao đổi được lưu trữ 90 ngày.
-        </p>
+        <h1 className="text-base sm:text-xl md:text-2xl font-black text-slate-900 tracking-tight">
+          Hộp thư trao đổi đề nghị
+        </h1>
       </div>
 
       {/* Chat Container Card — perfectly sized to viewport across mobile & desktop */}

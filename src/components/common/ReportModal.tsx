@@ -69,7 +69,16 @@ export const ReportModal: React.FC<ReportModalProps> = ({
       return;
     }
     if (description.trim().length < 10) {
-      setErrorMsg('Vui lòng mô tả chi tiết vi phạm ít nhất 10 ký tự để Admin đối soát.');
+      setErrorMsg('Vui lòng mô tả chi tiết vi phạm ít nhất 10 ký tự.');
+      return;
+    }
+
+    // Báo cáo vi phạm liên quan đến lừa đảo/tranh chấp bắt buộc có ít nhất 1 ảnh bằng chứng
+    const isFraudOrDispute =
+      reason === 'Lừa đảo / Chiếm đoạt tài sản' ||
+      reason === 'Hàng giả / Sai mô tả nghiêm trọng';
+    if (isFraudOrDispute && evidenceImages.length === 0) {
+      setErrorMsg('Vui lòng đính kèm ít nhất 1 hình ảnh hoặc tài liệu bằng chứng để chúng tôi đối soát báo cáo này.');
       return;
     }
 

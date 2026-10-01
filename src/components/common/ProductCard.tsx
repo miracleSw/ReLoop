@@ -237,7 +237,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
                     </span>
                     <span>•</span>
                     <span className="text-eco-700 font-semibold">
-                      ★ {seller.trustScore}đ Uy tín
+                      ★ {seller.trustScore} điểm uy tín
                     </span>
                     <span className="hidden sm:inline">•</span>
                     <span className="hidden sm:inline">{seller.totalTransactions} giao dịch</span>
@@ -271,7 +271,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
               ) : (
                 <span className="text-base sm:text-lg font-bold text-eco-700 flex items-center gap-1.5">
                   <ArrowRightLeft className="w-4 h-4 text-eco-600" />
-                  Giao lưu đổi đồ / Thương lượng
+                  Giao lưu đổi đồ
                 </span>
               )}
             </div>
@@ -427,7 +427,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
             <Link
               to={`/sellers/${seller.id}`}
               className="flex items-center gap-1.5 text-right hover:opacity-80 transition-opacity flex-shrink-0"
-              title={`Người bán: ${seller.fullName} (${seller.trustScore}đ uy tín)`}
+              title={`Người bán: ${seller.fullName} (${seller.trustScore} điểm uy tín)`}
             >
               <div className="hidden xs:block sm:block text-right">
                 <div className="text-[11px] font-semibold text-charcoal-800 max-w-[85px] truncate">

@@ -61,9 +61,9 @@ export const CreateListingPage: React.FC = () => {
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return;
     const files = Array.from(e.target.files);
-    const remainingSlots = 5 - images.length;
+    const remainingSlots = 10 - images.length;
     if (remainingSlots <= 0) {
-      setErrorMsg('Tối đa 5 hình ảnh cho mỗi bài đăng (quy chuẩn BR M2).');
+      setErrorMsg('Bạn chỉ có thể tải lên tối đa 10 hình ảnh.');
       return;
     }
     const filesToLoad = files.slice(0, remainingSlots);
@@ -72,7 +72,7 @@ export const CreateListingPage: React.FC = () => {
       reader.onload = (uploadEvent) => {
         const result = uploadEvent.target?.result as string;
         if (result) {
-          setImages((prev) => (prev.length < 5 ? [...prev, result] : prev));
+          setImages((prev) => (prev.length < 10 ? [...prev, result] : prev));
         }
       };
       reader.readAsDataURL(file);
@@ -82,8 +82,8 @@ export const CreateListingPage: React.FC = () => {
   };
 
   const handleAddSampleImage = (url: string) => {
-    if (images.length >= 5) {
-      setErrorMsg('Tối đa 5 hình ảnh cho mỗi bài đăng (quy chuẩn BR M2).');
+    if (images.length >= 10) {
+      setErrorMsg('Bạn chỉ có thể tải lên tối đa 10 hình ảnh.');
       return;
     }
     setImages([...images, url]);
@@ -99,15 +99,24 @@ export const CreateListingPage: React.FC = () => {
     setErrorMsg('');
 
     if (title.trim().length < 10) {
-      setErrorMsg('Tiêu đề bài đăng phải có ít nhất 10 ký tự rõ ràng.');
+      setErrorMsg('Tiêu đề cần có ít nhất 10 ký tự.');
       return;
     }
     if (description.trim().length < 20) {
-      setErrorMsg('Mô tả tình trạng thực tế phải có ít nhất 20 ký tự để người mua nắm rõ.');
+      setErrorMsg('Mô tả chi tiết cần có ít nhất 20 ký tự.');
       return;
     }
     if (images.length === 0) {
-      setErrorMsg('Vui lòng tải lên ít nhất 1 hình ảnh thực tế của sản phẩm.');
+      setErrorMsg('Vui lòng thêm ít nhất 1 hình ảnh sản phẩm.');
+      return;
+    }
+
+    if (type !== 'EXCHANGE' && (!price || price <= 0)) {
+      setErrorMsg('Vui lòng nhập giá bán lớn hơn 0.');
+      return;
+    }
+    if (type !== 'SELL' && !wantedExchangeItems.trim()) {
+      setErrorMsg('Vui lòng nhập món đồ bạn mong muốn đổi lấy.');
       return;
     }
 
@@ -146,11 +155,8 @@ export const CreateListingPage: React.FC = () => {
     <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-8">
       {/* 1. HEADER */}
       <div className="text-center max-w-2xl mx-auto space-y-2">
-        <span className="text-xs font-bold text-eco-800 uppercase tracking-wider bg-eco-50 px-3.5 py-1 rounded-full border border-eco-200/80 inline-flex shadow-subtle">
-          Mô hình tuần hoàn đồ cũ
-        </span>
         <h1 className="text-2xl sm:text-3xl font-extrabold text-charcoal-900 tracking-tight">
-          Đăng tin Sản phẩm mới
+          Đăng tin mới
         </h1>
         <p className="text-xs sm:text-sm text-slate-500">
           Hãy mô tả chân thực tình trạng để kết nối với những người trân trọng đồ cũ như bạn.
@@ -327,10 +333,10 @@ export const CreateListingPage: React.FC = () => {
 
               <div className="flex items-center justify-between mb-2">
                 <label className="text-xs font-bold text-charcoal-800">
-                  Ảnh chụp thực tế sản phẩm (Tối đa 5 ảnh) <span className="text-rose-500">*</span>
+                  Ảnh chụp thực tế sản phẩm (Tối đa 10 ảnh) <span className="text-rose-500">*</span>
                 </label>
                 <span className="text-[11px] text-slate-500 font-medium">
-                  {images.length}/5 ảnh
+                  {images.length}/10 ảnh
                 </span>
               </div>
 
@@ -450,7 +456,7 @@ export const CreateListingPage: React.FC = () => {
             </div>
 
             <p className="text-[11px] text-slate-500 pt-1">
-              Tuyệt đối không nhập số nhà riêng cụ thể nhằm bảo vệ quyền riêng tư theo Quy định an toàn ReLoop.
+              Gợi ý: Chỉ nên chọn khu vực công cộng để đảm bảo an toàn giao dịch.
             </p>
           </div>
         </div>
@@ -491,7 +497,7 @@ export const CreateListingPage: React.FC = () => {
             <div className="pt-4 border-t border-slate-100 space-y-2 text-xs text-slate-600">
               <div className="flex items-center gap-1.5 text-eco-800 font-medium">
                 <CheckCircle2 className="w-4 h-4 text-eco-600" />
-                <span>Trạng thái mặc định: Còn hàng (AVAILABLE)</span>
+                <span>Trạng thái ban đầu: Còn hàng</span>
               </div>
               <div className="flex items-center gap-1.5 text-eco-800 font-medium">
                 <CheckCircle2 className="w-4 h-4 text-eco-600" />

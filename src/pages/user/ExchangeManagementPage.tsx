@@ -88,18 +88,11 @@ export const ExchangeManagementPage: React.FC = () => {
       {/* 1. HEADER */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200/80">
         <div>
-          <div className="inline-flex items-center gap-1.5 text-xs font-bold text-eco-800 uppercase tracking-wider bg-eco-100/70 px-3 py-1 rounded-full border border-eco-200/80 mb-2 shadow-xs">
-            <ArrowRightLeft className="w-3.5 h-3.5 text-eco-700" />
-            <span>Trung tâm quản lý thương lượng & đề nghị</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight flex items-center gap-2.5">
-            <span>Quản lý Đề nghị & Đề xuất Giao dịch</span>
-            <span className="inline-flex items-center justify-center p-1 rounded-lg bg-eco-100/70 text-eco-700">
-              <Sparkles className="w-4 h-4" />
-            </span>
+          <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
+            Quản lý đề nghị giao dịch
           </h1>
           <p className="text-xs sm:text-sm text-slate-500 mt-1">
-            Theo dõi, thương lượng và xét duyệt cả đề nghị Đổi đồ (Barter) và đề xuất Mua trực tiếp (Buy) minh bạch.
+            Theo dõi, thương lượng và phản hồi các đề nghị trao đổi hoặc mua bán sản phẩm.
           </p>
         </div>
       </div>
@@ -195,14 +188,14 @@ export const ExchangeManagementPage: React.FC = () => {
             }`}
           >
             {st === 'ALL'
-              ? 'Tất cả trạng thái'
+              ? 'Tất cả'
               : st === 'PENDING'
-              ? 'Chờ duyệt'
+              ? 'Chờ phản hồi'
               : st === 'ACCEPTED'
-              ? 'Đã chấp thuận'
+              ? 'Đã đồng ý'
               : st === 'REJECTED'
               ? 'Đã từ chối'
-              : 'Trong hàng chờ (ON_HOLD)'}
+              : 'Hàng chờ'}
           </button>
         ))}
       </div>
@@ -237,8 +230,6 @@ export const ExchangeManagementPage: React.FC = () => {
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-100">
                     <div className="flex flex-wrap items-center gap-2 sm:gap-3">
                       <StatusBadge status={req.status} size="sm" />
-                      <span className="text-xs font-semibold text-slate-500">Mã: #{req.id}</span>
-                      <span className="text-slate-300 hidden sm:inline">•</span>
                       <span className="text-xs text-slate-500 flex items-center gap-1">
                         <Clock className="w-3.5 h-3.5 text-slate-400" />
                         {new Date(req.createdAt).toLocaleString('vi-VN')}
@@ -436,8 +427,6 @@ export const ExchangeManagementPage: React.FC = () => {
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-100">
                     <div className="flex flex-wrap items-center gap-2 sm:gap-3">
                       <StatusBadge status={req.status} size="sm" />
-                      <span className="text-xs font-semibold text-slate-500">Mã đề xuất: #{req.id}</span>
-                      <span className="text-slate-300 hidden sm:inline">•</span>
                       <span className="text-xs text-slate-500 flex items-center gap-1">
                         <Clock className="w-3.5 h-3.5 text-slate-400" />
                         {new Date(req.createdAt).toLocaleString('vi-VN')}
@@ -609,7 +598,7 @@ export const ExchangeManagementPage: React.FC = () => {
                 Xác nhận Chấp nhận Đề nghị Đổi đồ?
               </h3>
               <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                Khi chấp nhận đề nghị này, bài đăng của bạn sẽ chuyển sang trạng thái <strong className="text-slate-900">Tạm giữ (RESERVED)</strong> và hệ thống sẽ tự động tạo lịch hẹn gặp với người đổi. Các đề nghị khác sẽ chuyển sang hàng chờ. Bạn có đồng ý không?
+                Khi chấp nhận đề nghị này, bài đăng của bạn sẽ chuyển sang trạng thái <strong className="text-slate-900">Đã hẹn gặp</strong> và hệ thống sẽ tự động tạo lịch hẹn gặp với người đổi. Các đề nghị khác sẽ chuyển sang hàng chờ. Bạn có đồng ý không?
               </p>
             </div>
 
@@ -653,7 +642,7 @@ export const ExchangeManagementPage: React.FC = () => {
                 <strong className="text-clay-700 font-black">
                   {confirmAcceptBuy.offeredPrice.toLocaleString('vi-VN')}₫
                 </strong>
-                . Bài đăng sẽ chuyển sang <strong className="text-slate-900">Tạm giữ (RESERVED)</strong>, mở thông tin liên hệ và tạo lịch hẹn gặp mặt trực tiếp.
+                . Bài đăng sẽ chuyển sang <strong className="text-slate-900">Đã hẹn gặp</strong>, mở thông tin liên hệ và tạo lịch hẹn gặp mặt trực tiếp.
               </p>
             </div>
 

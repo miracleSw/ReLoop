@@ -26,10 +26,10 @@ export const AdminDashboardPage: React.FC = () => {
       {/* HEADER */}
       <div>
         <h1 className="text-2xl sm:text-3xl font-extrabold text-charcoal-900">
-          Dashboard Thống kê Hệ thống (UC22)
+          Tổng quan thống kê
         </h1>
         <p className="text-xs sm:text-sm text-sand-600 mt-1">
-          Báo cáo định lượng và chỉ số hoạt động toàn sàn ReLoop thời gian thực.
+          Tổng quan hoạt động và các chỉ số toàn sàn theo thời gian thực.
         </p>
       </div>
 
@@ -53,7 +53,7 @@ export const AdminDashboardPage: React.FC = () => {
         {/* KPI 2: Số bài đăng */}
         <div className="p-6 rounded-3xl bg-white border border-slate-200/90 shadow-soft hover:shadow-card transition-all space-y-2">
           <div className="flex items-center justify-between text-xs text-sand-500 font-bold uppercase tracking-wider">
-            <span>Tổng bài đăng đồ cũ</span>
+            <span>Tổng bài đăng</span>
             <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-sky-50 to-blue-100 text-sky-700 flex items-center justify-center shadow-subtle">
               <Layers className="w-5 h-5 text-sky-600" />
             </div>
@@ -61,7 +61,7 @@ export const AdminDashboardPage: React.FC = () => {
           <div className="text-3xl font-black text-charcoal-900 tracking-tight">{stats.totalPosts}</div>
           <div className="flex items-center gap-1.5 text-xs text-sky-600 font-bold pt-1">
             <TrendingUp className="w-4 h-4" />
-            <span>+24.1% tăng trưởng đồ tuần hoàn</span>
+            <span>+24.1% so với tháng trước</span>
           </div>
         </div>
 

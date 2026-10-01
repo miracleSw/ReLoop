@@ -15,6 +15,7 @@ import { CategoriesPage } from './pages/public/CategoriesPage';
 import { SafetyPage } from './pages/public/SafetyPage';
 import { LoginPage } from './pages/public/LoginPage';
 import { RegisterPage } from './pages/public/RegisterPage';
+import { ForgotPasswordPage } from './pages/public/ForgotPasswordPage';
 
 // User pages
 import { UserDashboardPage } from './pages/user/UserDashboardPage';
@@ -68,6 +69,7 @@ export const App: React.FC = () => {
         <Route path="/safety" element={<SafetyPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
+        <Route path="/forgot-password" element={<ForgotPasswordPage />} />
 
         {/* User Hub */}
         <Route path="/user/dashboard" element={<UserDashboardPage />} />

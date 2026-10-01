@@ -89,7 +89,7 @@ export const UserDashboardPage: React.FC = () => {
                 Xin chào, {currentUser.fullName}
               </h1>
               <span className="text-xs font-bold text-eco-800 bg-gradient-to-r from-eco-50 to-teal-50 border border-eco-200/80 px-2.5 py-0.5 rounded-full shadow-subtle">
-                ★ {currentUser.trustScore}đ Uy tín
+                ★ {currentUser.trustScore} điểm uy tín
               </span>
             </div>
             <p className="text-xs text-sand-500 mt-1 font-medium">

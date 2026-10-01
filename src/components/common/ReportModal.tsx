@@ -69,7 +69,7 @@ export const ReportModal: React.FC<ReportModalProps> = ({
       return;
     }
     if (description.trim().length < 10) {
-      setErrorMsg('Vui lòng mô tả chi tiết vi phạm ít nhất 10 ký tự để Admin đối soát.');
+      setErrorMsg('Vui lòng mô tả chi tiết vi phạm ít nhất 10 ký tự.');
       return;
     }
 

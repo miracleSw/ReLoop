@@ -26,10 +26,10 @@ export const AdminDashboardPage: React.FC = () => {
       {/* HEADER */}
       <div>
         <h1 className="text-2xl sm:text-3xl font-extrabold text-charcoal-900">
-          Dashboard Thống kê Hệ thống (UC22)
+          Tổng quan thống kê
         </h1>
         <p className="text-xs sm:text-sm text-sand-600 mt-1">
-          Báo cáo định lượng và chỉ số hoạt động toàn sàn ReLoop thời gian thực.
+          Tổng quan hoạt động và các chỉ số toàn sàn theo thời gian thực.
         </p>
       </div>
 

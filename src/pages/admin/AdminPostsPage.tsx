@@ -38,10 +38,10 @@ export const AdminPostsPage: React.FC = () => {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h1 className="text-2xl font-extrabold text-charcoal-900">
-            Kiểm duyệt Bài đăng & Sản phẩm (UC24)
+            Kiểm duyệt bài đăng
           </h1>
           <p className="text-xs text-sand-600 mt-0.5">
-            Kiểm soát hàng cấm, đối soát vi phạm chính sách cộng đồng và gỡ bỏ bài đăng giả mạo (UC26).
+            Kiểm tra các bài đăng có dấu hiệu vi phạm và xử lý theo chính sách cộng đồng.
           </p>
         </div>
       </div>
@@ -179,12 +179,12 @@ export const AdminPostsPage: React.FC = () => {
 
                         <button
                           onClick={() => {
-                            if (window.confirm('Gỡ bỏ bài đăng vi phạm này vĩnh viễn khỏi hệ thống? (UC26)')) {
+                            if (window.confirm('Bạn có chắc chắn muốn gỡ bỏ vĩnh viễn bài đăng này?')) {
                               setProductStatus(p.id, 'REMOVED');
                             }
                           }}
                           className="p-1.5 text-slate-400 hover:text-rose-700 rounded-lg hover:bg-rose-50 transition-colors"
-                          title="Gỡ bài vĩnh viễn (UC26)"
+                          title="Gỡ bài đăng"
                         >
                           <Trash2 className="w-4 h-4" />
                         </button>
@@ -265,7 +265,7 @@ export const AdminPostsPage: React.FC = () => {
                 }}
                 className="px-4 py-2 bg-gradient-to-r from-rose-600 to-rose-700 hover:from-rose-500 hover:to-rose-600 text-white rounded-xl text-xs font-bold shadow-md shadow-rose-600/20"
               >
-                Gỡ bài đăng vi phạm (UC26)
+                Gỡ bài đăng vi phạm
               </button>
             </div>
           </div>

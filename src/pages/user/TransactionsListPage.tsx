@@ -54,17 +54,17 @@ export const TransactionsListPage: React.FC = () => {
           { id: 'ALL', label: 'Tất cả cuộc hẹn', count: myTransactions.length },
           {
             id: 'APPOINTED',
-            label: 'Đã lên lịch (APPOINTED)',
+            label: 'Đã lên lịch',
             count: myTransactions.filter((t) => t.status === 'APPOINTED').length,
           },
           {
             id: 'COMPLETED',
-            label: 'Hoàn tất thành công (COMPLETED)',
+            label: 'Đã hoàn tất',
             count: myTransactions.filter((t) => t.status === 'COMPLETED').length,
           },
           {
             id: 'CANCELLED',
-            label: 'Đã hủy (CANCELLED)',
+            label: 'Đã hủy',
             count: myTransactions.filter((t) => t.status === 'CANCELLED').length,
           },
         ].map((tab) => (

@@ -33,10 +33,10 @@ export const AdminReviewsPage: React.FC = () => {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h1 className="text-2xl font-extrabold text-charcoal-900">
-            Giám sát Đánh giá & Xử lý Khiếu nại (UC27)
+            Quản lý đánh giá & khiếu nại
           </h1>
           <p className="text-xs text-sand-600 mt-0.5">
-            Giám sát tính minh bạch của các đánh giá 2 chiều và giải quyết khiếu nại đánh giá vu khống.
+            Theo dõi phản hồi giao dịch và xử lý các khiếu nại đánh giá không chính xác.
           </p>
         </div>
 
@@ -148,7 +148,7 @@ export const AdminReviewsPage: React.FC = () => {
                 <ShieldAlert className="w-5 h-5" />
               </div>
               <div>
-                <h3 className="text-lg font-bold text-charcoal-900">Xử lý Khiếu nại Đánh giá (UC27)</h3>
+                <h3 className="text-lg font-bold text-charcoal-900">Xử lý khiếu nại đánh giá</h3>
                 <p className="text-xs text-slate-500">Đối soát tính xác thực của nội dung đánh giá</p>
               </div>
             </div>

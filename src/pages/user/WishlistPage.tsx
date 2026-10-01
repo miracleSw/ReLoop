@@ -62,13 +62,13 @@ export const WishlistPage: React.FC = () => {
             <span>Bộ sưu tập yêu thích</span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight flex items-center gap-2.5">
-            <span>Danh sách món đồ quan tâm (Wishlist)</span>
+            <span>Danh sách yêu thích</span>
             <span className="inline-flex items-center justify-center p-1 rounded-lg bg-eco-100/70 text-eco-700">
               <Sparkles className="w-4 h-4" />
             </span>
           </h1>
           <p className="text-xs sm:text-sm text-slate-500 mt-1">
-            Lưu lại để theo dõi biến động trạng thái (RESERVED, COMPLETED, giảm giá) hoặc chuẩn bị đồ để đổi.
+            Lưu lại để theo dõi trạng thái món đồ hoặc chuẩn bị đồ để trao đổi.
           </p>
         </div>
 

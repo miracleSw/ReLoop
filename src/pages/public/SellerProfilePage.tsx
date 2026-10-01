@@ -103,7 +103,7 @@ export const SellerProfilePage: React.FC = () => {
               <div className="text-2xl sm:text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-eco-700 to-teal-600">
                 ★ {seller.trustScore}/100
               </div>
-              <div className="text-[11px] text-eco-900 font-bold uppercase tracking-wider mt-0.5">Chỉ số Uy tín cộng đồng</div>
+              <div className="text-[11px] text-eco-900 font-bold uppercase tracking-wider mt-0.5">Điểm uy tín</div>
             </div>
 
             <button
@@ -161,7 +161,7 @@ export const SellerProfilePage: React.FC = () => {
       {/* 3. REVIEWS & RATINGS RECEIVED */}
       <section className="bg-white rounded-3xl border border-slate-200/90 shadow-soft p-6 sm:p-8 space-y-6">
         <h3 className="text-lg font-bold text-charcoal-900 tracking-tight">
-          Đánh giá minh bạch từ đối tác sau buổi hẹn gặp ({sellerReviews.length})
+          Đánh giá từ đối tác sau buổi hẹn gặp ({sellerReviews.length})
         </h3>
 
         {sellerReviews.length === 0 ? (

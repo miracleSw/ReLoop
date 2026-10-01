@@ -140,7 +140,7 @@ export const LoginPage: React.FC = () => {
           {/* QUICK PERSONA LOGIN HELPER */}
           <div className="pt-6 border-t border-slate-200 space-y-3">
             <span className="text-[11px] font-bold text-sand-500 uppercase tracking-wider block text-center">
-              Hoặc đăng nhập nhanh bằng tài khoản mẫu:
+              Tài khoản trải nghiệm nhanh:
             </span>
             <div className="grid grid-cols-2 gap-2 text-xs">
               <button
@@ -180,7 +180,7 @@ export const LoginPage: React.FC = () => {
                   setPassword('password123');
                 }}
                 className="p-2.5 rounded-xl bg-rose-50 border border-rose-200 hover:border-rose-400 text-left font-semibold text-rose-800 transition-colors shadow-subtle"
-                title="Test kiểm tra tài khoản LOCKED"
+                title="Tài khoản vi phạm quy định"
               >
                 🚫 Văn Kiệt (Bị khóa)
               </button>

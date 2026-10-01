@@ -115,7 +115,7 @@ export const HomePage: React.FC = () => {
               <ArrowRightLeft className="w-6 h-6" />
             </div>
             <h3 className="text-base sm:text-lg font-bold text-charcoal-900 group-hover:text-eco-700 transition-colors">
-              Cơ chế Đổi đồ (Barter) linh hoạt
+              Cơ chế trao đổi đồ linh hoạt
             </h3>
             <p className="text-xs sm:text-sm text-sand-600 mt-2 leading-relaxed">
               Chọn món đồ từ kho cá nhân để gửi đề nghị đổi lấy món đồ yêu thích. Hỗ trợ thỏa thuận bù trừ tiền mặt minh bạch và sòng phẳng.
@@ -410,7 +410,7 @@ export const HomePage: React.FC = () => {
                     </div>
                     <div className="mt-2.5 flex items-center gap-3 text-xs">
                       <span className="font-bold text-emerald-800 bg-emerald-100/80 px-2 py-0.5 rounded-full text-[10px] shadow-subtle">
-                        ★ {u.trustScore}đ Uy tín
+                        ★ {u.trustScore} điểm uy tín
                       </span>
                       <span className="text-sand-500 text-[11px] font-medium">
                         {u.totalTransactions} giao dịch

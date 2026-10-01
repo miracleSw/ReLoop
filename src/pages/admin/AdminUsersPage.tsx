@@ -48,7 +48,7 @@ export const AdminUsersPage: React.FC = () => {
 
     // BR-03: Admin cannot lock self
     if (lockingUser.id === currentUser?.id) {
-      setErrorMsg('Quản trị viên không được phép tự khóa tài khoản của chính mình (BR-03).');
+      setErrorMsg('Bạn không thể tự khóa tài khoản của chính mình.');
       return;
     }
 
@@ -62,10 +62,10 @@ export const AdminUsersPage: React.FC = () => {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h1 className="text-2xl font-extrabold text-charcoal-900">
-            Quản lý Người dùng (User Management - UC23)
+            Quản lý người dùng
           </h1>
           <p className="text-xs text-sand-600 mt-0.5">
-            Tra cứu hồ sơ thành viên, điểm uy tín và quản lý trạng thái khóa tài khoản (UC25).
+            Tra cứu thông tin thành viên, chỉ số uy tín và quản lý trạng thái tài khoản.
           </p>
         </div>
       </div>
@@ -192,7 +192,7 @@ export const AdminUsersPage: React.FC = () => {
                           <button
                             onClick={() => {
                               if (isCurrentAdmin) {
-                                alert('Không được phép tự khóa chính tài khoản của bạn (BR-03).');
+                                alert('Bạn không thể tự khóa chính tài khoản của mình.');
                                 return;
                               }
                               setLockingUser(u);

@@ -72,7 +72,7 @@ export const AdminLayout: React.FC = () => {
             Re<span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-300">Loop</span> Admin
           </span>
           <span className="text-[10px] bg-white/10 text-emerald-300 border border-white/15 font-bold px-2 py-0.5 rounded-full ml-1.5 hidden sm:inline-block flex-shrink-0">
-            HUSC-33 Management
+            Quản trị hệ thống
           </span>
         </div>
 
@@ -81,7 +81,7 @@ export const AdminLayout: React.FC = () => {
             to="/"
             className="flex items-center gap-1.5 text-xs text-sand-300 hover:text-white transition-colors"
           >
-            <span className="hidden sm:inline">Về giao diện Sàn</span>
+            <span className="hidden sm:inline">Xem sàn giao dịch</span>
             <span className="sm:hidden">Sàn</span>
             <ExternalLink className="w-3.5 h-3.5" />
           </Link>

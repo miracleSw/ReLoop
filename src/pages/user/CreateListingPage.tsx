@@ -63,7 +63,7 @@ export const CreateListingPage: React.FC = () => {
     const files = Array.from(e.target.files);
     const remainingSlots = 5 - images.length;
     if (remainingSlots <= 0) {
-      setErrorMsg('Tối đa 5 hình ảnh cho mỗi bài đăng (quy chuẩn BR M2).');
+      setErrorMsg('Tối đa 5 hình ảnh cho mỗi bài đăng.');
       return;
     }
     const filesToLoad = files.slice(0, remainingSlots);
@@ -450,7 +450,7 @@ export const CreateListingPage: React.FC = () => {
             </div>
 
             <p className="text-[11px] text-slate-500 pt-1">
-              Tuyệt đối không nhập số nhà riêng cụ thể nhằm bảo vệ quyền riêng tư theo Quy định an toàn ReLoop.
+              Gợi ý: Chỉ nên chọn khu vực công cộng để đảm bảo an toàn giao dịch.
             </p>
           </div>
         </div>
@@ -491,7 +491,7 @@ export const CreateListingPage: React.FC = () => {
             <div className="pt-4 border-t border-slate-100 space-y-2 text-xs text-slate-600">
               <div className="flex items-center gap-1.5 text-eco-800 font-medium">
                 <CheckCircle2 className="w-4 h-4 text-eco-600" />
-                <span>Trạng thái mặc định: Còn hàng (AVAILABLE)</span>
+                <span>Trạng thái ban đầu: Còn hàng</span>
               </div>
               <div className="flex items-center gap-1.5 text-eco-800 font-medium">
                 <CheckCircle2 className="w-4 h-4 text-eco-600" />

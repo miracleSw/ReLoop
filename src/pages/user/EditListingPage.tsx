@@ -73,7 +73,7 @@ export const EditListingPage: React.FC = () => {
         </div>
         <h2 className="text-xl font-bold text-rose-700">Không có quyền chỉnh sửa</h2>
         <p className="text-xs text-slate-600 mt-1">
-          Bạn chỉ có thể chỉnh sửa bài đăng do chính mình tạo ra (BR UC06).
+          Bạn chỉ có thể chỉnh sửa bài đăng do chính mình tạo ra.
         </p>
         <Link
           to="/user/products"
@@ -187,9 +187,8 @@ export const EditListingPage: React.FC = () => {
         <div className="p-4 bg-amber-50/90 rounded-2xl border border-amber-200 text-xs text-amber-900 flex items-start gap-3 shadow-sm">
           <Info className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
           <div>
-            <strong className="font-bold">Lưu ý nghiệp vụ (HUSC-33):</strong> Bài đăng đang ở trạng thái{' '}
-            <span className="font-bold underline">{product.status}</span> (đã chấp thuận đề nghị hoặc đã hoàn tất).
-            Để bảo vệ sự minh bạch giao dịch, bạn không thể thay đổi giá bán hoặc hình thức trao đổi trong khi lịch hẹn đang diễn ra.
+            <strong className="font-bold">Lưu ý:</strong> Bài đăng đang có người hẹn giao dịch hoặc đã hoàn tất.
+            Để đảm bảo tính minh bạch, bạn không thể thay đổi giá hoặc hình thức trao đổi trong lúc này.
           </div>
         </div>
       )}

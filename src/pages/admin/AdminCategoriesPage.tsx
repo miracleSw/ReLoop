@@ -62,10 +62,10 @@ export const AdminCategoriesPage: React.FC = () => {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h1 className="text-2xl font-extrabold text-charcoal-900">
-            Quản lý Danh mục Ngành hàng (Category Management - UC27)
+            Quản lý danh mục ngành hàng
           </h1>
           <p className="text-xs text-sand-600 mt-0.5">
-            Quản trị cấu trúc danh mục toàn sàn, thứ tự ưu tiên và trạng thái ẩn/hiện ngành hàng.
+            Sắp xếp thứ tự ưu tiên và quản lý hiển thị các nhóm sản phẩm.
           </p>
         </div>
 

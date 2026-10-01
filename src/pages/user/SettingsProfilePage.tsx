@@ -64,7 +64,7 @@ export const SettingsProfilePage: React.FC = () => {
     setPasswordError('');
 
     if (oldPassword !== 'password123' && oldPassword.length === 0) {
-      setPasswordError('Vui lòng nhập mật khẩu hiện tại chính xác (UC04 BR-01).');
+      setPasswordError('Mật khẩu hiện tại không chính xác.');
       return;
     }
     if (newPassword.length < 6) {

@@ -609,7 +609,7 @@ export const ExchangeManagementPage: React.FC = () => {
                 Xác nhận Chấp nhận Đề nghị Đổi đồ?
               </h3>
               <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                Khi chấp nhận đề nghị này, bài đăng của bạn sẽ chuyển sang trạng thái <strong className="text-slate-900">Tạm giữ (RESERVED)</strong> và hệ thống sẽ tự động tạo lịch hẹn gặp với người đổi. Các đề nghị khác sẽ chuyển sang hàng chờ. Bạn có đồng ý không?
+                Khi chấp nhận đề nghị này, bài đăng của bạn sẽ chuyển sang trạng thái <strong className="text-slate-900">Đã hẹn gặp</strong> và hệ thống sẽ tự động tạo lịch hẹn gặp với người đổi. Các đề nghị khác sẽ chuyển sang hàng chờ. Bạn có đồng ý không?
               </p>
             </div>
 
@@ -653,7 +653,7 @@ export const ExchangeManagementPage: React.FC = () => {
                 <strong className="text-clay-700 font-black">
                   {confirmAcceptBuy.offeredPrice.toLocaleString('vi-VN')}₫
                 </strong>
-                . Bài đăng sẽ chuyển sang <strong className="text-slate-900">Tạm giữ (RESERVED)</strong>, mở thông tin liên hệ và tạo lịch hẹn gặp mặt trực tiếp.
+                . Bài đăng sẽ chuyển sang <strong className="text-slate-900">Đã hẹn gặp</strong>, mở thông tin liên hệ và tạo lịch hẹn gặp mặt trực tiếp.
               </p>
             </div>
 

@@ -58,7 +58,7 @@ export const MyInventoryPage: React.FC = () => {
             <span>Kho hàng cá nhân</span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight flex items-center gap-2.5">
-            <span>Kho đồ cá nhân (Personal Inventory)</span>
+            <span>Kho đồ cá nhân</span>
             <span className="inline-flex items-center justify-center p-1 rounded-lg bg-eco-100/70 text-eco-700">
               <Sparkles className="w-4 h-4" />
             </span>
@@ -77,33 +77,33 @@ export const MyInventoryPage: React.FC = () => {
         </Link>
       </div>
 
-      {/* 2. STATUS TABS (UC07) */}
+      {/* 2. STATUS TABS */}
       <div className="flex items-center gap-2 overflow-x-auto pb-1 border-b border-slate-200/80 scrollbar-none min-w-0 max-w-full">
         {[
           { id: 'ALL', label: 'Tất cả bài đăng', count: myListings.length },
           {
             id: 'AVAILABLE',
-            label: 'Còn hàng (AVAILABLE)',
+            label: 'Còn hàng',
             count: myListings.filter((p) => p.status === 'AVAILABLE').length,
           },
           {
             id: 'RESERVED',
-            label: 'Đã hẹn gặp (RESERVED)',
+            label: 'Đã hẹn gặp',
             count: myListings.filter((p) => p.status === 'RESERVED').length,
           },
           {
             id: 'COMPLETED',
-            label: 'Đã giao dịch (COMPLETED)',
+            label: 'Đã hoàn tất',
             count: myListings.filter((p) => p.status === 'COMPLETED').length,
           },
           {
             id: 'HIDDEN',
-            label: 'Tạm ẩn (HIDDEN)',
+            label: 'Tạm ẩn',
             count: myListings.filter((p) => p.status === 'HIDDEN').length,
           },
           {
             id: 'LOCKED',
-            label: 'Bị khóa (LOCKED)',
+            label: 'Bị khóa',
             count: myListings.filter((p) => p.status === 'LOCKED').length,
           },
         ].map((tab) => (

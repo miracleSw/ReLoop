@@ -802,7 +802,7 @@ export const ProductDetailPage: React.FC = () => {
               <div className="p-6 bg-slate-50 border border-slate-200 rounded-2xl text-center space-y-3">
                 <AlertTriangle className="w-8 h-8 text-amber-500 mx-auto" />
                 <p className="text-xs text-charcoal-800 font-medium">
-                  Kho đồ cá nhân của bạn chưa có món đồ nào khả dụng (AVAILABLE) để đem đổi. Vui lòng đăng tin sản phẩm trước!
+                  Kho đồ cá nhân của bạn chưa có món đồ nào sẵn sàng để đem đổi. Vui lòng đăng tin món đồ mới trước!
                 </p>
                 <Link
                   to="/user/create-listing"

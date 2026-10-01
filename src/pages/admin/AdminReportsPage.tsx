@@ -47,10 +47,10 @@ export const AdminReportsPage: React.FC = () => {
     <div className="space-y-6">
       <div>
         <h1 className="text-2xl font-extrabold text-charcoal-900">
-          Xử lý Báo cáo Vi phạm & Tranh chấp (Report Management)
+          Xử lý báo cáo vi phạm & khiếu nại
         </h1>
         <p className="text-xs text-sand-600 mt-0.5">
-          Thẩm định bằng chứng người dùng đính kèm, đối soát với Hộp thư đề nghị và áp dụng biện pháp chế tài.
+          Kiểm tra bằng chứng phản ánh và áp dụng biện pháp xử lý phù hợp.
         </p>
       </div>
 

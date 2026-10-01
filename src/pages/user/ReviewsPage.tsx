@@ -40,10 +40,10 @@ export const ReviewsPage: React.FC = () => {
       <div className="pb-4 border-b border-slate-200/80">
         <div className="inline-flex items-center gap-1.5 text-xs font-bold text-eco-800 uppercase tracking-wider bg-eco-100/70 px-3 py-1 rounded-full border border-eco-200/80 mb-2 shadow-xs">
           <Star className="w-3.5 h-3.5 text-eco-700 fill-eco-600" />
-          <span>Hệ thống tín nhiệm 2 chiều</span>
+          <span>Đánh giá tín nhiệm 2 chiều</span>
         </div>
         <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight flex items-center gap-2.5">
-          <span>Đánh giá uy tín & Phản hồi (Reviews & Appeals)</span>
+          <span>Đánh giá uy tín & Phản hồi</span>
           <span className="inline-flex items-center justify-center p-1 rounded-lg bg-eco-100/70 text-eco-700">
             <Sparkles className="w-4 h-4" />
           </span>

@@ -25,23 +25,23 @@ export const RegisterPage: React.FC = () => {
     // BR-01: Email format and duplicate
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
-      setErrorMsg('Định dạng email không hợp lệ (BR-01).');
+      setErrorMsg('Định dạng email không hợp lệ.');
       return;
     }
     if (users.some((u) => u.email.toLowerCase() === email.trim().toLowerCase())) {
-      setErrorMsg('Email này đã được sử dụng bởi một tài khoản khác trên hệ thống (BR-01).');
+      setErrorMsg('Email này đã được sử dụng bởi một tài khoản khác.');
       return;
     }
 
     // BR-02: Phone duplicate
     if (users.some((u) => u.phone === phone.trim())) {
-      setErrorMsg('Số điện thoại này đã tồn tại trên hệ thống (BR-02).');
+      setErrorMsg('Số điện thoại này đã được sử dụng.');
       return;
     }
 
     // BR-03: Password match
     if (password !== confirmPassword) {
-      setErrorMsg('Mật khẩu xác nhận không khớp tuyệt đối với mật khẩu đã nhập (BR-03).');
+      setErrorMsg('Mật khẩu xác nhận không trùng khớp.');
       return;
     }
 

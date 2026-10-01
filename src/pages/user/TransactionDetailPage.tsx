@@ -93,7 +93,7 @@ export const TransactionDetailPage: React.FC = () => {
         <div className="w-14 h-14 rounded-2xl bg-rose-50 text-rose-600 border border-rose-200 mx-auto flex items-center justify-center mb-4">
           <AlertTriangle className="w-7 h-7" />
         </div>
-        <h2 className="text-xl font-bold text-slate-900">Từ chối truy cập (MSG 17_1)</h2>
+        <h2 className="text-xl font-bold text-slate-900">Không có quyền truy cập</h2>
         <p className="text-xs text-slate-600 mt-2 leading-relaxed">
           Bạn không có quyền truy cập giao dịch này. Chi tiết lịch hẹn và số điện thoại liên lạc chỉ dành riêng cho các bên trực tiếp tham gia giao dịch.
         </p>
@@ -422,7 +422,7 @@ export const TransactionDetailPage: React.FC = () => {
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
             <h3 className="text-lg font-black text-slate-900">
-              Xác nhận hoàn tất giao dịch 2 bên (2-Way Confirmation)
+              Xác nhận hoàn tất giao dịch 2 bên
             </h3>
             <p className="text-xs sm:text-sm text-slate-500 mt-1">
               Sau khi gặp mặt và bàn giao sản phẩm ngoài đời, cả 2 bên bấm xác nhận để hoàn tất giao dịch.
@@ -589,7 +589,7 @@ export const TransactionDetailPage: React.FC = () => {
           <div className="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 space-y-4 shadow-2xl border border-slate-200 animate-slide-up max-h-[90vh] overflow-y-auto">
             <h3 className="text-lg font-black text-slate-900">Hủy lịch hẹn gặp mặt</h3>
             <p className="text-xs text-slate-500">
-              Bài đăng sẽ được tự động phục hồi về trạng thái Còn hàng (AVAILABLE) để tiếp nhận đề nghị khác.
+              Bài đăng sẽ được tự động chuyển về trạng thái Còn hàng để tiếp nhận đề nghị khác.
             </p>
             <form onSubmit={handleCancelSubmit} className="space-y-4">
               <div>
@@ -636,7 +636,7 @@ export const TransactionDetailPage: React.FC = () => {
                 Đánh giá uy tín đối tác: {partner.fullName}
               </h3>
               <p className="text-xs text-slate-500">
-                Chỉ mở quyền chấm sao sau khi giao dịch hoàn tất. Mỗi mã giao dịch chỉ đánh giá 1 lần.
+                Đánh giá trải nghiệm giao dịch và thái độ của đối tác sau buổi gặp.
               </p>
             </div>
 

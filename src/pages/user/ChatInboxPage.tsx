@@ -263,7 +263,6 @@ export const ChatInboxPage: React.FC = () => {
         <div className="flex items-center justify-between gap-2">
           <h1 className="text-base sm:text-xl md:text-2xl font-black text-slate-900 tracking-tight flex items-center gap-2">
             <span>Hộp thư trao đổi đề nghị</span>
-            <span className="hidden sm:inline text-slate-400 text-sm font-semibold">(Offer Messages)</span>
             <span className="hidden sm:inline-flex items-center justify-center p-1 rounded-lg bg-eco-100/70 text-eco-700">
               <Sparkles className="w-3.5 h-3.5" />
             </span>

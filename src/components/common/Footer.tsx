@@ -153,7 +153,7 @@ export const Footer: React.FC = () => {
 
         {/* BOTTOM COPYRIGHT */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-4 text-center sm:text-left">
-          <p>© 2026 ReLoop Marketplace — HUSC-33 Software Engineering Capstone Project.</p>
+          <p>© 2026 ReLoop Marketplace. Nền tảng trao đổi & mua bán đồ cũ bền vững.</p>
           <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-6">
             <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-eco-800 border border-emerald-200/80 font-medium">
               <Leaf className="w-3.5 h-3.5 text-eco-600" /> Chuẩn Nature Eco Living

@@ -229,7 +229,7 @@ export const Navbar: React.FC = () => {
             <Link
               to="/user/wishlist"
               className="hidden sm:inline-flex relative p-2 text-charcoal-700 hover:text-rose-600 hover:bg-rose-50 rounded-full transition-colors border border-transparent hover:border-rose-100 flex-shrink-0"
-              title="Danh sách quan tâm"
+              title="Danh sách yêu thích"
             >
               <Heart className="w-4 h-4 sm:w-5 sm:h-5" />
               {favorites.length > 0 && (
@@ -394,7 +394,7 @@ export const Navbar: React.FC = () => {
                         className="flex items-center gap-2.5 px-4 py-2 hover:bg-sand-50 transition-colors"
                       >
                         <User className="w-4 h-4 text-sand-500" />
-                        <span>Tổng quan Dashboard</span>
+                        <span>Tổng quan tài khoản</span>
                       </Link>
 
                       <Link
@@ -430,7 +430,7 @@ export const Navbar: React.FC = () => {
                         className="flex items-center gap-2.5 px-4 py-2 hover:bg-sand-50 transition-colors"
                       >
                         <MessageSquare className="w-4 h-4 text-sand-500" />
-                        <span>Hộp thư thương lượng</span>
+                        <span>Tin nhắn trao đổi</span>
                       </Link>
 
                       <Link

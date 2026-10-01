@@ -10,11 +10,11 @@ export const RoleSwitcher: React.FC = () => {
 
   if (isCollapsed) {
     return (
-      <aside aria-label="Khung điều khiển giả lập vai trò" className="fixed bottom-3 left-3 sm:bottom-4 sm:left-4 z-40">
+      <aside aria-label="Chuyển đổi tài khoản" className="fixed bottom-3 left-3 sm:bottom-4 sm:left-4 z-40">
         <button
           onClick={() => setIsCollapsed(false)}
           className="bg-white/95 backdrop-blur-xl text-charcoal-900 rounded-full shadow-[0_8px_25px_-5px_rgba(16,185,129,0.25)] border border-slate-200/90 p-2 sm:p-2.5 flex items-center gap-1.5 text-xs hover:scale-105 transition-all"
-          title="Mở thanh chuyển vai trò"
+          title="Chuyển tài khoản"
         >
           <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse shadow-sm shadow-emerald-500/50" />
           <span className="font-bold text-eco-700 text-[11px] sm:text-xs">
@@ -26,14 +26,14 @@ export const RoleSwitcher: React.FC = () => {
   }
 
   return (
-    <aside aria-label="Khung điều khiển giả lập vai trò" className="fixed bottom-3 left-3 sm:bottom-4 sm:left-4 z-40 max-w-[calc(100vw-1.5rem)]">
+    <aside aria-label="Chuyển đổi tài khoản" className="fixed bottom-3 left-3 sm:bottom-4 sm:left-4 z-40 max-w-[calc(100vw-1.5rem)]">
       <div className="bg-white/95 backdrop-blur-xl text-charcoal-900 rounded-2xl shadow-[0_12px_30px_-5px_rgba(16,185,129,0.18)] border border-slate-200/90 p-1.5 sm:p-2.5 flex items-center gap-1.5 sm:gap-2 text-xs">
         <div className="flex items-center gap-1.5 pl-1 sm:pl-2 min-w-0">
           <span className="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-emerald-500 animate-pulse shadow-sm shadow-emerald-500/50 flex-shrink-0" />
-          <span className="text-slate-500 font-medium hidden sm:inline">Thử nghiệm:</span>
+          <span className="text-slate-500 font-medium hidden sm:inline">Tài khoản:</span>
           <span className="font-bold text-eco-700 truncate max-w-[90px] sm:max-w-[140px] md:max-w-none">
             {currentRole === 'ADMIN'
-              ? '👑 Admin'
+              ? '👑 Quản trị viên'
               : currentUser
               ? `👤 ${currentUser.fullName}`
               : '👀 Khách'}
@@ -44,7 +44,7 @@ export const RoleSwitcher: React.FC = () => {
           <button
             onClick={() => setIsOpen(!isOpen)}
             className="flex items-center gap-1 bg-slate-100 hover:bg-slate-200/80 text-charcoal-800 font-semibold px-2 py-1 sm:px-2.5 sm:py-1.5 rounded-xl transition-all text-[11px] sm:text-xs"
-            title="Đổi vai trò người dùng"
+            title="Đổi tài khoản"
           >
             <span>Đổi</span>
             <ChevronDown className="w-3 h-3 sm:w-3.5 sm:h-3.5 opacity-70" />
@@ -54,10 +54,10 @@ export const RoleSwitcher: React.FC = () => {
             <div className="absolute bottom-full left-0 mb-2 w-72 max-w-[calc(100vw-2rem)] bg-white text-charcoal-900 rounded-2xl shadow-elevated border border-slate-200 p-2 animate-slide-up z-50">
               <div className="px-3 py-2 border-b border-sand-100 flex items-center justify-between">
                 <span className="font-semibold text-xs text-charcoal-700 uppercase tracking-wider">
-                  Chọn người dùng mô phỏng
+                  Chuyển nhanh tài khoản
                 </span>
                 <span className="text-[10px] bg-eco-100 text-eco-800 font-semibold px-1.5 py-0.5 rounded">
-                  Mock Persona
+                  Tài khoản mẫu
                 </span>
               </div>
 
@@ -179,8 +179,8 @@ export const RoleSwitcher: React.FC = () => {
                       👀
                     </span>
                     <div>
-                      <div className="text-xs font-semibold">Khách vãng lai (Guest)</div>
-                      <div className="text-[10px] text-sand-500">Chưa đăng nhập hệ thống</div>
+                      <div className="text-xs font-semibold">Khách (Chưa đăng nhập)</div>
+                      <div className="text-[10px] text-sand-500">Trải nghiệm chế độ xem</div>
                     </div>
                   </div>
                   {!currentUser && <Check className="w-4 h-4 text-eco-700" />}
@@ -214,7 +214,7 @@ export const RoleSwitcher: React.FC = () => {
         <button
           onClick={resetData}
           className="p-1.5 hover:bg-slate-100 text-slate-400 hover:text-eco-700 rounded-xl transition-all"
-          title="Khôi phục dữ liệu mẫu ban đầu"
+          title="Đặt lại dữ liệu mẫu"
         >
           <RotateCcw className="w-3.5 h-3.5" />
         </button>

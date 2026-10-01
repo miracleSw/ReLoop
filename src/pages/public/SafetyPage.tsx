@@ -25,7 +25,7 @@ export const SafetyPage: React.FC = () => {
               <AlertOctagon className="w-6 h-6 text-rose-600" />
             </div>
             <h2 className="text-lg sm:text-xl font-bold text-charcoal-900">
-              1. Danh mục Hàng cấm nghiêm ngặt (Prohibited Items Policy)
+              1. Danh mục Hàng cấm nghiêm ngặt
             </h2>
           </div>
           <p className="text-xs sm:text-sm text-sand-600 leading-relaxed">
@@ -62,7 +62,7 @@ export const SafetyPage: React.FC = () => {
               <Lock className="w-6 h-6 text-eco-600" />
             </div>
             <h2 className="text-lg sm:text-xl font-bold text-charcoal-900">
-              2. Bảo vệ Vị trí & Thông tin Liên hệ cá nhân (Privacy & Public Meetup)
+              2. Bảo vệ Vị trí & Thông tin Liên hệ cá nhân
             </h2>
           </div>
           <div className="space-y-3 text-xs sm:text-sm text-sand-600 leading-relaxed">

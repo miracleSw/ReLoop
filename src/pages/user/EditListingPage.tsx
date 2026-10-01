@@ -90,9 +90,9 @@ export const EditListingPage: React.FC = () => {
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return;
     const files = Array.from(e.target.files);
-    const remainingSlots = 5 - images.length;
+    const remainingSlots = 10 - images.length;
     if (remainingSlots <= 0) {
-      setErrorMsg('Tối đa 5 hình ảnh cho mỗi bài đăng.');
+      setErrorMsg('Tối đa 10 hình ảnh cho mỗi bài đăng (BR-16).');
       return;
     }
     const filesToLoad = files.slice(0, remainingSlots);
@@ -101,7 +101,7 @@ export const EditListingPage: React.FC = () => {
       reader.onload = (uploadEvent) => {
         const result = uploadEvent.target?.result as string;
         if (result) {
-          setImages((prev) => (prev.length < 5 ? [...prev, result] : prev));
+          setImages((prev) => (prev.length < 10 ? [...prev, result] : prev));
         }
       };
       reader.readAsDataURL(file);
@@ -112,7 +112,7 @@ export const EditListingPage: React.FC = () => {
 
   const handleRemoveImage = (index: number) => {
     if (images.length <= 1) {
-      setErrorMsg('Bài đăng phải có ít nhất 1 hình ảnh đại diện.');
+      setErrorMsg('Bài đăng phải có ít nhất 1 hình ảnh đại diện (BR-16).');
       return;
     }
     setImages(images.filter((_, i) => i !== index));
@@ -120,6 +120,10 @@ export const EditListingPage: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (isLockedOrCompleted) {
+      setErrorMsg('Bài đăng không thể chỉnh sửa khi đang ở trạng thái Đang hẹn gặp hoặc Đã giao dịch (BR-19).');
+      return;
+    }
     if (title.trim().length < 10) {
       setErrorMsg('Tiêu đề phải có ít nhất 10 ký tự.');
       return;
@@ -129,18 +133,28 @@ export const EditListingPage: React.FC = () => {
       return;
     }
     if (images.length === 0) {
-      setErrorMsg('Vui lòng giữ lại ít nhất 1 ảnh của sản phẩm.');
+      setErrorMsg('Vui lòng giữ lại ít nhất 1 ảnh của sản phẩm (BR-16).');
+      return;
+    }
+
+    // BR-15
+    if (type !== 'EXCHANGE' && (!price || price <= 0)) {
+      setErrorMsg('Hình thức Mua bán bắt buộc nhập Giá bán lớn hơn 0 (BR-15 / MSG 6).');
+      return;
+    }
+    if (type !== 'SELL' && !wantedExchangeItems.trim()) {
+      setErrorMsg('Hình thức Trao đổi bắt buộc ghi rõ nhu cầu muốn đổi lấy sản phẩm gì (BR-15).');
       return;
     }
 
     updateProduct(product.id, {
       title,
       categoryId,
-      type: isLockedOrCompleted ? product.type : type,
+      type,
       condition,
-      price: !isLockedOrCompleted && type !== 'EXCHANGE' ? price : product.price,
-      originalPrice: !isLockedOrCompleted && type !== 'EXCHANGE' ? originalPrice : product.originalPrice,
-      wantedExchangeItems: !isLockedOrCompleted && type !== 'SELL' ? wantedExchangeItems : product.wantedExchangeItems,
+      price: type !== 'EXCHANGE' ? price : undefined,
+      originalPrice: type !== 'EXCHANGE' ? originalPrice : undefined,
+      wantedExchangeItems: type !== 'SELL' ? wantedExchangeItems : undefined,
       description,
       images,
       location: {
@@ -184,8 +198,8 @@ export const EditListingPage: React.FC = () => {
         <div className="p-4 bg-amber-50/90 rounded-2xl border border-amber-200 text-xs text-amber-900 flex items-start gap-3 shadow-sm">
           <Info className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
           <div>
-            <strong className="font-bold">Lưu ý:</strong> Bài đăng đang có người hẹn giao dịch hoặc đã hoàn tất.
-            Để đảm bảo tính minh bạch, bạn không thể thay đổi giá hoặc hình thức trao đổi trong lúc này.
+            <strong className="font-bold">Khóa chỉnh sửa (BR-19):</strong> Bài đăng đang ở trạng thái {product.status === 'RESERVED' ? 'Đang hẹn gặp (RESERVED)' : 'Đã giao dịch (COMPLETED)'}.
+            Theo quy định hệ thống, bài đăng không thể chỉnh sửa thông tin khi đang trong tiến trình giao dịch hoặc đã hoàn tất.
           </div>
         </div>
       )}
@@ -408,9 +422,14 @@ export const EditListingPage: React.FC = () => {
           </button>
           <button
             type="submit"
-            className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-eco-700 via-eco-600 to-teal-600 hover:from-eco-600 hover:to-teal-500 text-white text-xs font-bold shadow-glow-emerald hover:shadow-lg transition-all"
+            disabled={isLockedOrCompleted}
+            className={`px-6 py-2.5 rounded-xl text-white text-xs font-bold transition-all ${
+              isLockedOrCompleted
+                ? 'bg-slate-400 cursor-not-allowed opacity-70'
+                : 'bg-gradient-to-r from-eco-700 via-eco-600 to-teal-600 hover:from-eco-600 hover:to-teal-500 shadow-glow-emerald hover:shadow-lg'
+            }`}
           >
-            Lưu thay đổi
+            {isLockedOrCompleted ? 'Đang khóa chỉnh sửa (BR-19)' : 'Lưu thay đổi'}
           </button>
         </div>
       </form>

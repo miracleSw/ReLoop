@@ -74,6 +74,7 @@ interface AppContextType {
   closeLoginPrompt: () => void;
   
   // User actions
+  addUser: (newUser: User) => void;
   updateProfile: (updates: Partial<User>) => void;
   lockUser: (userId: string, durationDays: number, reason: string) => void;
   unlockUser: (userId: string) => void;
@@ -391,7 +392,11 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     );
   };
 
-  // User profile
+  // User profile & management
+  const addUser = (newUser: User) => {
+    setUsers((prev) => [newUser, ...prev]);
+  };
+
   const updateProfile = (updates: Partial<User>) => {
     if (!currentUser) return;
     setUsers((prev) => prev.map((u) => (u.id === currentUser.id ? { ...u, ...updates } : u)));
@@ -407,7 +412,18 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     setUsers((prev) =>
       prev.map((u) => (u.id === userId ? { ...u, status: 'LOCKED', lockedUntil, lockReason: reason } : u))
     );
-    showToast(`Đã khóa tài khoản thành viên trong ${durationDays} ngày.`, 'warning');
+
+    // BR-46: Khi một tài khoản bị khóa, tất cả bài đăng đang ở trạng thái Còn hàng tự động chuyển sang Bị ẩn
+    setProducts((prev) =>
+      prev.map((p) => (p.sellerId === userId && p.status === 'AVAILABLE' ? { ...p, status: 'HIDDEN' } : p))
+    );
+
+    // BR-45: Thu hồi phiên đăng nhập ngay lập tức nếu người dùng bị khóa đang đăng nhập
+    if (currentUser?.id === userId) {
+      setCurrentUserId(null);
+    }
+
+    showToast(`Đã khóa tài khoản thành viên trong ${durationDays} ngày. Toàn bộ tin đăng Còn hàng đã tự động chuyển sang Bị ẩn (BR-46).`, 'warning');
   };
 
   const unlockUser = (userId: string) => {
@@ -442,6 +458,28 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     }
     const targetProd = products.find((p) => p.id === data.targetProductId);
     if (!targetProd) return false;
+
+    // BR-32: Không tự gửi đề nghị mua/trao đổi trên bài đăng của chính mình
+    if (targetProd.sellerId === currentUser.id) {
+      showToast('Bạn không thể tự gửi đề nghị trao đổi trên bài đăng của chính mình (BR-32).', 'error');
+      return false;
+    }
+
+    // BR-33: Chống spam đề nghị - Mỗi người dùng chỉ được duy nhất 1 đề nghị PENDING trên cùng bài đăng
+    const hasPendingOffer =
+      barterRequests.some((r) => r.targetProductId === data.targetProductId && r.senderId === currentUser.id && r.status === 'PENDING') ||
+      buyRequests.some((r) => r.targetProductId === data.targetProductId && r.senderId === currentUser.id && r.status === 'PENDING');
+    if (hasPendingOffer) {
+      showToast('Bạn đã có 1 đề nghị đang chờ xử lý trên sản phẩm này (BR-33).', 'warning');
+      return false;
+    }
+
+    // BR-34: Ràng buộc kho đồ trao đổi - Món đồ đổi bắt buộc thuộc sở hữu người gửi và ở trạng thái Còn hàng
+    const offeredProd = products.find((p) => p.id === data.offeredProductId);
+    if (!offeredProd || offeredProd.sellerId !== currentUser.id || offeredProd.status !== 'AVAILABLE') {
+      showToast('Sản phẩm đem đi đổi bắt buộc phải nằm trong Kho đồ cá nhân của bạn và đang ở trạng thái Còn hàng (BR-34).', 'error');
+      return false;
+    }
 
     const newReq: BarterRequest = {
       id: 'barter-' + Date.now(),
@@ -487,6 +525,27 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     }
     const targetProd = products.find((p) => p.id === data.targetProductId);
     if (!targetProd) return false;
+
+    // BR-32: Không tự gửi đề nghị mua trên bài đăng của chính mình
+    if (targetProd.sellerId === currentUser.id) {
+      showToast('Bạn không thể tự gửi đề xuất mua trên bài đăng của chính mình (BR-32).', 'error');
+      return false;
+    }
+
+    // BR-15 & SRS MSG 6: Giá đề xuất phải là số và lớn hơn 0
+    if (!data.offeredPrice || data.offeredPrice <= 0) {
+      showToast('Giá đề xuất mua phải lớn hơn 0 (MSG 6 / BR-15).', 'error');
+      return false;
+    }
+
+    // BR-33: Chống spam đề nghị - Mỗi người dùng chỉ được duy nhất 1 đề xuất PENDING trên cùng bài đăng
+    const hasPendingOffer =
+      buyRequests.some((r) => r.targetProductId === data.targetProductId && r.senderId === currentUser.id && r.status === 'PENDING') ||
+      barterRequests.some((r) => r.targetProductId === data.targetProductId && r.senderId === currentUser.id && r.status === 'PENDING');
+    if (hasPendingOffer) {
+      showToast('Bạn đã có 1 đề nghị đang chờ xử lý trên sản phẩm này (BR-33).', 'warning');
+      return false;
+    }
 
     const newReq: BuyRequest = {
       id: 'buy-' + Date.now(),
@@ -863,7 +922,15 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       (r) => r.transactionId === data.transactionId && r.reviewerId === currentUser.id
     );
     if (alreadyReviewed) {
-      showToast('Mỗi bên chỉ được đánh giá 01 lần cho mỗi giao dịch hoàn tất.', 'warning');
+      showToast('Mỗi bên chỉ được đánh giá 01 lần cho mỗi giao dịch hoàn tất (BR-40).', 'warning');
+      return;
+    }
+
+    // BR-41: Thời hạn đánh giá trong vòng 7 ngày kể từ khi giao dịch hoàn tất
+    const completedTime = new Date(tx.updatedAt).getTime();
+    const diffDays = (Date.now() - completedTime) / (1000 * 60 * 60 * 24);
+    if (diffDays > 7) {
+      showToast('Thời hạn đánh giá (07 ngày kể từ khi hoàn tất) đã kết thúc (BR-41).', 'warning');
       return;
     }
 
@@ -1064,6 +1131,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         loginPromptMessage,
         openLoginPrompt,
         closeLoginPrompt,
+        addUser,
         updateProfile,
         lockUser,
         unlockUser,

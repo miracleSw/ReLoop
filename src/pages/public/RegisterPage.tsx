@@ -4,7 +4,7 @@ import { useApp } from '../../context/AppContext';
 import { Sparkles, CheckCircle2, AlertTriangle, ArrowRight, UserPlus, ShieldCheck } from 'lucide-react';
 
 export const RegisterPage: React.FC = () => {
-  const { users, loginAs, showToast } = useApp();
+  const { users, addUser, loginAs, showToast } = useApp();
   const navigate = useNavigate();
 
   const [fullName, setFullName] = useState('');
@@ -45,8 +45,10 @@ export const RegisterPage: React.FC = () => {
       return;
     }
 
-    if (password.length < 6) {
-      setErrorMsg('Mật khẩu phải có độ dài tối thiểu 6 ký tự.');
+    // BR-02: Password complexity (min 8 chars, 1 uppercase, 1 lowercase, 1 number)
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+    if (!passwordRegex.test(password)) {
+      setErrorMsg('Mật khẩu phải có độ dài tối thiểu 8 ký tự, bao gồm ít nhất 1 chữ hoa, 1 chữ thường và 1 chữ số (BR-02).');
       return;
     }
 
@@ -63,7 +65,7 @@ export const RegisterPage: React.FC = () => {
 
     // Create user in system state
     const newId = 'user-' + Date.now();
-    users.push({
+    addUser({
       id: newId,
       fullName,
       email,

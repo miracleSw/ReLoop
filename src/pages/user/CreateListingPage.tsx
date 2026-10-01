@@ -61,9 +61,9 @@ export const CreateListingPage: React.FC = () => {
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return;
     const files = Array.from(e.target.files);
-    const remainingSlots = 5 - images.length;
+    const remainingSlots = 10 - images.length;
     if (remainingSlots <= 0) {
-      setErrorMsg('Tối đa 5 hình ảnh cho mỗi bài đăng.');
+      setErrorMsg('Tối đa 10 hình ảnh cho mỗi bài đăng (BR-16).');
       return;
     }
     const filesToLoad = files.slice(0, remainingSlots);
@@ -72,7 +72,7 @@ export const CreateListingPage: React.FC = () => {
       reader.onload = (uploadEvent) => {
         const result = uploadEvent.target?.result as string;
         if (result) {
-          setImages((prev) => (prev.length < 5 ? [...prev, result] : prev));
+          setImages((prev) => (prev.length < 10 ? [...prev, result] : prev));
         }
       };
       reader.readAsDataURL(file);
@@ -82,8 +82,8 @@ export const CreateListingPage: React.FC = () => {
   };
 
   const handleAddSampleImage = (url: string) => {
-    if (images.length >= 5) {
-      setErrorMsg('Tối đa 5 hình ảnh cho mỗi bài đăng (quy chuẩn BR M2).');
+    if (images.length >= 10) {
+      setErrorMsg('Tối đa 10 hình ảnh cho mỗi bài đăng (BR-16).');
       return;
     }
     setImages([...images, url]);
@@ -107,7 +107,17 @@ export const CreateListingPage: React.FC = () => {
       return;
     }
     if (images.length === 0) {
-      setErrorMsg('Vui lòng tải lên ít nhất 1 hình ảnh thực tế của sản phẩm.');
+      setErrorMsg('Vui lòng tải lên ít nhất 1 hình ảnh thực tế của sản phẩm (BR-16).');
+      return;
+    }
+
+    // BR-15: Ràng buộc hình thức giao dịch
+    if (type !== 'EXCHANGE' && (!price || price <= 0)) {
+      setErrorMsg('Hình thức Mua bán bắt buộc nhập Giá bán lớn hơn 0 (BR-15 / MSG 6).');
+      return;
+    }
+    if (type !== 'SELL' && !wantedExchangeItems.trim()) {
+      setErrorMsg('Hình thức Trao đổi bắt buộc ghi rõ nhu cầu muốn đổi lấy sản phẩm gì (BR-15).');
       return;
     }
 

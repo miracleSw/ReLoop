@@ -1,6 +1,6 @@
 export type UserRole = 'USER' | 'ADMIN';
 
-export type UserStatus = 'ACTIVE' | 'LOCKED';
+export type UserStatus = 'ACTIVE' | 'LOCKED' | 'UNVERIFIED';
 
 export interface User {
   id: string;

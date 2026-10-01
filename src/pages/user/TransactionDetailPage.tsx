@@ -43,6 +43,7 @@ export const TransactionDetailPage: React.FC = () => {
   const [isRescheduleOpen, setIsRescheduleOpen] = useState(false);
   const [newTime, setNewTime] = useState('');
   const [newLocation, setNewLocation] = useState('');
+  const [rescheduleError, setRescheduleError] = useState('');
 
   const [isCancelOpen, setIsCancelOpen] = useState(false);
   const [cancelReason, setCancelReason] = useState('Bùng hẹn / Không đến điểm hẹn');
@@ -122,7 +123,20 @@ export const TransactionDetailPage: React.FC = () => {
 
   const handleRescheduleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!newTime || !newLocation) return;
+    setRescheduleError('');
+    if (!newTime || !newLocation) {
+      setRescheduleError('Vui lòng chọn đầy đủ thời gian và địa điểm hẹn mới.');
+      return;
+    }
+
+    // BR-37: Lịch hẹn gặp phải được thiết lập ở mốc thời gian trong tương lai (tối thiểu sau 1 giờ)
+    const selectedTime = new Date(newTime).getTime();
+    const oneHourAhead = Date.now() + 60 * 60 * 1000;
+    if (selectedTime < oneHourAhead) {
+      setRescheduleError('Lịch hẹn gặp phải được thiết lập ở mốc thời gian trong tương lai (tối thiểu sau 1 giờ kể từ thời điểm tạo theo quy chuẩn BR-37).');
+      return;
+    }
+
     rescheduleMeetup(transaction.id, newTime, newLocation);
     setIsRescheduleOpen(false);
   };
@@ -480,13 +494,19 @@ export const TransactionDetailPage: React.FC = () => {
 
             {/* Leave Review Button */}
             {!existingReview ? (
-              <button
-                onClick={() => setIsReviewOpen(true)}
-                className="px-5 py-2.5 bg-gradient-to-r from-eco-700 via-eco-600 to-teal-600 hover:from-eco-600 hover:to-teal-500 text-white font-bold text-xs rounded-xl shadow-glow-emerald hover:shadow-lg flex items-center gap-2 whitespace-nowrap transition-all"
-              >
-                <Star className="w-4 h-4 fill-amber-300 text-amber-300" />
-                <span>Đánh giá đối tác ngay</span>
-              </button>
+              (Date.now() - new Date(transaction.updatedAt).getTime()) > 7 * 86400000 ? (
+                <span className="text-xs text-slate-500 font-bold bg-slate-100 px-3.5 py-1.5 rounded-xl border border-slate-200" title="Quyền đánh giá tự động đóng sau 7 ngày">
+                  Đã quá hạn đánh giá (7 ngày - BR-41)
+                </span>
+              ) : (
+                <button
+                  onClick={() => setIsReviewOpen(true)}
+                  className="px-5 py-2.5 bg-gradient-to-r from-eco-700 via-eco-600 to-teal-600 hover:from-eco-600 hover:to-teal-500 text-white font-bold text-xs rounded-xl shadow-glow-emerald hover:shadow-lg flex items-center gap-2 whitespace-nowrap transition-all"
+                >
+                  <Star className="w-4 h-4 fill-amber-300 text-amber-300" />
+                  <span>Đánh giá đối tác ngay</span>
+                </button>
+              )
             ) : (
               <span className="text-xs text-emerald-800 font-bold bg-white/80 px-3.5 py-1.5 rounded-xl border border-emerald-200">
                 ✓ Bạn đã gửi đánh giá
@@ -535,6 +555,12 @@ export const TransactionDetailPage: React.FC = () => {
             <p className="text-xs text-slate-500">
               Chỉ dời lịch trước giờ hẹn tối thiểu 2 tiếng khi có sự đồng thuận 2 bên.
             </p>
+            {rescheduleError && (
+              <div className="p-3 bg-rose-50 border border-rose-200 text-rose-700 text-xs rounded-xl flex items-start gap-2">
+                <AlertTriangle className="w-4 h-4 text-rose-600 flex-shrink-0 mt-0.5" />
+                <span>{rescheduleError}</span>
+              </div>
+            )}
             <form onSubmit={handleRescheduleSubmit} className="space-y-4">
               <div>
                 <label className="block text-xs font-bold text-slate-800 mb-1.5 uppercase tracking-wider">
